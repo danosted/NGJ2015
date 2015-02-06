@@ -36,5 +36,20 @@ namespace Assets.src.Managers
                 return _genericManager;
             }
         }
+
+        //private GenericManager _genericManager;
+        //public GenericManager GenericManager
+        //{
+        //    get
+        //    {
+        //        if (_genericManager == null)
+        //        {
+        //            var prefab = Resources.Load(Constants.GenericManagerName);
+        //            var GO = (GameObject.Instantiate(prefab)) as GameObject;
+        //            _genericManager = GO.GetComponent<GenericManager>();
+        //        }
+        //        return _genericManager;
+        //    }
+        //}
     }
 }

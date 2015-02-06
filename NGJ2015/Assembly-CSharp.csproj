@@ -47,14 +47,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
     <Compile Include="Assets\src\Common\Constants.cs" />
     <Compile Include="Assets\src\Logic\GameLogic.cs" />
     <Compile Include="Assets\src\Logic\GenericLogic.cs" />
+    <Compile Include="Assets\src\Logic\LogicCollection.cs" />
     <Compile Include="Assets\src\Managers\GenericManager.cs" />
     <Compile Include="Assets\src\Managers\ManagerCollection.cs" />
+    <None Include="Assets\XInputDotNet\MITLicense.txt" />
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
