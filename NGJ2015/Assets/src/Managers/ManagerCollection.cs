@@ -22,33 +22,33 @@ namespace Assets.src.Managers
             }
         }
 
-        private GenericManager _genericManager;
-        public GenericManager GenericManager
+        private EnemyManager _enemyManager;
+        public EnemyManager EnemyManager
         {
             get
             {
-                if (_genericManager == null)
+                if (_enemyManager == null)
                 {
                     var prefab = Resources.Load(Constants.GenericManagerName);
                     var GO = (GameObject.Instantiate(prefab)) as GameObject;
-                    _genericManager = GO.GetComponent<GenericManager>();
+                    _enemyManager = GO.GetComponent<EnemyManager>();
                 }
-                return _genericManager;
+                return _enemyManager;
             }
         }
 
-        //private GenericManager _genericManager;
-        //public GenericManager GenericManager
+        //private EnemyManager _enemyManager;
+        //public EnemyManager EnemyManager
         //{
         //    get
         //    {
-        //        if (_genericManager == null)
+        //        if (_enemyManager == null)
         //        {
         //            var prefab = Resources.Load(Constants.GenericManagerName);
         //            var GO = (GameObject.Instantiate(prefab)) as GameObject;
-        //            _genericManager = GO.GetComponent<GenericManager>();
+        //            _enemyManager = GO.GetComponent<EnemyManager>();
         //        }
-        //        return _genericManager;
+        //        return _enemyManager;
         //    }
         //}
     }

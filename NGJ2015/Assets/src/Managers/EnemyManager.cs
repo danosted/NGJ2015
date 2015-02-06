@@ -6,8 +6,10 @@ using UnityEngine;
 
 namespace Assets.src.Managers
 {
-    public class GenericManager : MonoBehaviour
+    public class EnemyManager : MonoBehaviour
     {
 // DO STUFF
+
+
     }
 }

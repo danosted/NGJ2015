@@ -52,7 +52,7 @@
     <Compile Include="Assets\src\Logic\GameLogic.cs" />
     <Compile Include="Assets\src\Logic\GenericLogic.cs" />
     <Compile Include="Assets\src\Logic\LogicCollection.cs" />
-    <Compile Include="Assets\src\Managers\GenericManager.cs" />
+    <Compile Include="Assets\src\Managers\EnemyManager.cs" />
     <Compile Include="Assets\src\Managers\ManagerCollection.cs" />
     <None Include="Assets\XInputDotNet\MITLicense.txt" />
     <Reference Include="UnityEngine.UI">
