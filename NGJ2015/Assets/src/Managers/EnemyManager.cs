@@ -10,7 +10,6 @@ namespace Assets.src.Managers
 {
     public class EnemyManager : ManagerBase
     {
-// DO STUFF
         public GameObject GetNewEnemyFromType(Enumerations.EnemyType enemyType)
         {
             Debug.Log(string.Format("Fetching object with type '{0}'.", enemyType));
@@ -23,6 +22,7 @@ namespace Assets.src.Managers
             var resultGO = GameObject.Instantiate(GO) as GameObject;
             ActiveObjects.Add(resultGO.gameObject);
             resultGO.transform.parent = transform;
+            return resultGO;
         }
 
     }
