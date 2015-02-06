@@ -8,6 +8,6 @@ namespace Assets.src.Managers
 {
     public class GenericManager : MonoBehaviour
     {
-
+// DO STUFF
     }
 }

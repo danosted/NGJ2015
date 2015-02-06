@@ -34,17 +34,17 @@ namespace Assets.Backend.GameLogic
             }
         }
 
-        private EventLogic _eventLogic;
-        public EventLogic EventLogic
-        {
-            get
-            {
-                if (_eventLogic == null)
-                {
-                    _eventLogic = new EventLogic();
-                }
-                return _eventLogic;
-            }
-        }
+        //private EventLogic _eventLogic;
+        //public EventLogic EventLogic
+        //{
+        //    get
+        //    {
+        //        if (_eventLogic == null)
+        //        {
+        //            _eventLogic = new EventLogic();
+        //        }
+        //        return _eventLogic;
+        //    }
+        //}
     }
 }

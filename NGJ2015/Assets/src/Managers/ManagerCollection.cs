@@ -22,18 +22,18 @@ namespace Assets.src.Managers
             }
         }
 
-        private GenericManager _planetManager;
-        public GenericManager PlanetManager
+        private GenericManager _genericManager;
+        public GenericManager GenericManager
         {
             get
             {
-                if (_planetManager == null)
+                if (_genericManager == null)
                 {
                     var prefab = Resources.Load(Constants.GenericManagerName);
                     var GO = (GameObject.Instantiate(prefab)) as GameObject;
-                    _planetManager = GO.GetComponent<GenericManager>();
+                    _genericManager = GO.GetComponent<GenericManager>();
                 }
-                return _planetManager;
+                return _genericManager;
             }
         }
     }
