@@ -14,5 +14,7 @@ namespace Assets.src.Common
 		public const string MouseInputHandlerName = "MouseInputHandler";
         public const string TransformBodyName = "body";
 		public const string HillManagerName = "HillManager";
-    }
+		public const string AudioManagerName = "AudioManager";
+
+	}
 }

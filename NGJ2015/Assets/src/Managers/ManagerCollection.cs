@@ -38,6 +38,21 @@ namespace Assets.src.Managers
             }
         }
 
+		private AudioManager _audioManager;
+		public AudioManager AudioManager
+		{
+			get
+			{
+				if (_audioManager == null)
+				{
+					var prefab = Resources.Load(Constants.AudioManagerName);
+					var GO = (GameObject.Instantiate(prefab)) as GameObject;
+					_audioManager = GO.GetComponent<AudioManager>();
+				}
+				return _audioManager;
+			}
+		}
+		
 		private WeaponManager _weaponManager;
 		public WeaponManager WeaponManager 
 		{

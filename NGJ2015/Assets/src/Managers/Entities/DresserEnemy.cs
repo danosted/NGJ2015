@@ -1,12 +1,15 @@
 ﻿using System.Linq;
+using Assets.src.Common;
 using UnityEngine;
 using Random = System.Random;
 
 namespace Assets.src.Managers.Entities
 {
     public class DresserEnemy : Enemy
-	{
+    {
 
+        private float _cooldown = 2.5f;
+        private float _lastShot = 0f;
         private float _moveCloserDist = 10;
         private float _moveAwayDist = 8;
 
@@ -18,6 +21,8 @@ namespace Assets.src.Managers.Entities
         private MonsterStrategy _previousStrategy;
 
         private int _drawersLeft = 3;
+
+        private Weapon weapon;
 
         private enum MonsterStrategy
         {
@@ -53,12 +58,15 @@ namespace Assets.src.Managers.Entities
 		    }
 
             transform.position += KeepEnemyDistance();
-
+            
 		    if (_target)
 		    {
-                if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
+		        _lastShot += Time.deltaTime;
+                if (Vector3.Magnitude(transform.position - _target.transform.position) < _range && _lastShot > _cooldown)
                 {
-                    _target.TakeDamage(_damage);
+                    Shoot();
+                    //_target.TakeDamage(_damage);
+                    _lastShot = 0f;
                 }
 		    }
 		    
@@ -103,10 +111,22 @@ namespace Assets.src.Managers.Entities
 
         private void Shoot()
         {
+            
             if (_drawersLeft > 0)
             {
+                if (weapon == null)
+                {
+                    weapon = GetComponent<Weapon>();
+                }
+                if (_target)
+                {
+                    weapon.Attack(_target.transform, Enumerations.WeaponType.Drawer);
+                }
                 _drawersLeft--;
-                // TODO: Shoot
+            }
+            else
+            {
+                // TODO: CHARGE!!!
             }
         }
 
