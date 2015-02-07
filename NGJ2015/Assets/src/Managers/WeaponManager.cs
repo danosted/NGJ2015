@@ -30,7 +30,7 @@ namespace Assets.src.Managers
 			var resultGO = GameObject.Instantiate(GO, startPos, startRot) as GameObject;
 			ActiveObjects.Add(resultGO.gameObject);
 			resultGO.transform.parent = transform;
-			Debug.Log ("Should be instantiated now", resultGO);
+
 			return resultGO;
 		}
 		

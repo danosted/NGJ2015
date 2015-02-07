@@ -25,6 +25,9 @@ namespace Assets.src.Managers
 
 		public delegate void OnGameEndedDelegate();
 		public event OnGameEndedDelegate OnGameEnded;
+
+		public delegate void OnEnemyDeadDelegate();
+		public event OnGameEndedDelegate OnEnemyDead;
 		
 		public void WaveStarted()
         {

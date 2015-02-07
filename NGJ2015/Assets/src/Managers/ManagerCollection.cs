@@ -94,5 +94,19 @@ namespace Assets.src.Managers
                 return _eventManager;
             }
 		}
+		private HillManager _hillManager;
+		public HillManager HillManager
+		{
+			get
+			{
+				if (_hillManager == null)
+				{
+					var prefab = Resources.Load(Constants.HillManagerName);
+					var GO = (GameObject.Instantiate(prefab)) as GameObject;
+					_hillManager = GO.GetComponent<HillManager>();
+				}
+				return _hillManager;
+			}
+		}
     }
 }
