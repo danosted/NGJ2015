@@ -24,7 +24,7 @@ namespace Assets.src.Managers.Entities
 
 		protected void StartMoving(Vector3 movement)
 		{
-		    transform.position = transform.position += movement * _speed;
+		    transform.position += movement * _speed;
 		}
 
         public void TakeDamage(float damage)

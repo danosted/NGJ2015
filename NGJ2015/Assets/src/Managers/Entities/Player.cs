@@ -161,9 +161,18 @@ namespace Assets.src.Managers.Entities
             isMoving = true;
             while (true)
             {
+				float newx = transform.position.x + movement.x;
+				float newy = transform.position.y + movement.y;
                 if (movement.magnitude != 0f)
                 {
-                    StartMoving(movement*Time.deltaTime);
+					var newMovement = movement;
+					if (newx > 30 || newx < -30) {
+						newMovement.x = 0;
+					}
+					if (newy > 13 || newy < -11) {
+						newMovement.y = 0;
+					}
+                    StartMoving(newMovement*Time.deltaTime);
                 }
                 //else
                 //{
