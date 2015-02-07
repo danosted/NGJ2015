@@ -14,10 +14,8 @@ namespace Assets.src.Managers.Entities
         private List<MonsterDist> _nearbyMonsters;
 
         public float NearbyMonstersDist = 5;
-        public float ChargeDist = 5;
         public int SwarmThreshold = 5;
         public int SpreadThreshold = 10;
-        public int minEnemyDistance = 2;
 
         public enum MonsterStrategy
         {
@@ -56,8 +54,6 @@ namespace Assets.src.Managers.Entities
 
 		    }
 
-            transform.position += keepEnemyDistance();
-
 		    if (_target)
 		    {
                 if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
@@ -71,36 +67,27 @@ namespace Assets.src.Managers.Entities
         private MonsterStrategy ChooseStrategy()
         {
             _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
-
-            if ((_target.transform.position - transform.position).magnitude < ChargeDist)
-            {
-                return MonsterStrategy.Attack;
-            }
-
             _nearbyMonsters =
                 ManagerCollection.Instance.EnemyManager.GetActiveMonsters()
                     .Select(
                         m => new MonsterDist {Dist = (m.transform.position - transform.position), Monster = m})
                     .Where(m => m.Dist.magnitude < NearbyMonstersDist)
                     .ToList();
-            
-            
-            if (_nearbyMonsters.Count >= SwarmThreshold && _nearbyMonsters.Count < SpreadThreshold)
+
+            if (_nearbyMonsters.Count > SwarmThreshold)
             {
                 return MonsterStrategy.Swarm;
             }
 
-            if (_nearbyMonsters.Count >= SpreadThreshold)
+            if (_nearbyMonsters.Count > SpreadThreshold)
             {
                 return MonsterStrategy.Spread;
             }
-
             return MonsterStrategy.Attack;
         }
 
         private void ExecuteAttackStrategy()
         {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
                 //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
@@ -109,32 +96,25 @@ namespace Assets.src.Managers.Entities
             }
         }
 
-
         private void ExecuteSpreadStrategy()
         {
             //var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
 
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
-
-            var centerPosition = new Vector3();
-
-            foreach (var pos in _nearbyMonsters.Select(m => m.Monster.transform.position))
+            var finalDirection = new Vector3();
+            var directions = _nearbyMonsters.Select(m => (-1 / m.Dist.magnitude * m.Dist));
+            foreach (var direction in directions)
             {
-                centerPosition += pos;
+                finalDirection += direction;
             }
-
-            centerPosition /= _nearbyMonsters.Count;
-
-            var direction = transform.position - centerPosition;
-
+            finalDirection = finalDirection.normalized;
             if (_target)
             {
-                direction += _target.transform.position - transform.position;
-                direction /= 2;
+                finalDirection += (_target.transform.position - transform.position).normalized;
+                finalDirection /= 2;
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * _speed);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
         }
 
         private void ExecuteSwarmStrategy()
@@ -142,23 +122,21 @@ namespace Assets.src.Managers.Entities
             //var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
 
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
-
             var finalDirection = new Vector3();
-            var positions = _nearbyMonsters.Select(m => m.Monster.transform.position);
-            foreach (var pos in positions)
+            var directions = _nearbyMonsters.Select(m => (1 / m.Dist.magnitude * m.Dist));
+            foreach (var direction in directions)
             {
-                finalDirection += pos;
+                finalDirection += direction;
             }
 
-            finalDirection /= _nearbyMonsters.Count;
+            finalDirection = finalDirection.normalized;
             if (_target)
             {
-                finalDirection += _target.transform.position;
+                finalDirection += (_target.transform.position - transform.position).normalized;
                 finalDirection /= 2;
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, finalDirection, Time.deltaTime * _speed);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
         }
 
         public override void Die()
@@ -188,18 +166,6 @@ namespace Assets.src.Managers.Entities
         {
             public Vector3 Dist;
             public GameObject Monster;
-        }
-        private Vector3 keepEnemyDistance()
-        {
-            Vector3 targetPosition = new Vector3(0, 0, 0);
-            Vector3 enemyDistance;
-            foreach (var otherEnemy in _nearbyMonsters)
-            {
-                enemyDistance = otherEnemy.Monster.transform.position - transform.position;
-                if ((GetInstanceID() != otherEnemy.Monster.GetInstanceID()) && (enemyDistance.magnitude < minEnemyDistance))
-                    targetPosition -= enemyDistance * (minEnemyDistance - enemyDistance.magnitude);
-            }
-            return targetPosition;
         }
     }
 }
