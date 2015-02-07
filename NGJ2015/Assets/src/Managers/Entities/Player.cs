@@ -178,7 +178,7 @@ namespace Assets.src.Managers.Entities
 		}
         private void OnSpacePressed()
         {
-			var anim = transform.GetChild (0).GetComponent<Animator> () as Animator;
+			Animator anim = GetComponent<Animator> ();
 			anim.SetTrigger("attack");
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
         }
@@ -192,14 +192,15 @@ namespace Assets.src.Managers.Entities
 
 
         private IEnumerator StartMoving()
-        {
+		{
+			var anim = GetComponent<Animator>();
             isMoving = true;
             while (true)
             {
 				float newx = transform.position.x + movement.x;
 				float newy = transform.position.y + movement.y;
-                if (movement.magnitude != 0f)
-                {
+                if (movement.magnitude != 0f) {
+					anim.SetBool("walking", true);
 					var newMovement = movement;
 					if (newx > 30 || newx < -30) {
 						newMovement.x = 0;
@@ -208,7 +209,9 @@ namespace Assets.src.Managers.Entities
 						newMovement.y = 0;
 					}
                     StartMoving(newMovement*Time.deltaTime);
-                }
+                } else {
+					anim.SetBool("walking", false);
+				}
                 //else
                 //{
                 //    isMoving = false;

@@ -61,6 +61,7 @@ namespace Assets.src.Managers.Entities
                 if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
                 {
                     _target.TakeDamage(_damage);
+                    PushBack(((transform.position - _target.transform.position).normalized));
                 }
 		    }
 		    
@@ -112,6 +113,7 @@ namespace Assets.src.Managers.Entities
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
+
                 UpdatePosition(Vector3.MoveTowards(transform.position, _target.transform.position,
                     Time.fixedDeltaTime*_speed));
             }

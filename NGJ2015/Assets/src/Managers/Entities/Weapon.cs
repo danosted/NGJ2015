@@ -44,7 +44,25 @@ namespace Assets.src.Managers.Entities
 			    var enemy = collider.GetComponent<Enemy>();
 			    if (enemy != null)
 			    {
-                    enemy.TakeDamage(ClubDamage);
+                    iTween.PunchScale(collider.gameObject, Vector3.one * 10.1f, 0.5f);
+                    var enemy = collider.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(ClubDamage);
+                    }
+                    var character = collider.GetComponent<CharacterBase>();
+                    if (character != null)
+                    {
+                        Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
+                        var mulitiplier = 1;
+                        if ((character as Player) != null)
+                        {
+                            mulitiplier = 3;
+                        }
+                        character.PushBack(
+                            character.transform.position + ((character.transform.position - playerPos).normalized) *
+                            mulitiplier);
+                    }
 			    }
 			}
 		}
