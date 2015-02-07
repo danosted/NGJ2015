@@ -154,8 +154,6 @@ public class KeyInputHandler : MonoBehaviour
 			{
 				Debug.Log("no listener to event");
 			}
-			
 		}
 	}
-
 }

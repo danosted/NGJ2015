@@ -45,7 +45,6 @@ namespace Assets.src.Managers.Entities
 
         private void OnDownPressed()
         {
-            Debug.Log("Hek");
             movement += Vector3.down;
             Debug.Log("p " + movement);
             if(isMoving) return;
@@ -94,7 +93,12 @@ namespace Assets.src.Managers.Entities
         }
         private void OnSpacePressed()
         {
-
+			iTween.PunchRotation(transform.GetChild (0).GetChild(3).gameObject, new Vector3(0, 0, -160), 0.5f);
+			var colliders = Physics.OverlapSphere(transform.position, 10f);
+			foreach(var collider in colliders)
+			{
+				iTween.PunchScale(collider.gameObject, Vector3.one*10.1f, 0.5f);
+			}
         }
         private void OnSpaceReleased()
         {
