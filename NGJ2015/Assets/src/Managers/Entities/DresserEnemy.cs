@@ -32,7 +32,6 @@ namespace Assets.src.Managers.Entities
 
         public void FixedUpdate()
         {
-
 		    var strategy = ChooseStrategy();
 
 		    switch (strategy)
@@ -104,13 +103,13 @@ namespace Assets.src.Managers.Entities
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
-                var r = new Random();
-                UpdatePosition(transform.position + (new Vector3
-                {
-                    x = (float) r.NextDouble(),
-                    y = (float) r.NextDouble(),
-                    z = 0
-                })/(Time.fixedDeltaTime * _speed));
+                //var r = new Random();
+                //UpdatePosition(transform.position + (new Vector3
+                //{
+                //    x = (float) (r.NextDouble()-0.5),
+                //    y = (float) (r.NextDouble()-0.5),
+                //    z = 0
+                //})/(5));
             }
         }
 
@@ -136,8 +135,14 @@ namespace Assets.src.Managers.Entities
 
             if (_target != null)
             {
-                UpdatePosition(Vector3.MoveTowards(transform.position, transform.position + (_target.transform.position - transform.position), Time.fixedDeltaTime * _speed));
+                UpdatePosition(Vector3.MoveTowards(transform.position, _target.transform.position, Time.fixedDeltaTime * _speed));
             }
         }
+
+		public override void Die() {
+			base.Die();
+			var anim = transform.GetChild(0).GetComponent<Animator> ();
+			anim.SetBool ("isDead",true);
+		}
     }
 }
