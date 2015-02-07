@@ -130,8 +130,9 @@ namespace Assets.src.Managers.Entities
 
             if (_target)
             {
+                direction *= 2;
                 direction += _target.transform.position - transform.position;
-                direction /= 2;
+                direction /= 3;
             }
 
             transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * _speed);
