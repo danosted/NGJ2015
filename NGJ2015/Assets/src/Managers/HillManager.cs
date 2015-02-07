@@ -17,9 +17,11 @@ namespace Assets.src.Managers
 
 		private List<GameObject> enemies;
 		private List<GameObject> players;
+		private bool playerGainingPoints;
 
 		void Start() 
 		{
+			playerGainingPoints = false;
 			enemies = ManagerCollection.Instance.EnemyManager.GetActiveMonsters();
 			players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
 			foreach(GameObject player in players)
@@ -55,13 +57,19 @@ namespace Assets.src.Managers
 				if (Vector3.Magnitude(enemy.transform.position) <= hillRadius)
 					enemyKings++;
 			}
-			if (kings.Count == 1 && enemyKings == 0)
+			if (kings.Count == 1 && enemyKings == 0 && !playerGainingPoints)
 			{
 				Player player = kings[0].GetComponent<Player>();
 				if (player != null)
 				{
-					ManagerCollection.Instance.PlayerManager.GivePointsToPlayer(player, 1);
+					ManagerCollection.Instance.PlayerManager.StartGivingPointsToPlayer(player);
+					playerGainingPoints = true;
 				}
+			}
+			else if (playerGainingPoints && !(kings.Count == 1 && enemyKings == 0))
+			{
+				ManagerCollection.Instance.PlayerManager.StopGivingPointsToPlayer();
+				playerGainingPoints = false;
 			}
 		}
 	}
