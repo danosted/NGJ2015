@@ -120,7 +120,7 @@ namespace Assets.src.Input
 				if(!UseGamepad) {
                 	mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
 				} else {
-					Debug.Log (PlayerNr);
+					//Debug.Log (PlayerNr);
 					if(PlayerNr == 1){						
 						mousepos += Vector3.up * UnityEngine.Input.GetAxis("Joy1-Look-Vertical") * 360;
 						mousepos += Vector3.right * UnityEngine.Input.GetAxis("Joy1-Look-Horizontal") * 360;
@@ -132,15 +132,17 @@ namespace Assets.src.Input
                 //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
                 Vector3 weaponPos = body.transform.position;
                 Vector3 weaponToMouse = (mousepos - weaponPos).normalized;
-                float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);
-                if (facingLeft)
-                {
-                    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
-                }
-                else
-                {
-                    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
-                }
+				if(!weaponToMouse.Equals(Vector3.zero)) {
+                	float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);
+	                if (facingLeft)
+	                {
+	                    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
+	                }
+	                else
+	                {
+	                    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
+	                }
+				}
                 yield return null;
             }
         }
