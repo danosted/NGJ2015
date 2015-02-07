@@ -45,11 +45,11 @@ namespace Assets.src.Managers.Entities
                     break;
 
                 case MonsterStrategy.Spread:
-                    ExecuteSpreadStrategy2();
+                    ExecuteSpreadStrategy();
                     break;
 
                 case MonsterStrategy.Swarm:
-                    ExecuteSwarmStrategy2();
+                    ExecuteSwarmStrategy();
                     break;
 
 		    }
@@ -99,30 +99,8 @@ namespace Assets.src.Managers.Entities
             }
         }
 
+
         private void ExecuteSpreadStrategy()
-        {
-            //var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
-            //Debug.Log(msg, gameObject);
-
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
-
-            var finalDirection = new Vector3();
-            var directions = _nearbyMonsters.Select(m => ((1 / m.Dist.magnitude) * m.Dist));
-            foreach (var direction in directions)
-            {
-                finalDirection += direction;
-            }
-            finalDirection = -2 * finalDirection.normalized;
-            if (_target)
-            {
-                finalDirection += (_target.transform.position - transform.position).normalized;
-                finalDirection /= 3;
-            }
-
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
-        }
-
-        private void ExecuteSpreadStrategy2()
         {
             //var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
@@ -150,30 +128,6 @@ namespace Assets.src.Managers.Entities
         }
 
         private void ExecuteSwarmStrategy()
-        {
-            //var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
-            //Debug.Log(msg, gameObject);
-
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
-
-            var finalDirection = new Vector3();
-            var directions = _nearbyMonsters.Select(m => (1 / m.Dist.magnitude * m.Dist));
-            foreach (var direction in directions)
-            {
-                finalDirection += direction;
-            }
-
-            finalDirection = finalDirection.normalized;
-            if (_target)
-            {
-                finalDirection += (_target.transform.position - transform.position).normalized;
-                finalDirection /= 2;
-            }
-
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
-        }
-
-        private void ExecuteSwarmStrategy2()
         {
             //var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
