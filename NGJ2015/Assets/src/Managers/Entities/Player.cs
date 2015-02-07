@@ -24,25 +24,14 @@ namespace Assets.src.Managers.Entities
             points += points;
         }
 
-        public void OnEnable()
-        {
-            KeyInputHandler.Instance.OnDownPressed += this.OnDownPressed;
-            KeyInputHandler.Instance.OnDownReleased += this.OnDownReleased;
-            KeyInputHandler.Instance.OnUpPressed += this.OnUpPressed;
-            KeyInputHandler.Instance.OnUpReleased += this.OnUpReleased;
-            KeyInputHandler.Instance.OnRightPressed += this.OnRightPressed;
-            KeyInputHandler.Instance.OnRightReleased += this.OnRightReleased;
-            KeyInputHandler.Instance.OnLeftPressed += this.OnLeftPressed;
-            KeyInputHandler.Instance.OnLeftReleased += this.OnLeftReleased;
-            KeyInputHandler.Instance.OnSpacePressed += this.OnSpacePressed;
-            KeyInputHandler.Instance.OnSpaceReleased += this.OnSpaceReleased;
-		public void UseGamePad()
+        public void UseGamePad()
 		{
 			KeyInputHandler.Instance.OnVertical += this.OnVertical;
 			KeyInputHandler.Instance.OnHorizontal += this.OnHorizontal;
 			KeyInputHandler.Instance.OnFirePressed += this.OnFirePressed;
 			KeyInputHandler.Instance.OnMovementStop += this.OnMovementStop;			
 		}
+
 		public void UseKeyBoard()
 		{
 			KeyInputHandler.Instance.OnDownPressed += this.OnDownPressed;
