@@ -48,13 +48,13 @@ namespace Assets.src.Managers.Entities
                     if (character != null)
                     {
                         Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
-                        var mulitiplier = 2;
+                        var mulitiplier = 1;
                         if ((character as Player) != null)
                         {
-                            mulitiplier = 4;
+                            mulitiplier = 3;
                         }
                         character.PushBack(
-                            (character.transform.position + (character.transform.position - playerPos).normalized) *
+                            character.transform.position + ((character.transform.position - playerPos).normalized) *
                             mulitiplier);
                     }
 			    }
