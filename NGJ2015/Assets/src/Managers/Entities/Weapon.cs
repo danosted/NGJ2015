@@ -27,25 +27,24 @@ namespace Assets.src.Managers.Entities
 		}
 		
 		private void ClubAttack(Transform transform) {
-			iTween.PunchRotation (transform.GetChild (0).GetChild (3).gameObject, new Vector3 (0, 0, -120), 0.5f);
-			iTween.ShakePosition (Camera.main.gameObject, Vector3.one * 0.02f, 0.5f);
+
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
             Vector3 playerPos = transform.position;
             Vector2 weaponToMouse = (mousepos - playerPos).normalized;
 
             var colliders = Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f) * 2.5f, 3f);
+			if (colliders.Count > 0) {
+				ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.PlayerAttack);
+			} else {
+				ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.PlayerAttack);
+			}
 			foreach (var collider in colliders) {
 				iTween.PunchScale (collider.gameObject, Vector3.one * 10.1f, 0.5f);
 			    var enemy = collider.GetComponent<Enemy>();
 			    if (enemy != null)
 			    {
-			        enemy.TakeDamage(ClubDamage);
-			    }
-			    var character = collider.GetComponent<CharacterBase>();
-                if (character != null)
-                {
-                    character.PushBack(playerPos - character.transform.position);
+                    enemy.TakeDamage(ClubDamage);
 			    }
 			}
 		}

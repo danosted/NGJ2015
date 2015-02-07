@@ -38,5 +38,9 @@ namespace Assets.src.Common
 			Bullet
 		}
 
+		public enum Audio {
+			PlayerAttack,
+			ChairDead
+		}
     }
 }
