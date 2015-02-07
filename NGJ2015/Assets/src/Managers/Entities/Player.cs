@@ -45,6 +45,7 @@ namespace Assets.src.Managers.Entities
 
         private void OnDownPressed()
         {
+            Debug.Log("Hek");
             movement += Vector3.down;
             Debug.Log("p " + movement);
             if(isMoving) return;
