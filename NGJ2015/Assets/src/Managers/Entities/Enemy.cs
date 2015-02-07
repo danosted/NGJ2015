@@ -12,8 +12,10 @@ namespace Assets.src.Managers.Entities
         private List<GameObject> _targets;
 
         private List<MonsterDist> _nearbyMonsters;
- 
+
         public float NearbyMonstersDist = 5;
+        public int SwarmThreshold = 5;
+        public int SpreadThreshold = 10;
 
         public enum MonsterStrategy
         {
@@ -27,8 +29,12 @@ namespace Assets.src.Managers.Entities
 			_targets = targetObjects;
 		}
 
-		public void Update()
-		{
+        public void Update()
+        {
+        }
+
+        public void FixedUpdate()
+        {
 
 		    var strategy = ChooseStrategy();
 
@@ -60,50 +66,62 @@ namespace Assets.src.Managers.Entities
 
         private MonsterStrategy ChooseStrategy()
         {
+            _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
             _nearbyMonsters =
                 ManagerCollection.Instance.EnemyManager.GetActiveMonsters()
                     .Select(
                         m => new MonsterDist {Dist = (m.transform.position - transform.position), Monster = m})
-                    .TakeWhile((m, i) => m.Dist.magnitude < NearbyMonstersDist)
+                    .Where(m => m.Dist.magnitude < NearbyMonstersDist)
                     .ToList();
 
-            if (_nearbyMonsters.Count > 10)
+            if (_nearbyMonsters.Count > SwarmThreshold)
             {
                 return MonsterStrategy.Swarm;
             }
 
-            if (_nearbyMonsters.Count > 30)
+            if (_nearbyMonsters.Count > SpreadThreshold)
             {
-                return MonsterStrategy.Swarm;
+                return MonsterStrategy.Spread;
             }
             return MonsterStrategy.Attack;
         }
 
         private void ExecuteAttackStrategy()
         {
-            _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
             if (_target)
             {
-                //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
-                //Debug.Log(msg, gameObject);
+                var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
+                Debug.Log(msg, gameObject);
                 transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
             }
         }
 
         private void ExecuteSpreadStrategy()
         {
+            var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
+            Debug.Log(msg, gameObject);
+
             var finalDirection = new Vector3();
             var directions = _nearbyMonsters.Select(m => (-1 / m.Dist.magnitude * m.Dist));
             foreach (var direction in directions)
             {
                 finalDirection += direction;
             }
-            finalDirection.Normalize();
+            finalDirection = finalDirection.normalized;
+            if (_target)
+            {
+                finalDirection += (transform.position - _target.transform.position).normalized;
+                finalDirection /= 2;
+            }
+
             transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
         }
 
         private void ExecuteSwarmStrategy()
         {
+            var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
+            Debug.Log(msg, gameObject);
+
             var finalDirection = new Vector3();
             var directions = _nearbyMonsters.Select(m => (1 / m.Dist.magnitude * m.Dist));
             foreach (var direction in directions)
@@ -111,7 +129,12 @@ namespace Assets.src.Managers.Entities
                 finalDirection += direction;
             }
 
-            finalDirection = finalDirection.normalized + ((transform.position - _target.transform.position) / 2).normalized;
+            finalDirection = finalDirection.normalized;
+            if (_target)
+            {
+                finalDirection += (transform.position - _target.transform.position).normalized;
+                finalDirection /= 2;
+            }
 
             transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
         }
