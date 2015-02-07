@@ -9,6 +9,7 @@ namespace Assets.src.Managers.Entities
     {
         private bool isMoving;
         private Vector3 movement = Vector3.zero;
+		private Weapon weapon = new Weapon();
 
         public void OnEnable()
         {
@@ -81,7 +82,7 @@ namespace Assets.src.Managers.Entities
         }
         private void OnSpacePressed()
         {
-			ManagerCollection.Instance.WeaponManager.Attack (transform, Enumerations.WeaponType.Club);
+			weapon.Attack (transform, Enumerations.WeaponType.Club);
         }
         private void OnSpaceReleased()
         {
