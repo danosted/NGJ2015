@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class KeyInput2Object : MonoBehaviour
+public class KeyInputHandler : MonoBehaviour
 {
 
 	public delegate void OnLeftPressedDelegate();

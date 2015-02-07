@@ -29,7 +29,7 @@ namespace Assets.src.Managers
             {
                 if (_enemyManager == null)
                 {
-                    var prefab = Resources.Load(Constants.GenericManagerName);
+                    var prefab = Resources.Load(Constants.EnemyManagerName);
                     var GO = (GameObject.Instantiate(prefab)) as GameObject;
                     _enemyManager = GO.GetComponent<EnemyManager>();
                 }
@@ -37,19 +37,20 @@ namespace Assets.src.Managers
             }
         }
 
-        //private EnemyManager _enemyManager;
-        //public EnemyManager EnemyManager
-        //{
-        //    get
-        //    {
-        //        if (_enemyManager == null)
-        //        {
-        //            var prefab = Resources.Load(Constants.GenericManagerName);
-        //            var GO = (GameObject.Instantiate(prefab)) as GameObject;
-        //            _enemyManager = GO.GetComponent<EnemyManager>();
-        //        }
-        //        return _enemyManager;
-        //    }
-        //}
+		private KeyInputHandler _keyInputManager;
+		public KeyInputHandler KeyInputManager
+		{
+			get
+			{
+				if (_keyInputManager == null)
+				{
+					var prefab = Resources.Load(Constants.KeyInputHandlerName);
+					var GO = (GameObject.Instantiate(prefab)) as GameObject;
+					_keyInputManager = GO.GetComponent<KeyInputHandler>();
+				}
+				return _keyInputManager;
+			}
+		}
+
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MouseInput2Object : MonoBehaviour {
+public class MouseInputHandler : MonoBehaviour {
 	
 	public delegate void OnClickDelegate();
 	public event OnClickDelegate OnClick;

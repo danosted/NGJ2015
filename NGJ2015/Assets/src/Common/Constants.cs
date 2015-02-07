@@ -6,7 +6,9 @@ using System.Text;
 namespace Assets.src.Common
 {
     public class Constants
-    {
-        public const string GenericManagerName = "GenericManagerName";
+	{
+		public const string EnemyManagerName = "EnemyManager";
+		public const string PlayerManagerName = "PlayerManager";
+		public const string KeyInputHandlerName = "KeyInputHandler";
     }
 }
