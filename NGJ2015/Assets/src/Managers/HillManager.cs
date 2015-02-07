@@ -15,10 +15,12 @@ namespace Assets.src.Managers
 		[SerializeField] private float hillRadius = 10;
 		private List<Player> kings = new List<Player>();
 
+		private List<GameObject> enemies;
 		private List<GameObject> players;
 
 		void Start() 
 		{
+			enemies = ManagerCollection.Instance.EnemyManager.GetActiveMonsters();
 			players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
 			foreach(GameObject player in players)
 			{
@@ -47,11 +49,19 @@ namespace Assets.src.Managers
 					}
 				}
 			}
-			if (kings.Count == 1)
+			int enemyKings = 0;
+			foreach(GameObject enemy in enemies)
+			{
+				if (Vector3.Magnitude(enemy.transform.position) <= hillRadius)
+					enemyKings++;
+			}
+			if (kings.Count == 1 && enemyKings == 0)
 			{
 				Player player = kings[0].GetComponent<Player>();
 				if (player != null)
-					player = player; //	player = player;//ManagerCollection.Instance.PlayerManager.GivePointsToPlayer(player, 1);
+				{
+					ManagerCollection.Instance.PlayerManager.GivePointsToPlayer(player, 1);
+				}
 			}
 		}
 	}
