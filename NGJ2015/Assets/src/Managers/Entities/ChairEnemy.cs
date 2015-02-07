@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using Assets.src.Common;
 
 namespace Assets.src.Managers.Entities
 {
@@ -180,5 +181,16 @@ namespace Assets.src.Managers.Entities
             UpdatePosition(Vector3.MoveTowards(transform.position, finalDirection, Time.fixedDeltaTime * _speed));
         }
 
+		public override void TakeDamage(float damage) {
+			if (_health - damage > 0) {
+				ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.ChairHit);
+			}
+			base.TakeDamage (damage);
+		}
+
+		public override void Die() {
+			base.Die ();
+			ManagerCollection.Instance.AudioManager.PlayAudio (Enumerations.Audio.ChairDead);
+		}
     }
 }

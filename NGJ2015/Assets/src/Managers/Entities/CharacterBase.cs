@@ -44,7 +44,7 @@ namespace Assets.src.Managers.Entities
 		    transform.position += movement * _speed;
 		}
 
-        public void TakeDamage(float damage)
+        public virtual void TakeDamage(float damage)
         {
             _health -= damage;
             if (healthbar)

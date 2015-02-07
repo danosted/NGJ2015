@@ -40,7 +40,10 @@ namespace Assets.src.Common
 
 		public enum Audio {
 			PlayerAttack,
-			ChairDead
+			ChairDead,
+			DresserDead,
+			DresserHit,
+			ChairHit
 		}
     }
 }
