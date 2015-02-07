@@ -31,8 +31,8 @@ public class Drawer : MonoBehaviour {
     public void ShootDrawer(Vector3 from, Player target)
     {
 
-        var msg = string.Format("Shooting drawer from {0} against {1}.", transform.position, target.transform.position);
-        Debug.Log(msg, gameObject);
+        //var msg = string.Format("Shooting drawer from {0} against {1}.", transform.position, target.transform.position);
+        //Debug.Log(msg, gameObject);
         _targetPlayer = target;
         //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
         var targetPosition = target.transform.position;
