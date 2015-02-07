@@ -167,5 +167,15 @@ namespace Assets.src.Managers.Entities
             public Vector3 Dist;
             public GameObject Monster;
         }
+		//private Vector3 keepEnemyDistance (GameObject enemyObject) {
+		//			Vector3 targetPosition = new Vector3(0, 0, 0);
+		//			Vector3 enemyDistance;
+		//			foreach (var otherEnemy in enemies) {
+		//				enemyDistance = otherEnemy.transform.position - enemyObject.transform.position;
+		//				if ((enemyObject.GetInstanceID() != otherEnemy.GetInstanceID()) && (enemyDistance.magnitude < minEnemyDistance))
+		//					targetPosition -= enemyDistance*(minEnemyDistance-enemyDistance.magnitude);
+		//			}
+		//			return targetPosition;
+		//		}
     }
 }
