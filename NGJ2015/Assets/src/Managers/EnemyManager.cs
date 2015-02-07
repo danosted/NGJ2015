@@ -23,6 +23,5 @@ namespace Assets.src.Managers
             resultGO.transform.parent = transform;
             return resultGO;
         }
-
     }
 }

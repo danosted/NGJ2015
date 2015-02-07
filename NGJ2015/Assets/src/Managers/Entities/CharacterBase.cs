@@ -9,12 +9,18 @@ namespace Assets.src.Managers.Entities
 {
     public abstract class CharacterBase : MonoBehaviour
     {
-		private int health;
+		protected float _health;
+		protected float _speed;
+		protected float _range;
+		protected float _damage;
         protected bool isMoving;
 
-		public CharacterBase(int health)
+		public CharacterBase(float health, float speed, float range, float damage)
 		{
-			this.health = health;
+			_health = health;
+			_speed = speed;
+			_range = range;
+			_damage = damage;
 		}
 
 		protected void StartMoving(Vector3 movement)
@@ -22,7 +28,7 @@ namespace Assets.src.Managers.Entities
 		    if (isMoving) return;
             StartCoroutine(ConstantMovingEnumerator(movement));
 		}
-
+		
         protected void StopMoving()
         {
             if(!isMoving) return;
@@ -39,5 +45,19 @@ namespace Assets.src.Managers.Entities
                 yield return null;    
             }
         }
+		public float GetSpeed()
+		{
+			return _speed;
+		}
+
+		public float GetRange()
+		{
+			return _range;
+		}
+
+		public float GetDamage()
+		{
+			return _damage;
+		}
     }
 }

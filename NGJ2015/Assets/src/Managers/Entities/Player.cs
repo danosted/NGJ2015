@@ -6,7 +6,7 @@ namespace Assets.src.Managers.Entities
 {
 	public class Player : CharacterBase
 	{
-		public Player(int health) : base(health)
+		public Player(float health, float speed, float range, float damage) : base(health, speed, range, damage)
 		{
 
 		}
@@ -42,7 +42,7 @@ namespace Assets.src.Managers.Entities
 		private void OnDownPressed()
 		{
             if (isMoving) return;
-			this.StartMoving(new Vector3(0, 1)*Time.deltaTime);
+			this.StartMoving(new Vector3(0, -1)*Time.deltaTime);
 		}
 		private void OnDownReleased()
 		{
@@ -51,7 +51,7 @@ namespace Assets.src.Managers.Entities
 		private void OnUpPressed()
 		{
             if(isMoving) return;
-			this.StartMoving(new Vector3(0, -1)*Time.deltaTime);
+			this.StartMoving(new Vector3(0, 1)*Time.deltaTime);
 		}
 		private void OnUpReleased()
 		{
@@ -59,6 +59,7 @@ namespace Assets.src.Managers.Entities
 		}
 		private void OnRightPressed()
 		{
+
 			this.StartMoving(new Vector3(1, 0)*Time.deltaTime);
 		}
 		private void OnRightReleased()
@@ -67,6 +68,7 @@ namespace Assets.src.Managers.Entities
 		}
 		private void OnLeftPressed()
 		{
+
             if (isMoving) return;
 			this.StartMoving(new Vector3(-1, 0)*Time.deltaTime);
 		}
@@ -81,6 +83,11 @@ namespace Assets.src.Managers.Entities
 		private void OnSpaceReleased()
 		{
 			
+		}
+
+		public void TakeDamage(float damage)
+		{
+			_health -= damage;
 		}
 	}
 }
