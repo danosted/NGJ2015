@@ -13,6 +13,7 @@ namespace Assets.src.Managers.Entities
 		protected float _speed;
 		protected float _range;
         protected float _damage;
+        private HealthbarScript healthbar;
 
 		public void Initialize(float health, float speed, float range, float damage)
 		{
@@ -20,6 +21,11 @@ namespace Assets.src.Managers.Entities
 			_speed = speed;
 			_range = range;
 			_damage = damage;
+		    if (!healthbar)
+		    {
+		        healthbar = GetComponentInChildren<HealthbarScript>();
+		    }
+            healthbar.Init(_health);
 		}
 
 		protected void StartMoving(Vector3 movement)
@@ -30,7 +36,11 @@ namespace Assets.src.Managers.Entities
         public void TakeDamage(float damage)
         {
             _health -= damage;
-            if (_health < 0)
+            if (healthbar)
+            {
+                healthbar.DamageTaken(damage);
+            }
+            if (_health <= 0)
             {
                 Die();
             }
@@ -60,5 +70,10 @@ namespace Assets.src.Managers.Entities
 		{
 			return _damage;
 		}
+
+        public float GetHealth()
+        {
+            return _health;
+        }
     }
 }
