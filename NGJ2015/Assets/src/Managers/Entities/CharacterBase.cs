@@ -40,7 +40,7 @@ namespace Assets.src.Managers.Entities
             {
                 healthbar.DamageTaken(damage);
             }
-            if (_health < 0)
+            if (_health <= 0)
             {
                 Die();
             }

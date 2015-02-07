@@ -4,7 +4,7 @@ using Random = System.Random;
 
 namespace Assets.src.Managers.Entities
 {
-    public class DrawerEnemy : Enemy
+    public class DresserEnemy : Enemy
 	{
 
         private float _moveCloserDist = 6;
