@@ -31,8 +31,9 @@ public class GameLogic : MonoBehaviour
 		p2.playerName = "player2";
 		p2.UseKeyBoard();
 		manCol.PlayerManager.Player2 = p2;
-		
-		var enemyLogic = EnemyLogic.Instance;
+
+		var enemyLogic = EnemyLogic.Instance;    
+		var hillManager = ManagerCollection.Instance.HillManager;    
 
 		ManagerCollection.Instance.PlayerManager.P1Text = p1Points;
 		ManagerCollection.Instance.PlayerManager.P2Text = p2Points;
