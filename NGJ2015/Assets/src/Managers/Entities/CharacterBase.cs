@@ -18,7 +18,9 @@ namespace Assets.src.Managers.Entities
 
         private bool _canMove;
         private bool _beingPushedBack;
-        private Vector3 _pushBackPosition;
+        private Vector3 _pushBackVector;
+        private const int _pushbackFrames = 10;
+        private int _pushbackFrame = 0;
 
 		public void Initialize(float health, float speed, float range, float damage)
 		{
@@ -65,29 +67,44 @@ namespace Assets.src.Managers.Entities
         {
             if (_beingPushedBack)
             {
-                Debug.Log(string.Format("{0} {1} {2}", transform.position, _pushBackPosition, (transform.position - _pushBackPosition).magnitude));
 
-                if ((transform.position - _pushBackPosition).magnitude < 0.1)
+                if (_pushbackFrame > _pushbackFrames)
                 {
+                    _pushbackFrame = 0;
                     _beingPushedBack = false;
                     _canMove = true;
                 }
-                transform.position = Vector3.MoveTowards(transform.position, _pushBackPosition,
-                    (float) (Time.fixedDeltaTime * (_speed + 0.2*(_pushBackPosition-transform.position).magnitude)));
+                else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, transform.position + _pushBackVector,
+                        (Time.fixedDeltaTime*
+                         (PushbackSpeed(_pushbackFrame, _pushbackFrames))));
+
+                }
+                _pushbackFrame++;
             }
+        }
+
+        protected virtual float PushbackSpeed(int frame, int maxFrames)
+        {
+            return _speed + _speed * (((float)maxFrames - frame) / maxFrames);
         }
 
         public void PushBack(Vector3 destination)
         {
-            _canMove = false;
+            //_canMove = false;
             _beingPushedBack = true;
-            _pushBackPosition = destination;
+            _pushBackVector = destination;
         }
 
         protected void UpdatePosition(Vector3 position)
         {
             if (_canMove)
             {
+                if (_beingPushedBack)
+                {
+                    position = (position - transform.position)/5 + transform.position;
+                }
                 transform.position = position;
             }
         }

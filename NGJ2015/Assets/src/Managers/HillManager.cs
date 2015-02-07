@@ -19,8 +19,10 @@ namespace Assets.src.Managers
 		private List<GameObject> players;
 		private bool playerGainingPoints;
 
+		private GameObject carpetObject;
 		void Start() 
 		{
+			carpetObject = transform.GetChild(0).gameObject;
 			playerGainingPoints = false;
 			enemies = ManagerCollection.Instance.EnemyManager.GetActiveMonsters();
 			players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
@@ -65,11 +67,13 @@ namespace Assets.src.Managers
 				{
 					ManagerCollection.Instance.PlayerManager.StartGivingPointsToPlayer(player);
 					playerGainingPoints = true;
+					iTween.ColorTo(carpetObject, ManagerCollection.Instance.PlayerManager.GetPlayerColor(player), 0.5f);
 				}
 			}
 			else if (playerGainingPoints && !(kings.Count == 1 && enemyKings == 0))
 			{
 				ManagerCollection.Instance.PlayerManager.StopGivingPointsToPlayer();
+				iTween.ColorTo(carpetObject, Color.white, 0.5f);
 				playerGainingPoints = false;
 			}
 		}

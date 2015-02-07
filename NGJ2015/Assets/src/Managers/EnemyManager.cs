@@ -8,7 +8,6 @@ namespace Assets.src.Managers
     {
         public GameObject GetNewEnemyFromType(Enumerations.EnemyType enemyType)
         {
-            Debug.Log(string.Format("Fetching object with type '{0}'.", enemyType));
             if(InactiveObjects.Exists(x => x.GetComponent(enemyType.ToString())))
             {
                 var poolObject = InactiveObjects.Find(x => x.GetComponent(enemyType.ToString()));
@@ -18,6 +17,7 @@ namespace Assets.src.Managers
 				poolObject.SetActive(true);
 				return poolObject;
             }
+            //Debug.LogWarning(enemyType);
             var GO = PrefabPool.Find(x => x.GetComponent(enemyType.ToString()) != null);
             if (GO == null)
             {

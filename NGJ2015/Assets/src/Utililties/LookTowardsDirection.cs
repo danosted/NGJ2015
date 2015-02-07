@@ -13,6 +13,7 @@ namespace Assets.src.Utililties
     {
         private Transform model;
         private Transform body;
+        [SerializeField]
         private bool facingLeft;
         private bool _isFacingRight;
         private Enemy entity;
@@ -33,13 +34,28 @@ namespace Assets.src.Utililties
 
         void Update()
         {
-            if (Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition).x < transform.position.x)
+            if (entity.TargetPosition.x < transform.position.x)
             {
                 FaceLeft();
             }
             else
             {
                 FaceRight();
+            }
+            Vector3 pos = transform.position;
+            Vector3 direction = (entity.TargetPosition - pos).normalized;
+            Debug.DrawRay(transform.position, direction * 10f);
+            //Debug.DrawRay(transform.position, Vector3.left * 10f, Color.red);
+            //Debug.DrawRay(transform.position, Vector3.right * 10f, Color.blue);
+            float angle = Mathf.Atan(direction.y / direction.x);
+            if (!body) return;
+            if (facingLeft)
+            {
+                body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
+            }
+            else
+            {
+                body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
             }
         }
 
@@ -65,22 +81,25 @@ namespace Assets.src.Utililties
 
         private IEnumerator PointGun()
         {
-            while (entity)
-            {
-                //Vector3 pos = body.transform.position;
-                //Vector3 weaponToMouse = (entity.Direction - pos).normalized;
-                
-                //float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);
-                //if (facingLeft)
-                //{
-                //    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
-                //}
-                //else
-                //{
-                //    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
-                //}
-                yield return null;
-            }
+            //while (body && entity)
+            //{
+            //    Vector3 pos = transform.position;
+            //    Vector3 direction = (entity.TargetPosition - pos).normalized;
+            //    Debug.DrawRay(transform.position, direction * 10f);
+            //    //Debug.DrawRay(transform.position, Vector3.left * 10f, Color.red);
+            //    //Debug.DrawRay(transform.position, Vector3.right * 10f, Color.blue);
+            //    float angle = Mathf.Atan(direction.y / direction.x);
+            //    if (facingLeft)
+            //    {
+            //        body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
+            //    }
+            //    else
+            //    {
+            //        body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
+            //    }
+            //    yield return null;
+            //}
+            yield return null;
         }
     }
 }
