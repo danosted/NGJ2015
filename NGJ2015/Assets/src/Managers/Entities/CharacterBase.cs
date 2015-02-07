@@ -14,7 +14,7 @@ namespace Assets.src.Managers.Entities
 		protected float _range;
         protected float _damage;
 
-		public CharacterBase(float health, float speed, float range, float damage)
+		public void Initialize(float health, float speed, float range, float damage)
 		{
 			_health = health;
 			_speed = speed;
@@ -24,7 +24,7 @@ namespace Assets.src.Managers.Entities
 
 		protected void StartMoving(Vector3 movement)
 		{
-		    transform.position = transform.position += movement;
+		    transform.position = transform.position += movement * _speed;
 		}
 		
         protected void StopMoving()

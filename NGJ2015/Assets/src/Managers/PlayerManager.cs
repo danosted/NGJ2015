@@ -1,4 +1,5 @@
-﻿using Assets.src.Common;
+﻿using System.Collections.Generic;
+using Assets.src.Common;
 using Assets.src.Managers;
 using UnityEngine;
 using System.Collections;
@@ -18,5 +19,11 @@ public class PlayerManager : ManagerBase
         ActiveObjects.Add(resultGO.gameObject);
         resultGO.transform.parent = transform;
         return resultGO;
+    }
+
+    public List<GameObject> GetActivePlayers()
+    {
+        Debug.Log(string.Format("Fetching active player object."));
+        return ActiveObjects;
     }
 }

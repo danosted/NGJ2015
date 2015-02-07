@@ -21,16 +21,16 @@ namespace Assets.Backend.GameLogic
             }
         }
 
-        private GenericLogic _genericLogic;
-        public GenericLogic GenericLogic
+        private EnemyLogic _enemyLogic;
+        public EnemyLogic EnemyLogic
         {
             get
             {
-                if (_genericLogic == null)
+                if (_enemyLogic == null)
                 {
-                    _genericLogic = new GenericLogic();
+                    _enemyLogic = new EnemyLogic();
                 }
-                return _genericLogic;
+                return _enemyLogic;
             }
         }
 
