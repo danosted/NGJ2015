@@ -11,7 +11,7 @@ namespace Assets.src.Managers.Entities
         private bool isMoving;
         private Vector3 movement = Vector3.zero;
 		public string playerName;
-		private Weapon weapon = new Weapon();
+        private Weapon weapon;
 
         private long _points = 0;
 
@@ -108,6 +108,10 @@ namespace Assets.src.Managers.Entities
 		private void OnJoy1FirePressed()
 		{			
 			//Debug.Log ("Attack1");
+		    if (!weapon)
+		    {
+		        weapon = GetComponent<Weapon>();
+		    }
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
 		}
 		

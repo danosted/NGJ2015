@@ -9,9 +9,21 @@ namespace Assets.src.Managers.Entities
     public class Enemy : CharacterBase
 	{
 		protected CharacterBase _target;
+
+        public Vector3 TargetPosition
+        {
+            get
+            {
+                if (_target == null)
+                {
+                    return Vector3.zero;
+                }
+                return _target.transform.position;
+            }
+        }
         protected List<GameObject> _targets;
 
-        protected List<MonsterDist> _nearbyMonsters;
+        protected List<MonsterDist> _nearbyMonsters = new List<MonsterDist>();
 
         private int minEnemyDistance = 1;
         

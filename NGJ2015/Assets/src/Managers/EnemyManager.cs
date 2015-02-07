@@ -18,6 +18,7 @@ namespace Assets.src.Managers
 				poolObject.SetActive(true);
 				return poolObject;
             }
+            Debug.LogWarning(enemyType);
             var GO = PrefabPool.Find(x => x.GetComponent(enemyType.ToString()) != null);
             if (GO == null)
             {

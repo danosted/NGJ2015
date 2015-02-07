@@ -109,7 +109,20 @@ namespace Assets.src.Logic
             var enemy = ManagerCollection.Instance.EnemyManager.GetNewEnemyFromType(chosenType);
 			enemy.transform.position = MathUtil.RandomOnUnitCircle() * 50f;
             var enemyScript = enemy.GetComponent(chosenType.ToString()) as Enemy;
-			enemyScript.Initialize(10f,5f,5f,1f);
+		    
+            if (chosenType.Equals(Enumerations.EnemyType.ChairEnemy))
+		    {
+                enemyScript.Initialize(10f, 5f, 5f, 1f);
+		    }
+            else if (chosenType.Equals(Enumerations.EnemyType.DresserEnemy))
+            {
+                enemyScript.Initialize(5f, 2f, 10f, 1f);
+            }
+            else if (chosenType.Equals(Enumerations.EnemyType.TrashcanEnemy))
+            {
+
+            }
+
 			var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
 
             enemyScript.SetTargets(players);

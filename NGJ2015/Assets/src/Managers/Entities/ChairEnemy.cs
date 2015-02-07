@@ -126,7 +126,6 @@ namespace Assets.src.Managers.Entities
 
             var centerPosition = new Vector3();
             var numPos = 0;
-
             foreach (var m in _nearbyMonsters.Select(m => m.Monster))
             {
                 var chairEnemy = m.GetComponent<ChairEnemy>();

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.src.Managers.Entities
 {
-    public class Weapon
+    public class Weapon : MonoBehaviour
     {
         public float ClubDamage = 5;
         public float AssaultRifleDamage = 4;
@@ -17,7 +17,7 @@ namespace Assets.src.Managers.Entities
 			case Enumerations.WeaponType.Club:
 				ClubAttack(transform);
 				break;
-			case Enumerations.WeaponType.AssaultRifle:
+			case Enumerations.WeaponType.Drawer:
 				AssaultRifleAttack(transform);
 				break;
 			default:
@@ -50,8 +50,10 @@ namespace Assets.src.Managers.Entities
 			}
 		}
 		
-		private void AssaultRifleAttack(Transform transform) {
-			ManagerCollection.Instance.WeaponManager.GetNewProjectileFromType (Enumerations.ProjectileTypes.Bullet, transform.position, transform.rotation);
+		private void AssaultRifleAttack(Transform targetTransform) {
+			var bulletGO = ManagerCollection.Instance.WeaponManager.GetNewProjectileFromType (Enumerations.ProjectileTypes.Drawer, transform.position, transform.rotation);
+            var bullet = bulletGO.GetComponent(Enumerations.ProjectileTypes.Drawer.ToString()) as Drawer;
+            bullet.ShootDrawer(targetTransform.position, targetTransform.GetComponent<Player>());
 		}
     }
 }
