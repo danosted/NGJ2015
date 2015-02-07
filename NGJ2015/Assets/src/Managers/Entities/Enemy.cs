@@ -13,23 +13,7 @@ namespace Assets.src.Managers.Entities
 
         protected List<MonsterDist> _nearbyMonsters;
 
-        public int MinFramesToKeepAStrategy = 30;
-
-        protected int _strategyFrameNum = 0;
-        private MonsterStrategy _previousStrategy;
-
-        public float NearbyMonstersDist = 5;
-        public float ChargeDist = 5;
-        public int SwarmThreshold = 5;
-        public int SpreadThreshold = 10;
-        public int minEnemyDistance = 2;
-
-        private enum MonsterStrategy
-        {
-            Spread,
-            Swarm,
-            Attack
-        }
+        private int minEnemyDistance = 2;
 
 		public void SetTargets(List<GameObject> targetObjects)
 		{

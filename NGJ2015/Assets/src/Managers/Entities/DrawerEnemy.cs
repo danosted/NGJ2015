@@ -6,11 +6,17 @@ namespace Assets.src.Managers.Entities
 {
     public class DrawerEnemy : Enemy
 	{
-		
-        public float MoveCloserDist = 6;
-        public float MoveAwayDist = 4;
 
+        private float _moveCloserDist = 6;
+        private float _moveAwayDist = 4;
+
+        private float _nearbyMonstersDist = 15;
+
+        private int _minFramesToKeepAStrategy = 30;
+
+        private int _strategyFrameNum = 0;
         private MonsterStrategy _previousStrategy;
+
 
         private enum MonsterStrategy
         {
@@ -60,10 +66,11 @@ namespace Assets.src.Managers.Entities
         private MonsterStrategy ChooseStrategy()
         {
             _strategyFrameNum++;
-            if (_strategyFrameNum < MinFramesToKeepAStrategy)
+            if (_strategyFrameNum < _minFramesToKeepAStrategy)
             {
                 return _previousStrategy;
             }
+            _strategyFrameNum = 0;
 
             _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
 
@@ -71,18 +78,18 @@ namespace Assets.src.Managers.Entities
                 ManagerCollection.Instance.EnemyManager.GetActiveMonsters()
                     .Select(
                         m => new MonsterDist { Dist = (m.transform.position - transform.position), Monster = m })
-                    .Where(m => m.Dist.magnitude < NearbyMonstersDist)
+                    .Where(m => m.Dist.magnitude < _nearbyMonstersDist)
                     .ToList();
 
             var targetDistance = (_target.transform.position - transform.position).magnitude;
             
-            if (targetDistance >= MoveCloserDist)
+            if (targetDistance >= _moveCloserDist)
             {
                 _previousStrategy = MonsterStrategy.MoveCloser;
                 return _previousStrategy;
             }
 
-            if (targetDistance < MoveAwayDist)
+            if (targetDistance < _moveAwayDist)
             {
                 _previousStrategy = MonsterStrategy.MoveAway;
                 return _previousStrategy;
@@ -131,14 +138,6 @@ namespace Assets.src.Managers.Entities
             {
                 transform.position = Vector3.MoveTowards(transform.position, transform.position + (_target.transform.position - transform.position), Time.fixedDeltaTime * _speed);
             }
-        }
-
-
-        public override void Die()
-        {
-            Debug.Log("Enemy die");
-            base.Die();
-            ManagerCollection.Instance.EnemyManager.PoolEnemyObject(gameObject);
         }
     }
 }

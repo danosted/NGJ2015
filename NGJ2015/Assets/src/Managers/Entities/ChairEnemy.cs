@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace Assets.src.Managers.Entities
@@ -9,16 +6,15 @@ namespace Assets.src.Managers.Entities
     public class ChairEnemy : Enemy
 	{
 
-        public int MinFramesToKeepAStrategy = 30;
+        private int _minFramesToKeepAStrategy = 30;
 
-        protected int _strategyFrameNum = 0;
+        private int _strategyFrameNum = 0;
         private MonsterStrategy _previousStrategy;
 
-        public float NearbyMonstersDist = 5;
-        public float ChargeDist = 5;
-        public int SwarmThreshold = 5;
-        public int SpreadThreshold = 10;
-        public int minEnemyDistance = 2;
+        private float _nearbyMonstersDist = 15;
+        private float _chargeDist = 5;
+        private int _swarmThreshold = 3;
+        private int _spreadThreshold = 8;
 
         private enum MonsterStrategy
         {
@@ -66,35 +62,36 @@ namespace Assets.src.Managers.Entities
 
         private MonsterStrategy ChooseStrategy()
         {
-            _strategyFrameNum++;
-            if (_strategyFrameNum < MinFramesToKeepAStrategy)
+            if (_strategyFrameNum++ < _minFramesToKeepAStrategy)
             {
                 return _previousStrategy;
             }
+            _strategyFrameNum = 0;
+
             _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
 
             _nearbyMonsters =
                 ManagerCollection.Instance.EnemyManager.GetActiveMonsters()
                     .Select(
                         m => new MonsterDist { Dist = (m.transform.position - transform.position), Monster = m })
-                    .Where(m => m.Dist.magnitude < NearbyMonstersDist)
+                    .Where(m => m.Dist.magnitude < _nearbyMonstersDist)
                     .ToList();
             
 
-            if ((_target.transform.position - transform.position).magnitude < ChargeDist)
+            if ((_target.transform.position - transform.position).magnitude < _chargeDist)
             {
                 _previousStrategy = MonsterStrategy.Attack;
                 return _previousStrategy;
             }
 
             
-            if (_nearbyMonsters.Count >= SwarmThreshold && _nearbyMonsters.Count < SpreadThreshold)
+            if (_nearbyMonsters.Count >= _swarmThreshold && _nearbyMonsters.Count < _spreadThreshold)
             {
                 _previousStrategy = MonsterStrategy.Swarm;
                 return _previousStrategy;
             }
 
-            if (_nearbyMonsters.Count >= SpreadThreshold)
+            if (_nearbyMonsters.Count >= _spreadThreshold)
             {
                 _previousStrategy =  MonsterStrategy.Spread;
                 return _previousStrategy;
@@ -166,13 +163,6 @@ namespace Assets.src.Managers.Entities
             }
 
             transform.position = Vector3.MoveTowards(transform.position, finalDirection, Time.fixedDeltaTime * _speed);
-        }
-
-        public override void Die()
-        {
-            Debug.Log("Enemy die");
-            base.Die();
-            ManagerCollection.Instance.EnemyManager.PoolEnemyObject(gameObject);
         }
 
     }
