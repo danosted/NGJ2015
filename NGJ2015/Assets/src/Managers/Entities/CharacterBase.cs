@@ -12,8 +12,7 @@ namespace Assets.src.Managers.Entities
 		protected float _health;
 		protected float _speed;
 		protected float _range;
-		protected float _damage;
-        protected bool isMoving;
+        protected float _damage;
 
 		public CharacterBase(float health, float speed, float range, float damage)
 		{
@@ -25,8 +24,7 @@ namespace Assets.src.Managers.Entities
 
 		protected void StartMoving(Vector3 movement)
 		{
-		    if (isMoving) return;
-            StartCoroutine(ConstantMovingEnumerator(movement));
+		    transform.position = transform.position += movement;
 		}
 		
         protected void StopMoving()
@@ -36,15 +34,6 @@ namespace Assets.src.Managers.Entities
             StopCoroutine("ConstantMovingEnumerator");
         }
 
-        private IEnumerator ConstantMovingEnumerator(Vector3 movement)
-        {
-            isMoving = true;
-            while (isMoving)
-            {
-                transform.position += movement;
-                yield return null;    
-            }
-        }
 		public float GetSpeed()
 		{
 			return _speed;
