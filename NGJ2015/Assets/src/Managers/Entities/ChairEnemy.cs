@@ -16,11 +16,16 @@ namespace Assets.src.Managers.Entities
         private int _swarmThreshold = 3;
         private int _spreadThreshold = 8;
 
-        private enum MonsterStrategy
+        public enum MonsterStrategy
         {
             Spread,
             Swarm,
             Attack
+        }
+
+        public MonsterStrategy GetStrategy()
+        {
+            return _previousStrategy;
         }
 
         public void Update()
@@ -121,10 +126,16 @@ namespace Assets.src.Managers.Entities
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
 
             var centerPosition = new Vector3();
+            var numPos = 0;
 
-            foreach (var pos in _nearbyMonsters.Select(m => m.Monster.transform.position))
+            foreach (var m in _nearbyMonsters.Select(m => m.Monster))
             {
-                centerPosition += pos;
+                var chairEnemy = m.GetComponent<ChairEnemy>();
+                if (chairEnemy == null || chairEnemy.GetStrategy() != MonsterStrategy.Attack)
+                {
+                    numPos++;
+                }
+                centerPosition += m.transform.position;
             }
 
             centerPosition /= _nearbyMonsters.Count;
