@@ -6,20 +6,18 @@ using UnityEngine;
 
 namespace Assets.src.Managers.Entities
 {
-    public abstract class CharacterBase
+    public abstract class CharacterBase : MonoBehaviour
     {
 		private int health;
-		private Vector2 position;
 
 		public CharacterBase(int health)
 		{
 			this.health = health;
-			this.position = Vector2.zero;
 		}
 
-		public abstract void move(Vector2 movement)
+		protected void Move(Vector3 movement)
 		{
-			this.position += movement;
+			transform.position += movement;
 		}
     }
 }
