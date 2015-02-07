@@ -38,7 +38,7 @@ namespace Assets.src.Managers.Entities
 			foreach (var collider in colliders) {
                 if (collider.transform != transform) // Dont hit yourself..
 			    {
-                    iTween.PunchScale(collider.gameObject, Vector3.one * 10.1f, 0.5f);
+                    //iTween.PunchScale(collider.gameObject, Vector3.one * 10.1f, 0.5f);
                     var enemy = collider.GetComponent<Enemy>();
                     if (enemy != null)
                     {
@@ -54,7 +54,7 @@ namespace Assets.src.Managers.Entities
                             mulitiplier = 3;
                         }
                         character.PushBack(
-                            character.transform.position + ((character.transform.position - playerPos).normalized) *
+                            ((character.transform.position - playerPos).normalized) *
                             mulitiplier);
                     }
 			    }
