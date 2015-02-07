@@ -11,6 +11,18 @@ namespace Assets.src.Managers.Entities
         private Vector3 movement = Vector3.zero;
 		private Weapon weapon = new Weapon();
 
+        private long points = 0;
+
+        public long GetPoints()
+        {
+            return points;
+        }
+
+        public void AddPoints(long points)
+        {
+            points += points;
+        }
+
         public void OnEnable()
         {
             KeyInputHandler.Instance.OnDownPressed += this.OnDownPressed;
