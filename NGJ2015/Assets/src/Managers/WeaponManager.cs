@@ -15,9 +15,9 @@ namespace Assets.src.Managers
 				case Enumerations.WeaponType.AssaultRifle:
 					AssaultRifleAttack(transform);
 					break;
-					
 				default:
 					Debug.LogError ("Not implemented");
+					break;
 			}
 		}
 
