@@ -21,25 +21,8 @@ namespace Assets.src.Logic
                 var enemyScript = enemy.GetComponent(Enumerations.EnemyType.Enemy.ToString()) as Enemy;
                 enemyScript.Initialize(10f,5f,5f,1f);
                 var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
-                var nearestPlayer = GetNearestTarget(players, enemy.transform.position);
-                enemy.GetComponent<Enemy>().SetTarget(nearestPlayer);
+                enemy.GetComponent<Enemy>().SetTarget(players);
             }
-        }
-
-        public GameObject GetNearestTarget(List<GameObject> targets, Vector3 position)
-        {
-            var nearestDist = float.MaxValue;
-            GameObject result = targets[0];
-            foreach (var target in targets)
-            {
-                var tempDist = Vector3.Distance(target.transform.position, position);
-                if (tempDist < nearestDist)
-                {
-                    nearestDist = tempDist;
-                    result = target;
-                }
-            }
-            return result;
         }
     }
 }

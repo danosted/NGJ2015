@@ -25,6 +25,7 @@ namespace Assets.src.Managers.Entities
 
         public void OnDisable()
         {
+            if(!KeyInputHandler.Instance) return;
             KeyInputHandler.Instance.OnDownPressed -= this.OnDownPressed;
             KeyInputHandler.Instance.OnDownReleased -= this.OnDownReleased;
             KeyInputHandler.Instance.OnUpPressed -= this.OnUpPressed;
@@ -108,11 +109,6 @@ namespace Assets.src.Managers.Entities
                 //}
                 yield return null;
             }
-        }
-
-        public void TakeDamage(float damage)
-        {
-            _health -= damage;
         }
     }
 }
