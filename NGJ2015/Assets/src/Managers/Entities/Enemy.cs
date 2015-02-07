@@ -11,7 +11,7 @@ namespace Assets.src.Managers.Entities
 		protected CharacterBase _target;
         protected List<GameObject> _targets;
 
-        protected List<MonsterDist> _nearbyMonsters;
+        protected List<MonsterDist> _nearbyMonsters = new List<MonsterDist>();
 
         private int minEnemyDistance = 1;
         

@@ -178,7 +178,7 @@ namespace Assets.src.Managers.Entities
 		}
         private void OnSpacePressed()
         {
-			var anim = transform.GetChild (0).GetComponent<Animator> ();
+			var anim = transform.GetChild (0).GetComponent<Animator> () as Animator;
 			anim.SetTrigger("attack");
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
         }
