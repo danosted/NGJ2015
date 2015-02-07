@@ -2,6 +2,7 @@
 using System.Collections;
 using Assets.src.Managers;
 using Assets.src.Common;
+using Assets.src.Input;
 
 namespace Assets.src.Managers.Entities
 {
@@ -26,12 +27,26 @@ namespace Assets.src.Managers.Entities
 
         public void UseGamePad()
 		{
-			KeyInputHandler.Instance.OnVertical += this.OnVertical;
-			KeyInputHandler.Instance.OnHorizontal += this.OnHorizontal;
-			KeyInputHandler.Instance.OnFirePressed += this.OnFirePressed;
-			KeyInputHandler.Instance.OnMovementStop += this.OnMovementStop;			
+			Debug.Log ("Player 1 Events added");
+			KeyInputHandler.Instance.OnJoy1Vertical += this.OnJoy1Vertical;
+			KeyInputHandler.Instance.OnJoy1Horizontal += this.OnJoy1Horizontal;
+			KeyInputHandler.Instance.OnJoy1FirePressed += this.OnJoy1FirePressed;
+			
+			KeyInputHandler.Instance.OnMovementStop += this.OnMovementStop;	
+			this.GetComponent<MouseLook2D> ().UseGamepad = true;
+			this.GetComponent<MouseLook2D> ().PlayerNr = 1;
 		}
-
+		public void UseGamePad2()
+		{
+			Debug.Log ("Player 2 Events added");
+			KeyInputHandler.Instance.OnJoy2Vertical += this.OnJoy2Vertical;
+			KeyInputHandler.Instance.OnJoy2Horizontal += this.OnJoy2Horizontal;
+			KeyInputHandler.Instance.OnJoy2FirePressed += this.OnJoy2FirePressed;
+			
+			KeyInputHandler.Instance.OnMovementStop += this.OnMovementStop;	
+			this.GetComponent<MouseLook2D> ().UseGamepad = true;
+			this.GetComponent<MouseLook2D> ().PlayerNr = 2;
+		}
 		public void UseKeyBoard()
 		{
 			KeyInputHandler.Instance.OnDownPressed += this.OnDownPressed;
@@ -76,19 +91,44 @@ namespace Assets.src.Managers.Entities
             KeyInputHandler.Instance.OnSpaceReleased -= this.OnSpaceReleased;
         }
 
-		private void OnHorizontal(float mag)
+		private void OnJoy1Horizontal(float mag)
 		{
+			Debug.Log (playerName);
 			movement += Vector3.right*mag;
 			if(isMoving) return;
 			StartCoroutine(StartMoving());			
 		}
-		private void OnVertical(float mag)
+		private void OnJoy1Vertical(float mag)
 		{
+			//Debug.Log (playerName);
 			movement += Vector3.up*mag;
 			if(isMoving) return;
 			StartCoroutine(StartMoving());			
 		}
+		private void OnJoy1FirePressed()
+		{			
+			weapon.Attack (transform, Enumerations.WeaponType.Club);
+		}
 		
+		private void OnJoy2Horizontal(float mag)
+		{
+			Debug.Log (playerName);
+			movement += Vector3.right*mag;
+			if(isMoving) return;
+			StartCoroutine(StartMoving());			
+		}
+		private void OnJoy2Vertical(float mag)
+		{
+			//Debug.Log (playerName);
+			movement += Vector3.up*mag;
+			if(isMoving) return;
+			StartCoroutine(StartMoving());			
+		}
+		private void OnJoy2FirePressed()
+		{			
+			weapon.Attack (transform, Enumerations.WeaponType.Club);
+		}
+
 		private void OnDownPressed(float mag)
         {
 			movement += Vector3.down*mag;
@@ -144,17 +184,7 @@ namespace Assets.src.Managers.Entities
         }
 
 		
-		private void OnFirePressed()
-		{
-			iTween.PunchRotation(transform.GetChild (0).GetChild(3).gameObject, new Vector3(0, 0, -120),0.5f);
-			iTween.ShakePosition(Camera.main.gameObject, Vector3.one*0.02f, 0.5f);
-			//			iTween.PunchRotation(Camera.main.gameObject, new Vector3(0, 0, 720),4.5f);
-			var colliders = Physics.OverlapSphere(transform.position, 10f);
-			foreach(var collider in colliders)
-			{
-				iTween.PunchScale(collider.gameObject, Vector3.one*10.1f, 0.5f);
-			}
-		}
+
 
         private IEnumerator StartMoving()
         {
