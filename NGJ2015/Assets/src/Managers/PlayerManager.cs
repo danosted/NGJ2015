@@ -3,6 +3,7 @@ using Assets.src.Common;
 using Assets.src.Managers;
 using UnityEngine;
 using System.Collections;
+using Assets.src.Managers.Entities;
 
 public class PlayerManager : ManagerBase
 {
@@ -20,6 +21,9 @@ public class PlayerManager : ManagerBase
         resultGO.transform.parent = transform;
         return resultGO;
     }
+
+	public Player Player1{ get; set; } 
+	public Player Player2{ get; set; } 
 
     public List<GameObject> GetActivePlayers()
     {

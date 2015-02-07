@@ -3,39 +3,52 @@ using System.Collections;
 
 public class KeyInputHandler : MonoBehaviour
 {
-	public delegate void OnLeftPressedDelegate();
+	public delegate void OnLeftPressedDelegate(float mag);
 	public event OnLeftPressedDelegate OnLeftPressed;
 
-	public delegate void OnLeftReleasedDelegate();
+	public delegate void OnLeftReleasedDelegate(float mag);
 	public event OnLeftReleasedDelegate OnLeftReleased;
 	
-	public delegate void OnRightPressedDelegate();
+	public delegate void OnRightPressedDelegate(float mag);
 	public event OnRightPressedDelegate OnRightPressed;
 	
-	public delegate void OnRightReleasedDelegate();
+	public delegate void OnRightReleasedDelegate(float mag);
 	public event OnRightReleasedDelegate OnRightReleased;
 
-	public delegate void OnUpPressedDelegate();
+	public delegate void OnUpPressedDelegate(float mag);
 	public event OnUpPressedDelegate OnUpPressed;
 	
-	public delegate void OnUpReleasedDelegate();
+	public delegate void OnUpReleasedDelegate(float mag);
 	public event OnUpReleasedDelegate OnUpReleased;
 
-	public delegate void OnDownPressedDelegate();
+	public delegate void OnDownPressedDelegate(float mag);
 	public event OnDownPressedDelegate OnDownPressed;
 	
-	public delegate void OnDownReleasedDelegate();
+	public delegate void OnDownReleasedDelegate(float mag);
 	public event OnDownReleasedDelegate OnDownReleased;
+	
+	public delegate void OnMovementStopDelegate();
+	public event OnSpacePressedDelegate OnMovementStop;
 
 	public delegate void OnSpacePressedDelegate();
 	public event OnSpacePressedDelegate OnSpacePressed;
 
 	public delegate void OnSpaceReleasedDelegate();
 	public event OnSpaceReleasedDelegate OnSpaceReleased;
+			
+	public delegate void OnFirePressedDelegate();
+	public event OnSpacePressedDelegate OnFirePressed;
+
+	public delegate void OnVerticalDelegate(float mag);
+	public event OnRightReleasedDelegate OnVertical;
+
+	public delegate void OnHorizontalDelegate(float mag);
+	public event OnRightReleasedDelegate OnHorizontal;
 
     private static KeyInputHandler _instance;
 
     private static object _lock = new object();
+	public bool UseGamePad = true;
 
     public static KeyInputHandler Instance
     {
@@ -103,22 +116,37 @@ public class KeyInputHandler : MonoBehaviour
 	
 	void Update()
 	{
+		float mag = 1f;
+		//Debug.Log("H: " + Mathf.Abs(Input.GetAxis("Horizontal")) +" V: "+ Mathf.Abs(Input.GetAxis("Vertical")) +"Hit"+ Input.GetButton("Jump"));
+		
+		//AllStop
+
+		if(OnMovementStop != null)
+		{
+			OnMovementStop();
+		}
+		else
+		{
+			Debug.Log("no listener to event");
+		}			
+
 		if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 		{
 			if(OnLeftPressed != null)
 			{
-				OnLeftPressed();
+				OnLeftPressed(mag);
 			}
 			else
 			{
 				Debug.Log("no listener to event");
 			}
+
 		}
 		if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			if(OnRightPressed != null)
 			{
-				OnRightPressed();
+				OnRightPressed(mag);
 			}
 			else
 			{
@@ -129,7 +157,18 @@ public class KeyInputHandler : MonoBehaviour
 		{
 			if(OnUpPressed != null)
 			{
-				OnUpPressed();
+				OnUpPressed(mag);
+			}
+			else
+			{
+				Debug.Log("no listener to event");
+			}
+		}
+		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			if(OnDownPressed != null)
+			{
+				OnDownPressed(mag);
 			}
 			else
 			{
@@ -147,22 +186,11 @@ public class KeyInputHandler : MonoBehaviour
 				Debug.Log("no listener to event");
 			}
 		}
-		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-		{
-			if(OnDownPressed != null)
-			{
-				OnDownPressed();
-			}
-			else
-			{
-				Debug.Log("no listener to event");
-			}
-		}
 		if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
 		{
 			if(OnLeftReleased != null)
 			{
-				OnLeftReleased();
+				OnLeftReleased(mag);
 			}
 			else
 			{
@@ -173,7 +201,7 @@ public class KeyInputHandler : MonoBehaviour
 		{
 			if(OnRightReleased != null)
 			{
-				OnRightReleased();
+				OnRightReleased(mag);
 			}
 			else
 			{
@@ -184,7 +212,7 @@ public class KeyInputHandler : MonoBehaviour
 		{
 			if(OnUpReleased != null)
 			{
-				OnUpReleased();
+				OnUpReleased(mag);
 			}
 			else
 			{
@@ -206,12 +234,52 @@ public class KeyInputHandler : MonoBehaviour
 		{
 			if(OnDownReleased != null)
 			{
-				OnDownReleased();
+				OnDownReleased(mag);
 			}
 			else
 			{
 				Debug.Log("no listener to event");
 			}
+		}
+		
+		
+		if(Input.GetAxis("Horizontal") != 0)
+		{
+			float magAxis = Input.GetAxis("Horizontal");
+			if(OnHorizontal != null)
+			{
+				OnHorizontal(magAxis);
+			}
+			else
+			{
+				Debug.Log("no listener to event");
+			}
+			
+		}
+		if(Input.GetAxis("Vertical") != 0)
+		{
+			float magAxis = Input.GetAxis("Vertical");
+			if(OnVertical != null)
+			{
+				OnVertical(magAxis);
+			}
+			else
+			{
+				Debug.Log("no listener to event");
+			}
+			
+		}
+		if(Input.GetButton("Fire1"))
+		{
+			if(OnVertical != null)
+			{
+				OnFirePressed();
+			}
+			else
+			{
+				Debug.Log("no listener to event");
+			}
+			
 		}
 	}
 }
