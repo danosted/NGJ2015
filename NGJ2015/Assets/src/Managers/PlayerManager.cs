@@ -11,6 +11,7 @@ using Assets.src.Common;
 
 public class PlayerManager : ManagerBase
 {	
+	public Image Win;
 	public Image P1PointTimerBar;
 	public Image P2PointTimerBar;
 	public Image P1PointBar;
@@ -84,13 +85,35 @@ public class PlayerManager : ManagerBase
 			lastPointTick = Time.time;
 			yield return new WaitForSeconds(pointInterval);
 			player.AddPoints(points);
+			float playerPoints = (float)player.GetPoints();
+			bool isWon = false;
+			if (playerPoints >= pointsToWin)
+			{
+				Win.transform.GetChild(0).GetComponent<Text>().text = player.playerName;
+
+				Win.transform.GetChild(1).GetComponent<Text>().text = player.playerName;
+				switch(player.playerName)
+				{
+				case "player1":
+					Win.transform.GetChild(0).GetComponent<Text>().color = new Color(185f/255f,71f/255f,177f/255f);
+					Win.transform.GetChild(2).GetComponent<Text>().color = new Color(185f/255f,71f/255f,177f/255f);
+					break;
+				case "player2":
+					Win.transform.GetChild(0).GetComponent<Text>().color = new Color(96f/255f,207f/255f,135f/255f);
+					Win.transform.GetChild(2).GetComponent<Text>().color = new Color(96f/255f,207f/255f,135f/255f);
+					break;
+
+				}
+				Win.gameObject.SetActive(true);
+				Time.timeScale = 0;
+			}
 			switch (player.playerName)
 	        {
 	            case "player1":
-					P1PointBar.fillAmount = (float)player.GetPoints()/pointsToWin;
+					P1PointBar.fillAmount = playerPoints/pointsToWin;
 					break;
 	            case "player2":
-					P2PointBar.fillAmount = (float)player.GetPoints()/pointsToWin;
+					P2PointBar.fillAmount = playerPoints/pointsToWin;
 					break;
 			}
 		}
