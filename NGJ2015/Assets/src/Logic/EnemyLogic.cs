@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
@@ -14,31 +13,37 @@ namespace Assets.src.Logic
     public class EnemyLogic : MonoBehaviour
 	{
 		private float timeSinceLastWave = 0.0f;
-		private float timeBetweenWaves = 5.0f;
-		private float difficulty = 1.0f;
+		private float timeToNextSpawn = 0.0f;
+
+		public static float maxSpawnPerSecond = 10f;
+
+		private float spawnFunction(float x) {
+			float y = maxSpawnPerSecond*Mathf.Sin (0.1f * x);
+			return y > 1.0f ? y : 1.0f;
+		}
 
 		void Update() {
 			timeSinceLastWave += Time.deltaTime;
-			if (timeSinceLastWave > timeBetweenWaves) {
+			if (timeSinceLastWave > timeToNextSpawn) {
 				timeSinceLastWave = 0.0f;
-				StartEnemyWave(20, difficulty);
-				difficulty += 1.0f;
+				SpawnEnemy();
+				timeToNextSpawn = GetNextSpawnTime(Time.timeSinceLevelLoad);
 			}
 		}
 
-		public void StartEnemyWave(int EnemyCount, float difficulty)
-        {
-            for (int i = 0; i < EnemyCount; i++)
-            {
-                var enemy = ManagerCollection.Instance.EnemyManager.GetNewEnemyFromType(Enumerations.EnemyType.Enemy);
-                enemy.transform.position = MathUtil.RandomOnUnitCircle() * 50f;
-                var enemyScript = enemy.GetComponent(Enumerations.EnemyType.Enemy.ToString()) as Enemy;
-                enemyScript.Initialize(10f,5f,5f,1f);
-                var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
-                enemy.GetComponent<Enemy>().SetTarget(players);
-            }
+		void SpawnEnemy() {
+			var enemy = ManagerCollection.Instance.EnemyManager.GetNewEnemyFromType(Enumerations.EnemyType.Enemy);
+			enemy.transform.position = MathUtil.RandomOnUnitCircle() * 50f;
+			var enemyScript = enemy.GetComponent(Enumerations.EnemyType.Enemy.ToString()) as Enemy;
+			enemyScript.Initialize(10f,5f,5f,1f);
+			var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
+			enemy.GetComponent<Enemy>().SetTarget(players);
+		}
 
-			// Start next wave
-        }
+		float GetNextSpawnTime(float elapsedTime) {
+			float ranNum = Random.Range (0.5f, 1.5f);
+
+			return ranNum * (1.0f/spawnFunction (elapsedTime));
+		}
     }
 }
