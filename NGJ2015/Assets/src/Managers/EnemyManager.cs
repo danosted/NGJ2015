@@ -23,5 +23,11 @@ namespace Assets.src.Managers
             resultGO.transform.parent = transform;
             return resultGO;
         }
+
+        public List<GameObject> GetActiveMonsters()
+        {
+            Debug.Log(string.Format("Fetching active monster objects."));
+            return ActiveObjects;
+        }
     }
 }

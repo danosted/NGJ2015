@@ -110,5 +110,12 @@ namespace Assets.src.Managers.Entities
                 yield return null;
             }
         }
+
+        public override void Die()
+        {
+            Debug.Log("Player die");
+            base.Die();
+            
+        }
     }
 }
