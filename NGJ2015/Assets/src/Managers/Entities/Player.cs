@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.src.Managers;
+using Assets.src.Common;
 
 namespace Assets.src.Managers.Entities
 {
@@ -80,7 +81,7 @@ namespace Assets.src.Managers.Entities
         }
         private void OnSpacePressed()
         {
-			ManagerCollection.Instance.WeaponManager.ClubAttack (transform);
+			ManagerCollection.Instance.WeaponManager.Attack (transform, Enumerations.WeaponType.Club);
         }
         private void OnSpaceReleased()
         {

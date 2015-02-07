@@ -28,5 +28,11 @@ namespace Assets.src.Common
             SpeedPowerup,
             DamagePowerup
         }
+
+		public enum WeaponType
+		{
+			Club,
+			AssaultRifle
+		}
     }
 }
