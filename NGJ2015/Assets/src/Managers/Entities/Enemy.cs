@@ -8,25 +8,164 @@ namespace Assets.src.Managers.Entities
 {
     public class Enemy : CharacterBase
 	{
-		private Player _target;
+		private CharacterBase _target;
+        private List<GameObject> _targets;
 
-		public void SetTarget(GameObject targetObject)
+        private List<MonsterDist> _nearbyMonsters;
+
+        public float NearbyMonstersDist = 5;
+        public int SwarmThreshold = 5;
+        public int SpreadThreshold = 10;
+
+        public enum MonsterStrategy
+        {
+            Spread,
+            Swarm,
+            Attack
+        }
+
+		public void SetTargets(List<GameObject> targetObjects)
 		{
-			_target = targetObject.GetComponent<Player>();
+			_targets = targetObjects;
 		}
 
-		public void Update()
-		{
-			if (_target)
-			{
+        public void Update()
+        {
+        }
+
+        public void FixedUpdate()
+        {
+
+		    var strategy = ChooseStrategy();
+
+		    switch (strategy)
+		    {
+                case MonsterStrategy.Attack:
+		            ExecuteAttackStrategy();
+                    break;
+
+                case MonsterStrategy.Spread:
+                    ExecuteSpreadStrategy();
+                    break;
+
+                case MonsterStrategy.Swarm:
+                    ExecuteSwarmStrategy();
+                    break;
+
+		    }
+
+		    if (_target)
+		    {
+                if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
+                {
+                    _target.TakeDamage(_damage);
+                }
+		    }
+		    
+		}
+
+        private MonsterStrategy ChooseStrategy()
+        {
+            _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
+            _nearbyMonsters =
+                ManagerCollection.Instance.EnemyManager.GetActiveMonsters()
+                    .Select(
+                        m => new MonsterDist {Dist = (m.transform.position - transform.position), Monster = m})
+                    .Where(m => m.Dist.magnitude < NearbyMonstersDist)
+                    .ToList();
+
+            if (_nearbyMonsters.Count > SwarmThreshold)
+            {
+                return MonsterStrategy.Swarm;
+            }
+
+            if (_nearbyMonsters.Count > SpreadThreshold)
+            {
+                return MonsterStrategy.Spread;
+            }
+            return MonsterStrategy.Attack;
+        }
+
+        private void ExecuteAttackStrategy()
+        {
+            if (_target)
+            {
                 //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
                 //Debug.Log(msg, gameObject);
-				transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
-				if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
-				{
-					_target.TakeDamage(_damage);
-				}
-			}
-		}
+                transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
+            }
+        }
+
+        private void ExecuteSpreadStrategy()
+        {
+            //var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
+            //Debug.Log(msg, gameObject);
+
+            var finalDirection = new Vector3();
+            var directions = _nearbyMonsters.Select(m => (-1 / m.Dist.magnitude * m.Dist));
+            foreach (var direction in directions)
+            {
+                finalDirection += direction;
+            }
+            finalDirection = finalDirection.normalized;
+            if (_target)
+            {
+                finalDirection += (_target.transform.position - transform.position).normalized;
+                finalDirection /= 2;
+            }
+
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
+        }
+
+        private void ExecuteSwarmStrategy()
+        {
+            //var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
+            //Debug.Log(msg, gameObject);
+
+            var finalDirection = new Vector3();
+            var directions = _nearbyMonsters.Select(m => (1 / m.Dist.magnitude * m.Dist));
+            foreach (var direction in directions)
+            {
+                finalDirection += direction;
+            }
+
+            finalDirection = finalDirection.normalized;
+            if (_target)
+            {
+                finalDirection += (_target.transform.position - transform.position).normalized;
+                finalDirection /= 2;
+            }
+
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
+        }
+
+        public override void Die()
+        {
+            Debug.Log("Enemy die");
+            base.Die();
+            ManagerCollection.Instance.EnemyManager.PoolEnemyObject(gameObject);
+        }
+
+        private GameObject GetNearestTarget(List<GameObject> targets, Vector3 position)
+        {
+            var nearestDist = float.MaxValue;
+            GameObject result = targets[0];
+            foreach (var target in targets)
+            {
+                var tempDist = Vector3.Distance(target.transform.position, position);
+                if (tempDist < nearestDist)
+                {
+                    nearestDist = tempDist;
+                    result = target;
+                }
+            }
+            return result;
+        }
+
+        private class MonsterDist
+        {
+            public Vector3 Dist;
+            public GameObject Monster;
+        }
     }
 }

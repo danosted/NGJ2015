@@ -26,6 +26,20 @@ namespace Assets.src.Managers.Entities
 		{
 		    transform.position = transform.position += movement * _speed;
 		}
+
+        public void TakeDamage(float damage)
+        {
+            _health -= damage;
+            if (_health < 0)
+            {
+                Die();
+            }
+        }
+
+        public virtual void Die()
+        {
+            // die animation
+        }
 		
         protected void StopMoving()
         {
