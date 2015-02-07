@@ -14,6 +14,7 @@ namespace Assets.src.Managers.Entities
         private List<MonsterDist> _nearbyMonsters;
 
         public float NearbyMonstersDist = 5;
+        public float ChargeDist = 5;
         public int SwarmThreshold = 5;
         public int SpreadThreshold = 10;
         public int minEnemyDistance = 2;
@@ -70,6 +71,12 @@ namespace Assets.src.Managers.Entities
         private MonsterStrategy ChooseStrategy()
         {
             _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
+
+            if ((_target.transform.position - transform.position).magnitude < ChargeDist)
+            {
+                return MonsterStrategy.Attack;
+            }
+
             _nearbyMonsters =
                 ManagerCollection.Instance.EnemyManager.GetActiveMonsters()
                     .Select(

@@ -108,7 +108,7 @@ namespace Assets.src.Managers.Entities
 
         public override void Die()
         {
-            Debug.Log("Player die");
+            //Debug.Log("Player die");
             base.Die();
             
         }
