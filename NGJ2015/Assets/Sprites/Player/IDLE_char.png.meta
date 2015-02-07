@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 56e3ba8392481d14c87dbb9e41208978
+guid: 626262ea6e2034741b4c5c88504c6073
 TextureImporter:
   fileIDToRecycleName:
-    21300000: attach_01_0
-    21300002: attach_01_1
-    21300004: attach_01_2
-    21300006: attach_01_3
-    21300008: attach_01_4
-    21300010: attach_01_5
+    21300000: IDLE_char_0
+    21300002: IDLE_char_1
+    21300004: IDLE_char_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -49,7 +46,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: attach_01_0
+    - name: IDLE_char_0
       rect:
         serializedVersion: 2
         x: 0
@@ -59,7 +56,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: attach_01_1
+    - name: IDLE_char_1
       rect:
         serializedVersion: 2
         x: 256
@@ -69,40 +66,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: attach_01_2
+    - name: IDLE_char_2
       rect:
         serializedVersion: 2
         x: 512
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: attach_01_3
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: attach_01_4
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: attach_01_5
-      rect:
-        serializedVersion: 2
-        x: 1280
         y: 0
         width: 256
         height: 256
