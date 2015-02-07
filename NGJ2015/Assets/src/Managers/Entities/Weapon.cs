@@ -1,12 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
-using Assets.src.Managers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Assets.src.Common;
+using UnityEngine;
 
-namespace Assets.src.Managers
+namespace Assets.src.Managers.Entities
 {
-    public class WeaponManager : ManagerBase
-    {
+    public class Weapon
+	{
 		public void Attack(Transform transform, Enumerations.WeaponType weapon) {
 			switch (weapon) {
 			case Enumerations.WeaponType.Club:
@@ -33,5 +35,5 @@ namespace Assets.src.Managers
 		private void AssaultRifleAttack(Transform transform) {
 			
 		}
-	}
+    }
 }
