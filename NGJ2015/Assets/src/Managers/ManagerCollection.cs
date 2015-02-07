@@ -37,6 +37,21 @@ namespace Assets.src.Managers
             }
         }
 
+        private PlayerManager _playerManager;
+        public PlayerManager PlayerManager
+        {
+            get
+            {
+                if (_playerManager == null)
+                {
+                    var prefab = Resources.Load(Constants.PlayerManagerName);
+                    var GO = (GameObject.Instantiate(prefab)) as GameObject;
+                    _playerManager = GO.GetComponent<PlayerManager>();
+                }
+                return _playerManager;
+            }
+        }
+
 		private KeyInputHandler _keyInputManager;
 		public KeyInputHandler KeyInputManager
 		{
@@ -51,6 +66,19 @@ namespace Assets.src.Managers
 				return _keyInputManager;
 			}
 		}
+
+        private EventHandler _eventManager;
+        public EventHandler EventManager
+        {
+            get
+            {
+                if (_eventManager == null)
+                {
+                    _eventManager = new EventHandler();
+                }
+                return _eventManager;
+            }
+        }
 
     }
 }

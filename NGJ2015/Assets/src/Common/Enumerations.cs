@@ -9,9 +9,18 @@ namespace Assets.src.Common
     {
         public enum EnemyType
         {
-            Melee,
-            Homing,
-            Ranged
+            Enemy,
+            MeleeEnemy,
+            HomingEnemy,
+            RangedEnemy
+        }
+
+        public enum PlayerType
+        {
+            Player,
+            MeleePlayer,
+            HomingPlayer,
+            RangedPlayer
         }
     }
 }
