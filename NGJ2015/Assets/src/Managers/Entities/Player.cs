@@ -11,6 +11,11 @@ namespace Assets.src.Managers.Entities
 
 		}
 
+		public void Update()
+		{
+			transform.LookAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+		}
+
 		public void OnEnable()
 		{
 			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnDownPressed;
@@ -73,7 +78,7 @@ namespace Assets.src.Managers.Entities
 		}
 		private void OnSpacePressed()
 		{
-
+			iTween.PunchRotation(transform.GetChild(0).GetChild(3).gameObject, new Vector3(0, 0, -160), 2.5f);
 		}
 		private void OnSpaceReleased()
 		{
