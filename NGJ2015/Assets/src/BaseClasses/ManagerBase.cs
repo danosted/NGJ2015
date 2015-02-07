@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.src.DataAccess.BaseClasses
+namespace Assets.src.Managers
 {
     public class ManagerBase : MonoBehaviour
     {
