@@ -17,6 +17,7 @@ namespace Assets.src.Managers.Entities
         private int _strategyFrameNum = 0;
         private MonsterStrategy _previousStrategy;
 
+        private int _drawersLeft = 3;
 
         private enum MonsterStrategy
         {
@@ -64,12 +65,6 @@ namespace Assets.src.Managers.Entities
 
         private MonsterStrategy ChooseStrategy()
         {
-            _strategyFrameNum++;
-            if (_strategyFrameNum < _minFramesToKeepAStrategy)
-            {
-                return _previousStrategy;
-            }
-            _strategyFrameNum = 0;
 
             _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
 
@@ -80,9 +75,16 @@ namespace Assets.src.Managers.Entities
                     .Where(m => m.Dist.magnitude < _nearbyMonstersDist)
                     .ToList();
 
+            _strategyFrameNum++;
+            if (_strategyFrameNum < _minFramesToKeepAStrategy)
+            {
+                return _previousStrategy;
+            }
+            _strategyFrameNum = 0;
+
             var targetDistance = (_target.transform.position - transform.position).magnitude;
-            
-            if (targetDistance >= _moveCloserDist)
+
+            if (targetDistance >= _moveCloserDist || _drawersLeft == 0)
             {
                 _previousStrategy = MonsterStrategy.MoveCloser;
                 return _previousStrategy;
@@ -96,6 +98,15 @@ namespace Assets.src.Managers.Entities
 
             _previousStrategy = MonsterStrategy.Idle;
             return _previousStrategy;
+        }
+
+        private void Shoot()
+        {
+            if (_drawersLeft > 0)
+            {
+                _drawersLeft--;
+                // TODO: Shoot
+            }
         }
 
         private void ExecuteIdleStrategy()
@@ -112,6 +123,7 @@ namespace Assets.src.Managers.Entities
                 }), Time.fixedDeltaTime*(_speed/2)));
             }
         }
+
 
 
         private void ExecuteMoveAwayStrategy()
