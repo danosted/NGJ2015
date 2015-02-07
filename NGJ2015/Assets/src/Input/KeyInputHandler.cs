@@ -129,6 +129,9 @@ public class KeyInputHandler : MonoBehaviour
 		//Debug.Log("H1: " + Mathf.Abs(Input.GetAxis("Joy1-Horizontal")) +" V1: "+ Mathf.Abs(Input.GetAxis("Joy1-Vertical")) +"Hit1"+ Input.GetAxis("Joy1-Fire"));
 		//Debug.Log("H2: " + Mathf.Abs(Input.GetAxis("Joy2-Horizontal")) +" V2: "+ Mathf.Abs(Input.GetAxis("Joy2-Vertical")) +"Hit2"+ Input.GetAxis("Joy2-Fire"));
 
+		//Debug.Log("H1: " + Mathf.Abs(Input.GetAxis("Joy1-Horizontal")) +" V1: "+ Mathf.Abs(Input.GetAxis("Joy1-Vertical")) +"Hit1"+ Input.GetAxis("Joy1-Fire"));
+		Debug.Log("H2: " + Mathf.Abs(Input.GetAxis("Joy2-Look-Horizontal")) +" V2: "+ Mathf.Abs(Input.GetAxis("Joy2-Look-Vertical")) +"Hit2"+ Input.GetAxis("Joy2-Fire"));
+
 		//AllStop
 
 		if(OnMovementStop != null)
@@ -294,7 +297,7 @@ public class KeyInputHandler : MonoBehaviour
 		if(Input.GetAxis("Joy2-Horizontal") != 0)
 		{
 			float magAxis = Input.GetAxis("Joy2-Horizontal");
-			if(OnJoy1Horizontal != null)
+			if(OnJoy2Horizontal != null)
 			{
 				OnJoy2Horizontal(magAxis);
 			}
@@ -307,7 +310,7 @@ public class KeyInputHandler : MonoBehaviour
 		if(Input.GetAxis("Joy2-Vertical") != 0)
 		{
 			float magAxis = Input.GetAxis("Joy2-Vertical");
-			if(OnJoy1Vertical != null)
+			if(OnJoy2Vertical != null)
 			{
 				OnJoy2Vertical(magAxis);
 			}
@@ -319,7 +322,7 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetAxis("Joy2-Fire") <= -.5f)
 		{
-			if(OnJoy1FirePressed != null)
+			if(OnJoy2FirePressed != null)
 			{
 				OnJoy2FirePressed();
 			}

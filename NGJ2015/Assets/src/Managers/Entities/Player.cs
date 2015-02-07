@@ -25,7 +25,7 @@ namespace Assets.src.Managers.Entities
             _points += points;
         }
 
-        public void UseGamePad()
+        public void UseGamePad1()
 		{
 			Debug.Log ("Player 1 Events added");
 			KeyInputHandler.Instance.OnJoy1Vertical += this.OnJoy1Vertical;
