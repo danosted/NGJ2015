@@ -4,21 +4,20 @@ using Assets.src.Managers;
 
 namespace Assets.src.Managers.Entities
 {
-	public class Player : CharacterBase
-	{
-		public Player(float health, float speed, float range, float damage) : base(health, speed, range, damage)
-		{
+    public class Player : CharacterBase
+    {
+        private bool isMoving;
+        private Vector3 movement = Vector3.zero;
 
-		}
+        public Player(float health, float speed, float range, float damage)
+            : base(health, speed, range, damage)
+        {
 
-		public void Update()
-		{
-			transform.LookAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-		}
+        }
 
-		public void OnEnable()
-		{
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnDownPressed;
+        public void OnEnable()
+        {
+            ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnDownPressed;
             ManagerCollection.Instance.KeyInputManager.OnDownReleased += this.OnDownReleased;
             ManagerCollection.Instance.KeyInputManager.OnUpPressed += this.OnUpPressed;
             ManagerCollection.Instance.KeyInputManager.OnUpReleased += this.OnUpReleased;
@@ -28,10 +27,10 @@ namespace Assets.src.Managers.Entities
             ManagerCollection.Instance.KeyInputManager.OnLeftReleased += this.OnLeftReleased;
             ManagerCollection.Instance.KeyInputManager.OnSpacePressed += this.OnSpacePressed;
             ManagerCollection.Instance.KeyInputManager.OnSpaceReleased += this.OnSpaceReleased;
-		}
+        }
 
-		public void OnDisable()
-		{
+        public void OnDisable()
+        {
             ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnDownPressed;
             ManagerCollection.Instance.KeyInputManager.OnDownReleased -= this.OnDownReleased;
             ManagerCollection.Instance.KeyInputManager.OnUpPressed -= this.OnUpPressed;
@@ -42,57 +41,84 @@ namespace Assets.src.Managers.Entities
             ManagerCollection.Instance.KeyInputManager.OnLeftReleased -= this.OnLeftReleased;
             ManagerCollection.Instance.KeyInputManager.OnSpacePressed -= this.OnSpacePressed;
             ManagerCollection.Instance.KeyInputManager.OnSpaceReleased -= this.OnSpaceReleased;
-		}
+        }
 
-		private void OnDownPressed()
-		{
-            if (isMoving) return;
-			this.StartMoving(new Vector3(0, -1)*Time.deltaTime);
-		}
-		private void OnDownReleased()
-		{
-		    StopMoving();
-		}
-		private void OnUpPressed()
-		{
+        private void OnDownPressed()
+        {
+            Debug.Log("Hek");
+            movement += Vector3.down;
+            Debug.Log("p " + movement);
             if(isMoving) return;
-			this.StartMoving(new Vector3(0, 1)*Time.deltaTime);
-		}
-		private void OnUpReleased()
-		{
-            StopMoving();
-		}
-		private void OnRightPressed()
-		{
-
-			this.StartMoving(new Vector3(1, 0)*Time.deltaTime);
-		}
-		private void OnRightReleased()
-		{
-            StopMoving();
-		}
-		private void OnLeftPressed()
-		{
-
+            StartCoroutine(StartMoving());
+        }
+        private void OnDownReleased()
+        {
+            movement += Vector3.up;
+            Debug.Log("r " + movement);
+        }
+        private void OnUpPressed()
+        {
+            movement += Vector3.up;
+            Debug.Log("p " + movement);
             if (isMoving) return;
-			this.StartMoving(new Vector3(-1, 0)*Time.deltaTime);
-		}
-		private void OnLeftReleased()
-		{
-            StopMoving();
-		}
-		private void OnSpacePressed()
-		{
-			iTween.PunchRotation(transform.GetChild(0).GetChild(3).gameObject, new Vector3(0, 0, -160), 2.5f);
-		}
-		private void OnSpaceReleased()
-		{
-			
-		}
+            StartCoroutine(StartMoving());
+        }
+        private void OnUpReleased()
+        {
+            movement += Vector3.down;
+            Debug.Log("r " + movement);
+        }
+        private void OnRightPressed()
+        {
+            movement += Vector3.right;
+            Debug.Log("p " + movement);
+            if (isMoving) return;
+            StartCoroutine(StartMoving());
+        }
+        private void OnRightReleased()
+        {
+            movement += Vector3.left;
+            Debug.Log("r " + movement);
+        }
+        private void OnLeftPressed()
+        {
+            movement += Vector3.left;
+            Debug.Log("p " + movement);
+            if (isMoving) return;
+            StartCoroutine(StartMoving());
+        }
+        private void OnLeftReleased()
+        {
+            movement += Vector3.right;
+            Debug.Log("r " + movement);
+        }
+        private void OnSpacePressed()
+        {
 
-		public void TakeDamage(float damage)
-		{
-			_health -= damage;
-		}
-	}
+        }
+        private void OnSpaceReleased()
+        {
+
+        }
+
+        private IEnumerator StartMoving()
+        {
+            isMoving = true;
+            Debug.Log("#Sup " + movement.magnitude);
+            while (true)
+            {
+                if (movement.magnitude != 0f)
+                {
+                    StartMoving(movement*Time.deltaTime);
+                }
+                yield return null;
+            }
+            isMoving = false;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            _health -= damage;
+        }
+    }
 }
