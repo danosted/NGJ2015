@@ -40,7 +40,12 @@ namespace Assets.src.Managers.Entities
 			    var enemy = collider.GetComponent<Enemy>();
 			    if (enemy != null)
 			    {
-                    enemy.TakeDamage(ClubDamage);
+			        enemy.TakeDamage(ClubDamage);
+			    }
+			    var character = collider.GetComponent<CharacterBase>();
+                if (character != null)
+                {
+                    character.PushBack(playerPos - character.transform.position);
 			    }
 			}
 		}

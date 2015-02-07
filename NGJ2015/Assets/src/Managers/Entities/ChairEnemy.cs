@@ -11,8 +11,8 @@ namespace Assets.src.Managers.Entities
         private int _strategyFrameNum = 0;
         private MonsterStrategy _previousStrategy;
 
-        private float _nearbyMonstersDist = 15;
-        private float _chargeDist = 5;
+        private float _nearbyMonstersDist = 10;
+        private float _chargeDist = 10;
         private int _swarmThreshold = 3;
         private int _spreadThreshold = 8;
 
@@ -111,9 +111,8 @@ namespace Assets.src.Managers.Entities
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
-                //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
-                //Debug.Log(msg, gameObject);
-                transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.fixedDeltaTime * _speed);
+                UpdatePosition(Vector3.MoveTowards(transform.position, _target.transform.position,
+                    Time.fixedDeltaTime*_speed));
             }
         }
 
@@ -134,11 +133,13 @@ namespace Assets.src.Managers.Entities
                 if (chairEnemy == null || chairEnemy.GetStrategy() != MonsterStrategy.Attack)
                 {
                     numPos++;
+                    centerPosition += m.transform.position;
                 }
-                centerPosition += m.transform.position;
             }
-
-            centerPosition /= _nearbyMonsters.Count;
+            if (numPos > 0)
+            {
+                centerPosition /= numPos;   
+            }
 
             var direction = transform.position - centerPosition;
 
@@ -149,7 +150,7 @@ namespace Assets.src.Managers.Entities
                 direction /= 3;
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.fixedDeltaTime * _speed);
+            UpdatePosition(Vector3.MoveTowards(transform.position, transform.position + direction, Time.fixedDeltaTime * _speed));
         }
 
         private void ExecuteSwarmStrategy()
@@ -173,7 +174,7 @@ namespace Assets.src.Managers.Entities
                 finalDirection /= 2;
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, finalDirection, Time.fixedDeltaTime * _speed);
+            UpdatePosition(Vector3.MoveTowards(transform.position, finalDirection, Time.fixedDeltaTime * _speed));
         }
 
     }
