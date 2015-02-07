@@ -32,12 +32,79 @@ public class KeyInputHandler : MonoBehaviour
 
 	public delegate void OnSpaceReleasedDelegate();
 	public event OnSpaceReleasedDelegate OnSpaceReleased;
+
+    private static KeyInputHandler _instance;
+
+    private static object _lock = new object();
+
+    public static KeyInputHandler Instance
+    {
+        get
+        {
+            if (applicationIsQuitting)
+            {
+                Debug.LogWarning("[Singleton] Instance '" + typeof(KeyInputHandler) +
+                    "' already destroyed on application quit." +
+                    " Won't create again - returning null.");
+                return null;
+            }
+
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = (KeyInputHandler)FindObjectOfType(typeof(KeyInputHandler));
+
+                    if (FindObjectsOfType(typeof(KeyInputHandler)).Length > 1)
+                    {
+                        Debug.LogError("[Singleton] Something went really wrong " +
+                            " - there should never be more than 1 singleton!" +
+                            " Reopening the scene might fix it.");
+                        return _instance;
+                    }
+
+                    if (_instance == null)
+                    {
+                        GameObject singleton = new GameObject();
+                        _instance = singleton.AddComponent<KeyInputHandler>();
+                        singleton.name = "(singleton) " + typeof(KeyInputHandler).ToString();
+
+                        DontDestroyOnLoad(singleton);
+
+                        Debug.Log("[Singleton] An instance of " + typeof(KeyInputHandler) +
+                            " is needed in the scene, so '" + singleton +
+                            "' was created with DontDestroyOnLoad.");
+                    }
+                    else
+                    {
+                        Debug.Log("[Singleton] Using instance already created: " +
+                            _instance.gameObject.name);
+                    }
+                }
+
+                return _instance;
+            }
+        }
+    }
+
+    private static bool applicationIsQuitting = false;
+    /// <summary>
+    /// When Unity quits, it destroys objects in a random order.
+    /// In principle, a Singleton is only destroyed when application quits.
+    /// If any script calls Instance after it have been destroyed, 
+    ///   it will create a buggy ghost object that will stay on the Editor scene
+    ///   even after stopping playing the Application. Really bad!
+    /// So, this was made to be sure we're not creating that buggy ghost object.
+    /// </summary>
+    public void OnDestroy()
+    {
+        applicationIsQuitting = true;
+    }
 	
 	void Update()
 	{
 		if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-            Debug.Log("OnLeftPressed");
 			if(OnLeftPressed != null)
 			{
 				OnLeftPressed();
@@ -49,7 +116,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
 		{
-            Debug.Log("OnRightPressed");
 			if(OnRightPressed != null)
 			{
 				OnRightPressed();
@@ -61,7 +127,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
 		{
-            Debug.Log("OnUpPressed");
 			if(OnUpPressed != null)
 			{
 				OnUpPressed();
@@ -73,7 +138,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-            Debug.Log("OnSpacePressed");
 			if(OnSpacePressed != null)
 			{
 				OnSpacePressed();
@@ -85,7 +149,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
 		{
-            Debug.Log("OnDownPressed");
 			if(OnDownPressed != null)
 			{
 				OnDownPressed();
@@ -97,7 +160,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
 		{
-            Debug.Log("OnLeftReleased");
 			if(OnLeftReleased != null)
 			{
 				OnLeftReleased();
@@ -109,7 +171,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
 		{
-            Debug.Log("OnRightReleased");
 			if(OnRightReleased != null)
 			{
 				OnRightReleased();
@@ -121,7 +182,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
 		{
-            Debug.Log("OnUpReleased");
 			if(OnUpReleased != null)
 			{
 				OnUpReleased();
@@ -133,7 +193,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyUp(KeyCode.Space))
 		{
-            Debug.Log("OnSpaceReleased");
 			if(OnSpaceReleased != null)
 			{
 				OnSpaceReleased();
@@ -145,7 +204,6 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow))
 		{
-            Debug.Log("OnDownReleased");
 			if(OnDownReleased != null)
 			{
 				OnDownReleased();
