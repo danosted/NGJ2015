@@ -15,7 +15,75 @@ namespace Assets.src.Logic
 		private float timeSinceLastWave = 0.0f;
 		private float timeToNextSpawn = 0.0f;
 
-		public static float maxSpawnPerSecond = 10f;
+		private static EnemyLogic _instance;
+		
+		private static object _lock = new object();
+
+		private static bool applicationIsQuitting = false;
+		/// <summary>
+		/// When Unity quits, it destroys objects in a random order.
+		/// In principle, a Singleton is only destroyed when application quits.
+		/// If any script calls Instance after it have been destroyed, 
+		///   it will create a buggy ghost object that will stay on the Editor scene
+		///   even after stopping playing the Application. Really bad!
+		/// So, this was made to be sure we're not creating that buggy ghost object.
+		/// </summary>
+		public void OnDestroy()
+		{
+			applicationIsQuitting = true;
+		}
+
+		public static EnemyLogic Instance
+		{
+			get
+			{
+				if (applicationIsQuitting)
+				{
+					Debug.LogWarning("[Singleton] Instance '" + typeof(EnemyLogic) +
+					                 "' already destroyed on application quit." +
+					                 " Won't create again - returning null.");
+					return null;
+				}
+				
+				lock (_lock)
+				{
+					if (_instance == null)
+					{
+						_instance = (EnemyLogic)FindObjectOfType(typeof(EnemyLogic));
+						
+						if (FindObjectsOfType(typeof(EnemyLogic)).Length > 1)
+						{
+							Debug.LogError("[Singleton] Something went really wrong " +
+							               " - there should never be more than 1 singleton!" +
+							               " Reopening the scene might fix it.");
+							return _instance;
+						}
+						
+						if (_instance == null)
+						{
+							GameObject singleton = new GameObject();
+							_instance = singleton.AddComponent<EnemyLogic>();
+							singleton.name = "(singleton) " + typeof(EnemyLogic).ToString();
+							
+							DontDestroyOnLoad(singleton);
+							
+							Debug.Log("[Singleton] An instance of " + typeof(EnemyLogic) +
+							          " is needed in the scene, so '" + singleton +
+							          "' was created with DontDestroyOnLoad.");
+						}
+						else
+						{
+							Debug.Log("[Singleton] Using instance already created: " +
+							          _instance.gameObject.name);
+						}
+					}
+					
+					return _instance;
+				}
+			}
+		}
+
+		public float maxSpawnPerSecond = 5f;
 
 		private float spawnFunction(float x) {
 			float y = maxSpawnPerSecond*Mathf.Sin (0.1f * x);

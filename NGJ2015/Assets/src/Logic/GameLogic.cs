@@ -19,9 +19,7 @@ public class GameLogic : MonoBehaviour
         var player2 = manCol.PlayerManager.GetNewPlayerFromType(Enumerations.PlayerType.Player);
         var p2 = player2.GetComponent(Enumerations.PlayerType.Player.ToString()) as Player;
 		p1.Initialize(10,10,10,5);
-		var enemyLogic = new GameObject ();
-		enemyLogic.AddComponent<EnemyLogic> ();
-		enemyLogic.name = "(singleton) " + typeof(EnemyLogic).ToString ();
+		var enemyLogic = EnemyLogic.Instance;
     }
 
 }
