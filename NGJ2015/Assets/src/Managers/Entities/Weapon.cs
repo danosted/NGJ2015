@@ -27,7 +27,7 @@ namespace Assets.src.Managers.Entities
 		}
 		
 		private void ClubAttack(Transform transform) {
-			iTween.PunchRotation (transform.GetChild (0).GetChild (3).gameObject, new Vector3 (0, 0, -120), 0.5f);
+			iTween.PunchRotation (transform.GetChild (0).GetChild (3).gameObject, new Vector3 (0, 0, -120), 0.2f);
 			iTween.ShakePosition (Camera.main.gameObject, Vector3.one * 0.02f, 0.5f);
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
@@ -36,17 +36,29 @@ namespace Assets.src.Managers.Entities
 
             var colliders = Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f) * 2.5f, 3f);
 			foreach (var collider in colliders) {
-				iTween.PunchScale (collider.gameObject, Vector3.one * 10.1f, 0.5f);
-			    var enemy = collider.GetComponent<Enemy>();
-			    if (enemy != null)
+                if (collider.transform != transform) // Dont hit yourself..
 			    {
-			        enemy.TakeDamage(ClubDamage);
+                    iTween.PunchScale(collider.gameObject, Vector3.one * 10.1f, 0.5f);
+                    var enemy = collider.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(ClubDamage);
+                    }
+                    var character = collider.GetComponent<CharacterBase>();
+                    if (character != null)
+                    {
+                        Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
+                        var mulitiplier = 2;
+                        if ((character as Player) != null)
+                        {
+                            mulitiplier = 4;
+                        }
+                        character.PushBack(
+                            (character.transform.position + (character.transform.position - playerPos).normalized) *
+                            mulitiplier);
+                    }
 			    }
-			    var character = collider.GetComponent<CharacterBase>();
-                if (character != null)
-                {
-                    character.PushBack(playerPos - character.transform.position);
-			    }
+			    
 			}
 		}
 		

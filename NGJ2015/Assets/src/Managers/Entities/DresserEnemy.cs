@@ -31,8 +31,9 @@ namespace Assets.src.Managers.Entities
         {
         }
 
-        public void FixedUpdate()
+        public new void FixedUpdate()
         {
+            base.FixedUpdate();
 		    var strategy = ChooseStrategy();
 
 		    switch (strategy)
