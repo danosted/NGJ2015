@@ -9,9 +9,11 @@ using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
+	[SerializeField] private Image p1PointTimerBar;
+	[SerializeField] private Image p2PointTimerBar;
+	[SerializeField] private Image p1PointBar;
+	[SerializeField] private Image p2PointBar;
 
-    public Text p1Points;
-    public Text p2Points;
 	public bool KeyboardControls = true;
 
     // Use this for initialization
@@ -40,9 +42,12 @@ public class GameLogic : MonoBehaviour
 
 		var enemyLogic = EnemyLogic.Instance;    
 		var hillManager = ManagerCollection.Instance.HillManager;    
+		
+		ManagerCollection.Instance.PlayerManager.P1PointTimerBar = p1PointTimerBar;
+		ManagerCollection.Instance.PlayerManager.P2PointTimerBar = p2PointTimerBar;
+		ManagerCollection.Instance.PlayerManager.P1PointBar = p1PointBar;
+		ManagerCollection.Instance.PlayerManager.P2PointBar = p2PointBar;
 
-		ManagerCollection.Instance.PlayerManager.P1Text = p1Points;
-		ManagerCollection.Instance.PlayerManager.P2Text = p2Points;
 	}
 
 }

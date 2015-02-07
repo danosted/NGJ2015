@@ -107,7 +107,8 @@ namespace Assets.src.Logic
 			var enemyScript = enemy.GetComponent(Enumerations.EnemyType.DresserEnemy.ToString()) as Enemy;
 			enemyScript.Initialize(10f,5f,5f,1f);
 			var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
-			enemy.GetComponent<Enemy>().SetTargets(players);
+            Debug.Log(enemy.GetComponent(Enumerations.EnemyType.DresserEnemy.ToString()));
+            ((Enemy)enemy.GetComponent(Enumerations.EnemyType.DresserEnemy.ToString())).SetTargets(players);
 		}
 
 		float GetNextSpawnTime(float elapsedTime) {
