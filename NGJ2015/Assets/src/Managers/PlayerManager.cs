@@ -40,8 +40,7 @@ public class PlayerManager : ManagerBase
     public void GivePointsToPlayer(Player player, long points)
     {
         player.AddPoints(points);
-
-        switch (player.name)
+		switch (player.playerName)
         {
             case "player1":
                 P1Text.text = player.GetPoints().ToString();

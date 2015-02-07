@@ -12,16 +12,16 @@ namespace Assets.src.Managers.Entities
 		public string playerName;
 		private Weapon weapon = new Weapon();
 
-        private long points = 0;
+        private long _points = 0;
 
         public long GetPoints()
         {
-            return points;
+            return _points;
         }
 
         public void AddPoints(long points)
         {
-            points += points;
+            _points += points;
         }
 
         public void UseGamePad()
