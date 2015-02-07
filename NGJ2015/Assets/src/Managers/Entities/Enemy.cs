@@ -87,7 +87,6 @@ namespace Assets.src.Managers.Entities
                 //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
                 //Debug.Log(msg, gameObject);
                 transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
-                
             }
         }
 
@@ -106,12 +105,14 @@ namespace Assets.src.Managers.Entities
         private void ExecuteSwarmStrategy()
         {
             var finalDirection = new Vector3();
-            var directions = _nearbyMonsters.Select(m => (-1 / m.Dist.magnitude * m.Dist));
+            var directions = _nearbyMonsters.Select(m => (1 / m.Dist.magnitude * m.Dist));
             foreach (var direction in directions)
             {
                 finalDirection += direction;
             }
-            finalDirection.Normalize();
+
+            finalDirection = finalDirection.normalized + ((transform.position - _target.transform.position) / 2).normalized;
+
             transform.position = Vector3.MoveTowards(transform.position, transform.position + finalDirection, Time.deltaTime * _speed);
         }
 

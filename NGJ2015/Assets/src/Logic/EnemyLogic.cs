@@ -37,7 +37,7 @@ namespace Assets.src.Logic
 			var enemyScript = enemy.GetComponent(Enumerations.EnemyType.Enemy.ToString()) as Enemy;
 			enemyScript.Initialize(10f,5f,5f,1f);
 			var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
-			enemy.GetComponent<Enemy>().SetTarget(players);
+			enemy.GetComponent<Enemy>().SetTargets(players);
 		}
 
 		float GetNextSpawnTime(float elapsedTime) {
