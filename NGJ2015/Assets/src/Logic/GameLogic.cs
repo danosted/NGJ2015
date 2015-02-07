@@ -28,6 +28,8 @@ public class GameLogic : MonoBehaviour
 		p2.UseKeyBoard();
 		manCol.PlayerManager.Player2 = p2;
 		
-		var enemyLogic = EnemyLogic.Instance;    }
+		var enemyLogic = EnemyLogic.Instance;    
+		var hillManager = ManagerCollection.Instance.HillManager;    
+	}
 
 }
