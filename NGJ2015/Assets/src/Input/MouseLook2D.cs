@@ -14,6 +14,14 @@ namespace Assets.src.Input
         private Transform body;
         private bool facingLeft;
         private bool _isFacingRight;
+		public bool UseGamepad = false;
+		public int PlayerNr = 1;
+		
+		public delegate void OnLookVerticalDelegate(float mag);
+		public event OnLookVerticalDelegate OnLookVertical;
+		
+		public delegate void OnLookHorizontalDelegate(float mag);
+		public event OnLookVerticalDelegate OnLookHorizontal;
 
         void Awake()
         {
@@ -25,8 +33,8 @@ namespace Assets.src.Input
 		input.OnFaceRight += FaceRight;
 #endif
             body = transform.FindChild(Constants.TransformBodyName);
-            //Debug.LogWarning(transform.GetChild(0).childCount);
-            //Debug.LogWarning(body);
+            Debug.LogWarning(transform.GetChild(0).childCount);
+            Debug.LogWarning(body);
             //body = weapons[0];
             //GameObject weaponGO = Instantiate(body.gameObject, gunPosition.position, body.transform.rotation) as GameObject;
             //weaponGO.transform.parent = transform;
@@ -50,14 +58,37 @@ namespace Assets.src.Input
 #else
         void Update()
         {
-            if (Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition).x < transform.position.x)
-            {
-                FaceLeft();
-            }
-            else
-            {
-                FaceRight();
-            }
+			if (!UseGamepad) {
+				if (Camera.main.ScreenToWorldPoint (UnityEngine.Input.mousePosition).x < transform.position.x) {
+						FaceLeft ();
+				} else {
+						FaceRight ();
+				}
+			} else {
+				if(PlayerNr == 1){
+					if(UnityEngine.Input.GetAxis("Joy1-Look-Horizontal") < 0)
+					{
+							FaceLeft ();
+						
+					}
+					if(UnityEngine.Input.GetAxis("Joy1-Look-Horizontal") > 0)
+					{
+							FaceRight ();
+						
+					}
+				} else {
+					if(UnityEngine.Input.GetAxis("Joy2-Look-Horizontal") < 0)
+					{
+							FaceLeft ();
+						
+					}
+					if(UnityEngine.Input.GetAxis("Joy2-Look-Horizontal") > 0)
+					{
+							FaceRight ();
+						
+					}
+				}
+			}
         }
 #endif
 
@@ -85,7 +116,19 @@ namespace Assets.src.Input
         {
             while (body)
             {
-                Vector3 mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+				Vector3 mousepos = Vector3.zero;
+				if(!UseGamepad) {
+                	mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+				} else {
+					Debug.Log (PlayerNr);
+					if(PlayerNr == 1){						
+						mousepos += Vector3.up * UnityEngine.Input.GetAxis("Joy1-Look-Vertical") * 360;
+						mousepos += Vector3.right * UnityEngine.Input.GetAxis("Joy1-Look-Horizontal") * 360;
+					} else {						
+						mousepos += Vector3.up * UnityEngine.Input.GetAxis("Joy2-Look-Vertical") * 360;
+						mousepos += Vector3.right * UnityEngine.Input.GetAxis("Joy2-Look-Horizontal") * 360;
+					}
+				}
                 //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
                 Vector3 weaponPos = body.transform.position;
                 Vector3 weaponToMouse = (mousepos - weaponPos).normalized;

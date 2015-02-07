@@ -36,14 +36,23 @@ public class KeyInputHandler : MonoBehaviour
 	public delegate void OnSpaceReleasedDelegate();
 	public event OnSpaceReleasedDelegate OnSpaceReleased;
 			
-	public delegate void OnFirePressedDelegate();
-	public event OnSpacePressedDelegate OnFirePressed;
+	public delegate void OnJoy1FirePressedDelegate();
+	public event OnSpacePressedDelegate OnJoy1FirePressed;
 
-	public delegate void OnVerticalDelegate(float mag);
-	public event OnRightReleasedDelegate OnVertical;
+	public delegate void OnJoy1VerticalDelegate(float mag);
+	public event OnRightReleasedDelegate OnJoy1Vertical;
 
-	public delegate void OnHorizontalDelegate(float mag);
-	public event OnRightReleasedDelegate OnHorizontal;
+	public delegate void OnJoy1HorizontalDelegate(float mag);
+	public event OnRightReleasedDelegate OnJoy1Horizontal;
+	
+	public delegate void OnJoy2FirePressedDelegate();
+	public event OnSpacePressedDelegate OnJoy2FirePressed;
+	
+	public delegate void OnJoy2VerticalDelegate(float mag);
+	public event OnRightReleasedDelegate OnJoy2Vertical;
+	
+	public delegate void OnJoy2HorizontalDelegate(float mag);
+	public event OnRightReleasedDelegate OnJoy2Horizontal;
 
     private static KeyInputHandler _instance;
 
@@ -117,8 +126,9 @@ public class KeyInputHandler : MonoBehaviour
 	void Update()
 	{
 		float mag = 1f;
-		//Debug.Log("H: " + Mathf.Abs(Input.GetAxis("Horizontal")) +" V: "+ Mathf.Abs(Input.GetAxis("Vertical")) +"Hit"+ Input.GetButton("Jump"));
-		
+		//Debug.Log("H1: " + Mathf.Abs(Input.GetAxis("Joy1-Horizontal")) +" V1: "+ Mathf.Abs(Input.GetAxis("Joy1-Vertical")) +"Hit1"+ Input.GetAxis("Joy1-Fire"));
+		//Debug.Log("H2: " + Mathf.Abs(Input.GetAxis("Joy2-Horizontal")) +" V2: "+ Mathf.Abs(Input.GetAxis("Joy2-Vertical")) +"Hit2"+ Input.GetAxis("Joy2-Fire"));
+
 		//AllStop
 
 		if(OnMovementStop != null)
@@ -243,12 +253,12 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		
 		
-		if(Input.GetAxis("Horizontal") != 0)
+		if(Input.GetAxis("Joy1-Horizontal") != 0)
 		{
-			float magAxis = Input.GetAxis("Horizontal");
-			if(OnHorizontal != null)
+			float magAxis = Input.GetAxis("Joy1-Horizontal");
+			if(OnJoy1Horizontal != null)
 			{
-				OnHorizontal(magAxis);
+				OnJoy1Horizontal(magAxis);
 			}
 			else
 			{
@@ -256,12 +266,12 @@ public class KeyInputHandler : MonoBehaviour
 			}
 			
 		}
-		if(Input.GetAxis("Vertical") != 0)
+		if(Input.GetAxis("Joy1-Vertical") != 0)
 		{
-			float magAxis = Input.GetAxis("Vertical");
-			if(OnVertical != null)
+			float magAxis = Input.GetAxis("Joy1-Vertical");
+			if(OnJoy1Vertical != null)
 			{
-				OnVertical(magAxis);
+				OnJoy1Vertical(magAxis);
 			}
 			else
 			{
@@ -269,11 +279,11 @@ public class KeyInputHandler : MonoBehaviour
 			}
 			
 		}
-		if(Input.GetButton("Fire1"))
+		if(Input.GetAxis("Joy1-Fire") <= -.5f)
 		{
-			if(OnVertical != null)
+			if(OnJoy1FirePressed != null)
 			{
-				OnFirePressed();
+				OnJoy1FirePressed();
 			}
 			else
 			{
@@ -281,5 +291,44 @@ public class KeyInputHandler : MonoBehaviour
 			}
 			
 		}
+		if(Input.GetAxis("Joy2-Horizontal") != 0)
+		{
+			float magAxis = Input.GetAxis("Joy2-Horizontal");
+			if(OnJoy1Horizontal != null)
+			{
+				OnJoy2Horizontal(magAxis);
+			}
+			else
+			{
+				Debug.Log("no listener to event");
+			}
+			
+		}
+		if(Input.GetAxis("Joy2-Vertical") != 0)
+		{
+			float magAxis = Input.GetAxis("Joy2-Vertical");
+			if(OnJoy1Vertical != null)
+			{
+				OnJoy2Vertical(magAxis);
+			}
+			else
+			{
+				Debug.Log("no listener to event");
+			}
+			
+		}
+		if(Input.GetAxis("Joy2-Fire") <= -.5f)
+		{
+			if(OnJoy1FirePressed != null)
+			{
+				OnJoy2FirePressed();
+			}
+			else
+			{
+				Debug.Log("no listener to event");
+			}
+			
+		}
+
 	}
 }

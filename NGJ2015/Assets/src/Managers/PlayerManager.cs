@@ -33,7 +33,7 @@ public class PlayerManager : ManagerBase
 
     public List<GameObject> GetActivePlayers()
     {
-        Debug.Log(string.Format("Fetching active player object."));
+        //Debug.Log(string.Format("Fetching active player object."));
         return ActiveObjects;
     }
 
