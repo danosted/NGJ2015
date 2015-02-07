@@ -63,6 +63,10 @@ namespace Assets.src.Managers.Entities
                     {
                         mulitiplier = 3;
                     }
+                    character.PushBack(
+                        ((character.transform.position - playerPos).normalized)*
+                        mulitiplier);
+
                 }
 
             }
