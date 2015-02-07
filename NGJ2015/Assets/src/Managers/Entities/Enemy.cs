@@ -18,6 +18,7 @@ namespace Assets.src.Managers.Entities
         public int SwarmThreshold = 5;
         public int SpreadThreshold = 10;
         public int minEnemyDistance = 2;
+        
 
         public enum MonsterStrategy
         {
@@ -100,7 +101,7 @@ namespace Assets.src.Managers.Entities
 
         private void ExecuteAttackStrategy()
         {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
+            //transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
                 //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
@@ -115,7 +116,7 @@ namespace Assets.src.Managers.Entities
             //var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
 
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
+            //transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
 
             var centerPosition = new Vector3();
 
@@ -143,7 +144,7 @@ namespace Assets.src.Managers.Entities
             //var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
 
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
+            //transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
 
             var finalDirection = new Vector3();
             var positions = _nearbyMonsters.Select(m => m.Monster.transform.position);
