@@ -8,7 +8,10 @@ using UnityEngine;
 namespace Assets.src.Managers.Entities
 {
     public class Weapon
-	{
+    {
+        public float ClubDamage = 5;
+        public float AssaultRifleDamage = 4;
+
 		public void Attack(Transform transform, Enumerations.WeaponType weapon) {
 			switch (weapon) {
 			case Enumerations.WeaponType.Club:
@@ -29,6 +32,11 @@ namespace Assets.src.Managers.Entities
 			var colliders = Physics.OverlapSphere (transform.position + Vector3.right * 2.5f, 3f);
 			foreach (var collider in colliders) {
 				iTween.PunchScale (collider.gameObject, Vector3.one * 10.1f, 0.5f);
+			    var enemy = collider.GetComponent<Enemy>();
+			    if (enemy != null)
+			    {
+                    enemy.TakeDamage(ClubDamage);
+			    }
 			}
 		}
 		

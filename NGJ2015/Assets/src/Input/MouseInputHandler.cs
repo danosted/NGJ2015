@@ -6,13 +6,43 @@ public class MouseInputHandler : MonoBehaviour {
 	public delegate void OnClickDelegate();
 	public event OnClickDelegate OnClick;
 
-	public delegate void OnPressDelegate();
-	public event OnPressDelegate OnPress;
+	public delegate void OnPressedObjectDelegate();
+    public event OnPressedObjectDelegate OnPressedObject;
 
 	public delegate void OnExitDelegate();
 	public event OnExitDelegate OnExit;
 	
-	void OnMouseUp()
+    public delegate void OnPressDelegate();
+	public event OnPressDelegate OnPress;
+
+	public delegate void OnReleaseDelegate();
+	public event OnReleaseDelegate OnRelease;
+
+	public delegate void OnFaceLeftDelegate();
+	public event OnFaceLeftDelegate OnFaceLeft;
+
+	public delegate void OnFaceRightDelegate();
+	public event OnFaceRightDelegate OnFaceRight;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (OnPress != null)
+            {
+                OnPress();
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (OnRelease != null)
+            {
+                OnRelease();
+            }
+        }
+    }
+
+    void OnMouseUp()
 	{
 		if(OnClick != null)
 		{
@@ -38,9 +68,9 @@ public class MouseInputHandler : MonoBehaviour {
 
 	void OnMouseDown()
 	{
-		if(OnPress != null)
+        if (OnPressedObject != null)
 		{
-			OnPress();
+            OnPressedObject();
 		}
 		else
 		{
