@@ -73,7 +73,7 @@ namespace Assets.src.Managers.Entities
                     _canMove = true;
                 }
                 transform.position = Vector3.MoveTowards(transform.position, _pushBackPosition,
-                    Time.fixedDeltaTime * _speed);
+                    (float) (Time.fixedDeltaTime * (_speed + 0.2*(_pushBackPosition-transform.position).magnitude)));
             }
         }
 

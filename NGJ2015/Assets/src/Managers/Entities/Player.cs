@@ -93,7 +93,7 @@ namespace Assets.src.Managers.Entities
 
 		private void OnJoy1Horizontal(float mag)
 		{
-			//Debug.Log (playerName);
+			Debug.Log (playerName);
 			movement += Vector3.right*mag;
 			if(isMoving) return;
 			StartCoroutine(StartMoving());			
@@ -113,11 +113,14 @@ namespace Assets.src.Managers.Entities
 		        weapon = GetComponent<Weapon>();
 		    }
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
+			var anim = GetComponent<Animator> ();
+			anim.SetTrigger ("attack");
+
 		}
 		
 		private void OnJoy2Horizontal(float mag)
 		{
-			//Debug.Log (playerName);
+			Debug.Log (playerName);
 			movement += Vector3.right*mag;
 			if(isMoving) return;
 			StartCoroutine(StartMoving());			
@@ -131,7 +134,6 @@ namespace Assets.src.Managers.Entities
 		}
 		private void OnJoy2FirePressed()
 		{			
-			//Debug.Log ("Attack2");
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
 		}
 
@@ -181,6 +183,8 @@ namespace Assets.src.Managers.Entities
 		}
         private void OnSpacePressed()
         {
+			Animator anim = GetComponent<Animator> ();
+			anim.SetTrigger("attack");
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
         }
 
@@ -193,14 +197,15 @@ namespace Assets.src.Managers.Entities
 
 
         private IEnumerator StartMoving()
-        {
+		{
+			var anim = GetComponent<Animator>();
             isMoving = true;
             while (true)
             {
 				float newx = transform.position.x + movement.x;
 				float newy = transform.position.y + movement.y;
-                if (movement.magnitude != 0f)
-                {
+                if (movement.magnitude != 0f) {
+					anim.SetBool("walking", true);
 					var newMovement = movement;
 					if (newx > 30 || newx < -30) {
 						newMovement.x = 0;
@@ -209,7 +214,9 @@ namespace Assets.src.Managers.Entities
 						newMovement.y = 0;
 					}
                     StartMoving(newMovement*Time.deltaTime);
-                }
+                } else {
+					anim.SetBool("walking", false);
+				}
                 //else
                 //{
                 //    isMoving = false;

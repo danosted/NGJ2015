@@ -39,5 +39,9 @@ namespace Assets.src.Common
             Bottle
 		}
 
+		public enum Audio {
+			PlayerAttack,
+			ChairDead
+		}
     }
 }

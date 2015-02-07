@@ -36,16 +36,17 @@ namespace Assets.src.Managers
 			foreach(GameObject playerObject in players)
 			{
 				Player player = playerObject.GetComponent<Player>();
+				Vector3 modifiedPlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y*3, player.transform.position.z);
 				if (kings.Contains(player))
 				{
-					if (Vector3.Magnitude(player.transform.position) > hillRadius)
+					if (Vector3.Magnitude(modifiedPlayerPosition) > hillRadius)
 					{
 						kings.Remove (player);
 					}
 				}
 				else 
 				{
-					if (Vector3.Magnitude(player.transform.position) <= hillRadius)
+					if (Vector3.Magnitude(modifiedPlayerPosition) <= hillRadius)
 					{
 						kings.Add (player);
 					}
