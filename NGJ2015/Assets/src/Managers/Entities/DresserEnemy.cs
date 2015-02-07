@@ -105,12 +105,12 @@ namespace Assets.src.Managers.Entities
             if (_target)
             {
                 var r = new Random();
-                transform.position += (new Vector3
+                UpdatePosition(transform.position + (new Vector3
                 {
                     x = (float) r.NextDouble(),
                     y = (float) r.NextDouble(),
                     z = 0
-                })/(Time.fixedDeltaTime * _speed);
+                })/(Time.fixedDeltaTime * _speed));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Assets.src.Managers.Entities
 
             if (_target != null)
             {
-                transform.position = Vector3.MoveTowards(transform.position, transform.position + (transform.position - _target.transform.position), Time.fixedDeltaTime * _speed);
+                UpdatePosition(Vector3.MoveTowards(transform.position, transform.position + (transform.position - _target.transform.position), Time.fixedDeltaTime * _speed));
             }
             
         }
@@ -136,7 +136,7 @@ namespace Assets.src.Managers.Entities
 
             if (_target != null)
             {
-                transform.position = Vector3.MoveTowards(transform.position, transform.position + (_target.transform.position - transform.position), Time.fixedDeltaTime * _speed);
+                UpdatePosition(Vector3.MoveTowards(transform.position, transform.position + (_target.transform.position - transform.position), Time.fixedDeltaTime * _speed));
             }
         }
 

@@ -15,12 +15,18 @@ namespace Assets.src.Managers.Entities
         protected float _damage;
         private HealthbarScript healthbar;
 
+        private bool _canMove;
+        private bool _beingPushedBack;
+        private Vector3 _pushBackPosition;
+
 		public void Initialize(float health, float speed, float range, float damage)
 		{
 			_health = health;
 			_speed = speed;
 			_range = range;
 			_damage = damage;
+		    _canMove = true;
+            _beingPushedBack = false;
 		    if (!healthbar)
 		    {
 		        healthbar = GetComponentInChildren<HealthbarScript>();
@@ -43,6 +49,37 @@ namespace Assets.src.Managers.Entities
             if (_health <= 0)
             {
                 Die();
+            }
+        }
+
+        public void FixedUpdate()
+        {
+            if (_beingPushedBack)
+            {
+                Debug.Log(string.Format("{0} {1} {2}", transform.position, _pushBackPosition, (transform.position - _pushBackPosition).magnitude));
+
+                if ((transform.position - _pushBackPosition).magnitude < 0.1)
+                {
+                    _beingPushedBack = false;
+                    _canMove = true;
+                }
+                transform.position = Vector3.MoveTowards(transform.position, _pushBackPosition,
+                    Time.fixedDeltaTime * _speed);
+            }
+        }
+
+        public void PushBack(Vector3 destination)
+        {
+            _canMove = false;
+            _beingPushedBack = true;
+            _pushBackPosition = destination;
+        }
+
+        protected void UpdatePosition(Vector3 position)
+        {
+            if (_canMove)
+            {
+                transform.position = position;
             }
         }
 

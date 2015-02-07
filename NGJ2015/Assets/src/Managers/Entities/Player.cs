@@ -25,7 +25,7 @@ namespace Assets.src.Managers.Entities
             _points += points;
         }
 
-        public void UseGamePad()
+        public void UseGamePad1()
 		{
 			Debug.Log ("Player 1 Events added");
 			KeyInputHandler.Instance.OnJoy1Vertical += this.OnJoy1Vertical;
@@ -93,7 +93,7 @@ namespace Assets.src.Managers.Entities
 
 		private void OnJoy1Horizontal(float mag)
 		{
-			Debug.Log (playerName);
+			//Debug.Log (playerName);
 			movement += Vector3.right*mag;
 			if(isMoving) return;
 			StartCoroutine(StartMoving());			
@@ -107,12 +107,13 @@ namespace Assets.src.Managers.Entities
 		}
 		private void OnJoy1FirePressed()
 		{			
+			//Debug.Log ("Attack1");
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
 		}
 		
 		private void OnJoy2Horizontal(float mag)
 		{
-			Debug.Log (playerName);
+			//Debug.Log (playerName);
 			movement += Vector3.right*mag;
 			if(isMoving) return;
 			StartCoroutine(StartMoving());			
@@ -126,6 +127,7 @@ namespace Assets.src.Managers.Entities
 		}
 		private void OnJoy2FirePressed()
 		{			
+			//Debug.Log ("Attack2");
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
 		}
 
