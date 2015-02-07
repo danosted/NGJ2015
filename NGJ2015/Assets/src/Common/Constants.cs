@@ -12,5 +12,6 @@ namespace Assets.src.Common
 		public const string PlayerManagerName = "PlayerManager";
 		public const string KeyInputHandlerName = "KeyInputHandler";
 		public const string MouseInputHandlerName = "MouseInputHandler";
+        public const string TransformBodyName = "body";
     }
 }
