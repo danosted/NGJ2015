@@ -10,13 +10,13 @@ namespace Assets.src.Managers
 
 		public AudioClip[] audioClips;
 
-        public GameObject PlayAudio(Enumerations.Audio audioName)
+        public void PlayAudio(Enumerations.Audio audioName)
         {
 			var audioToPlay = audioClips.Where (a => a.name == audioName.ToString ()).SingleOrDefault();
 			if (audioToPlay != null) {
 				AudioSource.PlayClipAtPoint (audioToPlay, new Vector3 (0, 0, 0));
 			} else {
-				Debug.LogError("Audio was not found", audioClips);
+				Debug.LogError("Audio was not found");
 			}
 		}
     }

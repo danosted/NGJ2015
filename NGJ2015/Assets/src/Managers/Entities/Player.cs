@@ -25,7 +25,7 @@ namespace Assets.src.Managers.Entities
             _points += points;
         }
 
-        public void UseGamePad()
+        public void UseGamePad1()
 		{
 			Debug.Log ("Player 1 Events added");
 			KeyInputHandler.Instance.OnJoy1Vertical += this.OnJoy1Vertical;
@@ -178,6 +178,8 @@ namespace Assets.src.Managers.Entities
 		}
         private void OnSpacePressed()
         {
+			var anim = transform.GetChild (0).GetComponent<Animator> ();
+			anim.SetTrigger("attack");
 			weapon.Attack (transform, Enumerations.WeaponType.Club);
         }
 
