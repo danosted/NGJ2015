@@ -14,29 +14,29 @@ namespace Assets.src.Managers.Entities
 		public void OnEnable()
 		{
 			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnDownPressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnDownReleased;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnUpPressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnUpReleased;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnRightPressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnRightReleased;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnLeftPressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnLeftReleased;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnSpacePressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed += this.OnSpaceReleased;
+            ManagerCollection.Instance.KeyInputManager.OnDownReleased += this.OnDownReleased;
+            ManagerCollection.Instance.KeyInputManager.OnUpPressed += this.OnUpPressed;
+            ManagerCollection.Instance.KeyInputManager.OnUpReleased += this.OnUpReleased;
+            ManagerCollection.Instance.KeyInputManager.OnRightPressed += this.OnRightPressed;
+            ManagerCollection.Instance.KeyInputManager.OnRightReleased += this.OnRightReleased;
+            ManagerCollection.Instance.KeyInputManager.OnLeftPressed += this.OnLeftPressed;
+            ManagerCollection.Instance.KeyInputManager.OnLeftReleased += this.OnLeftReleased;
+            ManagerCollection.Instance.KeyInputManager.OnSpacePressed += this.OnSpacePressed;
+            ManagerCollection.Instance.KeyInputManager.OnSpaceReleased += this.OnSpaceReleased;
 		}
 
 		public void OnDisable()
 		{
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnDownPressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnDownReleased;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnUpPressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnUpReleased;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnRightPressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnRightReleased;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnLeftPressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnLeftReleased;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnSpacePressed;
-			ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnSpaceReleased;
+            ManagerCollection.Instance.KeyInputManager.OnDownPressed -= this.OnDownPressed;
+            ManagerCollection.Instance.KeyInputManager.OnDownReleased -= this.OnDownReleased;
+            ManagerCollection.Instance.KeyInputManager.OnUpPressed -= this.OnUpPressed;
+            ManagerCollection.Instance.KeyInputManager.OnUpReleased -= this.OnUpReleased;
+            ManagerCollection.Instance.KeyInputManager.OnRightPressed -= this.OnRightPressed;
+            ManagerCollection.Instance.KeyInputManager.OnRightReleased -= this.OnRightReleased;
+            ManagerCollection.Instance.KeyInputManager.OnLeftPressed -= this.OnLeftPressed;
+            ManagerCollection.Instance.KeyInputManager.OnLeftReleased -= this.OnLeftReleased;
+            ManagerCollection.Instance.KeyInputManager.OnSpacePressed -= this.OnSpacePressed;
+            ManagerCollection.Instance.KeyInputManager.OnSpaceReleased -= this.OnSpaceReleased;
 		}
 
 		private void OnDownPressed()
