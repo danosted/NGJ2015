@@ -7,12 +7,12 @@ namespace Assets.src.Managers.Entities
     public class DresserEnemy : Enemy
 	{
 
-        private float _moveCloserDist = 6;
-        private float _moveAwayDist = 4;
+        private float _moveCloserDist = 10;
+        private float _moveAwayDist = 8;
 
         private float _nearbyMonstersDist = 15;
 
-        private int _minFramesToKeepAStrategy = 30;
+        private int _minFramesToKeepAStrategy = 10;
 
         private int _strategyFrameNum = 0;
         private MonsterStrategy _previousStrategy;
@@ -101,15 +101,15 @@ namespace Assets.src.Managers.Entities
         private void ExecuteIdleStrategy()
         {
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
-            if (_target)
+            var r = new Random();
+            if (_target && r.Next(50) < 2)
             {
-                //var r = new Random();
-                //UpdatePosition(transform.position + (new Vector3
-                //{
-                //    x = (float) (r.NextDouble()-0.5),
-                //    y = (float) (r.NextDouble()-0.5),
-                //    z = 0
-                //})/(5));
+                UpdatePosition(Vector3.MoveTowards(transform.position, transform.position + (new Vector3
+                {
+                    x = (float)(r.NextDouble() - 0.5),
+                    y = (float)(r.NextDouble() - 0.5),
+                    z = 0
+                }), Time.fixedDeltaTime*(_speed/2)));
             }
         }
 
