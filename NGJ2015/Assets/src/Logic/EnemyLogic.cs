@@ -94,7 +94,7 @@ namespace Assets.src.Logic
 
 		void Update() {
 			timeSinceLastWave += Time.deltaTime;
-			if (timeSinceLastWave > timeToNextSpawn && ManagerCollection.Instance.EnemyManager.ActiveObjects.Count <= maxNumOfEnemies) {
+			if (timeSinceLastWave > timeToNextSpawn && ManagerCollection.Instance.EnemyManager.ActiveObjects.Count < maxNumOfEnemies) {
 				timeSinceLastWave = 0.0f;
 				SpawnEnemy();
 				timeToNextSpawn = GetNextSpawnTime(Time.timeSinceLevelLoad);
