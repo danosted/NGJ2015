@@ -5,9 +5,13 @@ using Assets.src.Managers.Entities;
 using UnityEngine;
 using System.Collections;
 using Assets.src.Logic;
+using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
+
+    public Text p1Points;
+    public Text p2Points;
 
     // Use this for initialization
     void Start()
@@ -28,6 +32,10 @@ public class GameLogic : MonoBehaviour
 		p2.UseKeyBoard();
 		manCol.PlayerManager.Player2 = p2;
 		
-		var enemyLogic = EnemyLogic.Instance;    }
+		var enemyLogic = EnemyLogic.Instance;
+
+		ManagerCollection.Instance.PlayerManager.P1Text = p1Points;
+		ManagerCollection.Instance.PlayerManager.P2Text = p2Points;
+	}
 
 }

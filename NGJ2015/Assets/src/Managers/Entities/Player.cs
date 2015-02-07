@@ -12,13 +12,26 @@ namespace Assets.src.Managers.Entities
 		public string playerName;
 		private Weapon weapon = new Weapon();
 
-		public void UseGamePad()
+        private long points = 0;
+
+        public long GetPoints()
+        {
+            return points;
+        }
+
+        public void AddPoints(long points)
+        {
+            points += points;
+        }
+
+        public void UseGamePad()
 		{
 			KeyInputHandler.Instance.OnVertical += this.OnVertical;
 			KeyInputHandler.Instance.OnHorizontal += this.OnHorizontal;
 			KeyInputHandler.Instance.OnFirePressed += this.OnFirePressed;
 			KeyInputHandler.Instance.OnMovementStop += this.OnMovementStop;			
 		}
+
 		public void UseKeyBoard()
 		{
 			KeyInputHandler.Instance.OnDownPressed += this.OnDownPressed;
