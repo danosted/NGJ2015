@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using Assets.Backend.Utililties;
@@ -10,9 +11,22 @@ using UnityEngine;
 
 namespace Assets.src.Logic
 {
-    public class EnemyLogic
-    {
-        public void StartEnemyWave(int EnemyCount, float difficulty)
+    public class EnemyLogic : MonoBehaviour
+	{
+		private float timeSinceLastWave = 0.0f;
+		private float timeBetweenWaves = 5.0f;
+		private float difficulty = 1.0f;
+
+		void Update() {
+			timeSinceLastWave += Time.deltaTime;
+			if (timeSinceLastWave > timeBetweenWaves) {
+				timeSinceLastWave = 0.0f;
+				StartEnemyWave(20, difficulty);
+				difficulty += 1.0f;
+			}
+		}
+
+		public void StartEnemyWave(int EnemyCount, float difficulty)
         {
             for (int i = 0; i < EnemyCount; i++)
             {
@@ -23,6 +37,8 @@ namespace Assets.src.Logic
                 var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
                 enemy.GetComponent<Enemy>().SetTarget(players);
             }
+
+			// Start next wave
         }
     }
 }
