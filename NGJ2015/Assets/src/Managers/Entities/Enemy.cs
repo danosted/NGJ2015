@@ -10,10 +10,6 @@ namespace Assets.src.Managers.Entities
 	{
 		private Player _target;
 
-		public Enemy(float health, float speed, float range, float damage) : base(health, speed, range, damage)
-		{
-		}
-
 		public void SetTarget(GameObject targetObject)
 		{
 			_target = targetObject.GetComponent<Player>();
@@ -23,7 +19,9 @@ namespace Assets.src.Managers.Entities
 		{
 			if (_target)
 			{
-				Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
+                //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
+                //Debug.Log(msg, gameObject);
+				transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
 				if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
 				{
 					_target.TakeDamage(_damage);
