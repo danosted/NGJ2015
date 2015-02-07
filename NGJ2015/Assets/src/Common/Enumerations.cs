@@ -34,5 +34,10 @@ namespace Assets.src.Common
 			Club,
 			AssaultRifle
 		}
+		public enum ProjectileTypes
+		{
+			Bullet
+		}
+
     }
 }
