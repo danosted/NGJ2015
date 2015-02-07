@@ -67,6 +67,21 @@ namespace Assets.src.Managers
 			}
 		}
 
+		private MouseInputHandler _mouseInputManager;
+		public MouseInputHandler MouseInputManager
+		{
+			get
+			{
+				if (_mouseInputManager == null)
+				{
+					var prefab = Resources.Load(Constants.MouseInputHandlerName);
+					var GO = (GameObject.Instantiate(prefab)) as GameObject;
+					_mouseInputManager = GO.GetComponent<MouseInputHandler>();
+				}
+				return _mouseInputManager;
+			}
+		}
+
         private EventHandler _eventManager;
         public EventHandler EventManager
         {
@@ -78,7 +93,6 @@ namespace Assets.src.Managers
                 }
                 return _eventManager;
             }
-        }
-
+		}
     }
 }

@@ -10,5 +10,6 @@ namespace Assets.src.Common
 		public const string EnemyManagerName = "EnemyManager";
 		public const string PlayerManagerName = "PlayerManager";
 		public const string KeyInputHandlerName = "KeyInputHandler";
+		public const string MouseInputHandlerName = "MouseInputHandler";
     }
 }
