@@ -14,7 +14,7 @@ namespace Assets.src.Managers.Entities
 		protected float _range;
         protected float _damage;
         private HealthbarScript healthbar;
-        private FloatingCombatText floatingCombatText;
+        //private FloatingCombatText floatingCombatText;
 
         private bool _canMove;
         private bool _beingPushedBack;
@@ -32,10 +32,10 @@ namespace Assets.src.Managers.Entities
 		    {
 		        healthbar = GetComponentInChildren<HealthbarScript>();
 		    }
-		    if (!floatingCombatText)
-		    {
-		        floatingCombatText = GetComponentInChildren<FloatingCombatText>();
-		    }
+            //if (!floatingCombatText)
+            //{
+            //    floatingCombatText = GetComponentInChildren<FloatingCombatText>();
+            //}
             healthbar.Init(_health);
 		}
 
@@ -51,10 +51,10 @@ namespace Assets.src.Managers.Entities
             {
                 healthbar.DamageTaken(damage);
             }
-            if (floatingCombatText)
-            {
-                floatingCombatText.ShowFloatingText(damage.ToString());
-            }
+            //if (floatingCombatText)
+            //{
+            //    floatingCombatText.ShowFloatingText(damage.ToString());
+            //}
             if (_health <= 0)
             {
                 Die();
