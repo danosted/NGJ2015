@@ -13,7 +13,7 @@ namespace Assets.src.Managers.Entities
 
         protected List<MonsterDist> _nearbyMonsters;
 
-        private int minEnemyDistance = 2;
+        private int minEnemyDistance = 1;
         
 
 		public void SetTargets(List<GameObject> targetObjects)
