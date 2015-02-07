@@ -48,12 +48,17 @@ namespace Assets.src.Managers.Entities
         {
             Vector3 targetPosition = new Vector3(0, 0, 0);
             Vector3 enemyDistance;
-            foreach (var otherEnemy in _nearbyMonsters)
+            if (_nearbyMonsters != null)
             {
-                enemyDistance = otherEnemy.Monster.transform.position - transform.position;
-                if ((GetInstanceID() != otherEnemy.Monster.GetInstanceID()) && (enemyDistance.magnitude < minEnemyDistance))
-                    targetPosition -= enemyDistance * (minEnemyDistance - enemyDistance.magnitude);
+                foreach (var otherEnemy in _nearbyMonsters)
+                {
+                    enemyDistance = otherEnemy.Monster.transform.position - transform.position;
+                    if ((GetInstanceID() != otherEnemy.Monster.GetInstanceID()) &&
+                        (enemyDistance.magnitude < minEnemyDistance))
+                        targetPosition -= enemyDistance*(minEnemyDistance - enemyDistance.magnitude);
+                }
             }
+            
             return targetPosition;
         }
 

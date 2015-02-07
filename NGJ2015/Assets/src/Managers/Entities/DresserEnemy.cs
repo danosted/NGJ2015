@@ -101,7 +101,7 @@ namespace Assets.src.Managers.Entities
 
         private void ExecuteIdleStrategy()
         {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
+            //transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
                 var r = new Random();
@@ -117,7 +117,7 @@ namespace Assets.src.Managers.Entities
 
         private void ExecuteMoveAwayStrategy()
         {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
+            //transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
 
 
             if (_target != null)
@@ -132,7 +132,7 @@ namespace Assets.src.Managers.Entities
             //var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
 
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
+            //transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
 
             if (_target != null)
             {
