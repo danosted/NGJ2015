@@ -82,7 +82,7 @@ namespace Assets.src.Managers.Entities
         }
         private void OnSpacePressed()
         {
-			weapon.Attack (transform, Enumerations.WeaponType.Club);
+			weapon.Attack (transform, Enumerations.WeaponType.AssaultRifle);
         }
         private void OnSpaceReleased()
         {

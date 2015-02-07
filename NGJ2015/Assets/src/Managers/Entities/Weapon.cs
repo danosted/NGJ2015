@@ -33,7 +33,7 @@ namespace Assets.src.Managers.Entities
 		}
 		
 		private void AssaultRifleAttack(Transform transform) {
-			
+			ManagerCollection.Instance.WeaponManager.GetNewProjectileFromType (Enumerations.ProjectileTypes.Bullet, transform.position, transform.rotation);
 		}
     }
 }
