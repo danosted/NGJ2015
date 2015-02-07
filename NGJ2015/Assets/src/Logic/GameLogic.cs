@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
+	[SerializeField] private Image Win;
 	[SerializeField] private Image p1PointTimerBar;
 	[SerializeField] private Image p2PointTimerBar;
 	[SerializeField] private Image p1PointBar;
@@ -47,6 +48,7 @@ public class GameLogic : MonoBehaviour
 		ManagerCollection.Instance.PlayerManager.P2PointTimerBar = p2PointTimerBar;
 		ManagerCollection.Instance.PlayerManager.P1PointBar = p1PointBar;
 		ManagerCollection.Instance.PlayerManager.P2PointBar = p2PointBar;
+		ManagerCollection.Instance.PlayerManager.Win = Win;
 
 	}
 
