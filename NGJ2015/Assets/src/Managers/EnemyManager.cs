@@ -12,6 +12,16 @@ namespace Assets.src.Managers
         public GameObject GetNewEnemyFromType(Enumerations.EnemyType enemyType)
         {
             Debug.Log(string.Format("Fetching object with type '{0}'.", enemyType));
+            if(InactiveObjects.Exists(x => x.GetComponent(enemyType.ToString())))
+            {
+                Debug.Log(string.Format("Object found in pool."));
+                var poolObject = InactiveObjects.Find(x => x.GetComponent(enemyType.ToString()));
+                var inactiveGO = GameObject.Instantiate(poolObject) as GameObject;
+                ActiveObjects.Add(inactiveGO.gameObject);
+                inactiveGO.transform.parent = transform;
+                inactiveGO.SetActive(true);
+                return inactiveGO;
+            }
             var GO = PrefabPool.Find(x => x.GetComponent(enemyType.ToString()) != null);
             if (GO == null)
             {
@@ -28,6 +38,13 @@ namespace Assets.src.Managers
         {
             Debug.Log(string.Format("Fetching active monster objects."));
             return ActiveObjects;
+        }
+
+        public void PoolEnemyObject(GameObject enemyGameObject)
+        {
+            enemyGameObject.SetActive(false);
+            ActiveObjects.Remove(enemyGameObject);
+            InactiveObjects.Add(enemyGameObject);
         }
     }
 }

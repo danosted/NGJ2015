@@ -22,5 +22,11 @@ namespace Assets.src.Common
             HomingPlayer,
             RangedPlayer
         }
+
+        public enum PowerupType
+        {
+            SpeedPowerup,
+            DamagePowerup
+        }
     }
 }
