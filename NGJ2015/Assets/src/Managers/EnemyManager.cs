@@ -36,7 +36,7 @@ namespace Assets.src.Managers
 
         public List<GameObject> GetActiveMonsters()
         {
-            Debug.Log(string.Format("Fetching active monster objects."));
+            //Debug.Log(string.Format("Fetching active monster objects."));
             return ActiveObjects;
         }
 

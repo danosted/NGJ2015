@@ -90,16 +90,16 @@ namespace Assets.src.Managers.Entities
         {
             if (_target)
             {
-                var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
-                Debug.Log(msg, gameObject);
+                //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
+                //Debug.Log(msg, gameObject);
                 transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
             }
         }
 
         private void ExecuteSpreadStrategy()
         {
-            var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
-            Debug.Log(msg, gameObject);
+            //var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
+            //Debug.Log(msg, gameObject);
 
             var finalDirection = new Vector3();
             var directions = _nearbyMonsters.Select(m => (-1 / m.Dist.magnitude * m.Dist));
@@ -110,7 +110,7 @@ namespace Assets.src.Managers.Entities
             finalDirection = finalDirection.normalized;
             if (_target)
             {
-                finalDirection += (transform.position - _target.transform.position).normalized;
+                finalDirection += (_target.transform.position - transform.position).normalized;
                 finalDirection /= 2;
             }
 
@@ -119,8 +119,8 @@ namespace Assets.src.Managers.Entities
 
         private void ExecuteSwarmStrategy()
         {
-            var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
-            Debug.Log(msg, gameObject);
+            //var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
+            //Debug.Log(msg, gameObject);
 
             var finalDirection = new Vector3();
             var directions = _nearbyMonsters.Select(m => (1 / m.Dist.magnitude * m.Dist));
@@ -132,7 +132,7 @@ namespace Assets.src.Managers.Entities
             finalDirection = finalDirection.normalized;
             if (_target)
             {
-                finalDirection += (transform.position - _target.transform.position).normalized;
+                finalDirection += (_target.transform.position - transform.position).normalized;
                 finalDirection /= 2;
             }
 
