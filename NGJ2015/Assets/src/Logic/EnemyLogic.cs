@@ -102,9 +102,9 @@ namespace Assets.src.Logic
 		}
 
 		void SpawnEnemy() {
-			var enemy = ManagerCollection.Instance.EnemyManager.GetNewEnemyFromType(Enumerations.EnemyType.Enemy);
+			var enemy = ManagerCollection.Instance.EnemyManager.GetNewEnemyFromType(Enumerations.EnemyType.DresserEnemy);
 			enemy.transform.position = MathUtil.RandomOnUnitCircle() * 50f;
-			var enemyScript = enemy.GetComponent(Enumerations.EnemyType.Enemy.ToString()) as Enemy;
+			var enemyScript = enemy.GetComponent(Enumerations.EnemyType.DresserEnemy.ToString()) as Enemy;
 			enemyScript.Initialize(10f,5f,5f,1f);
 			var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
 			enemy.GetComponent<Enemy>().SetTargets(players);

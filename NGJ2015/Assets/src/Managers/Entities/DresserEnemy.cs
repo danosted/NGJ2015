@@ -139,5 +139,11 @@ namespace Assets.src.Managers.Entities
                 transform.position = Vector3.MoveTowards(transform.position, transform.position + (_target.transform.position - transform.position), Time.fixedDeltaTime * _speed);
             }
         }
+
+		public override void Die() {
+			base.Die ();
+			var anim = GetComponent<Animator> ();
+			anim.SetBool ("isDead",true);
+		}
     }
 }
