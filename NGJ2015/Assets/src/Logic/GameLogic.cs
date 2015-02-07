@@ -33,13 +33,19 @@ public class GameLogic : MonoBehaviour
 			p1.UseGamePad1 ();
 		}
 
-		manCol.PlayerManager.Player1 = p1;
+
         var player2 = manCol.PlayerManager.GetNewPlayerFromType(Enumerations.PlayerType.Player);
 		var p2 = player2.GetComponent(Enumerations.PlayerType.Player.ToString()) as Player;
 		p2.Initialize(10,10,10,5);
 		p2.playerName = "player2";
 		p2.UseGamePad2();
+
+		p1.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ManagerCollection.Instance.PlayerManager.GetPlayerColor(p1);
+		p2.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ManagerCollection.Instance.PlayerManager.GetPlayerColor(p2);
+
+		manCol.PlayerManager.Player1 = p1;
 		manCol.PlayerManager.Player2 = p2;
+
 
 		var enemyLogic = EnemyLogic.Instance;    
 		var hillManager = ManagerCollection.Instance.HillManager;    
