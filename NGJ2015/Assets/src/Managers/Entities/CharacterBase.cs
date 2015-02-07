@@ -30,6 +30,15 @@ namespace Assets.src.Managers.Entities
         public void TakeDamage(float damage)
         {
             _health -= damage;
+            if (_health < 0)
+            {
+                Die();
+            }
+        }
+
+        public virtual void Die()
+        {
+            // die animation
         }
 		
         protected void StopMoving()

@@ -38,6 +38,20 @@ namespace Assets.src.Managers
             }
         }
 
+		private WeaponManager _weaponManager;
+		public WeaponManager WeaponManager 
+		{
+			get
+			{
+				if (_weaponManager == null) {
+					var prefab = Resources.Load(Constants.WeaponManagerName);
+					var GO = (GameObject.Instantiate(prefab)) as GameObject;
+					_weaponManager = GO.GetComponent<WeaponManager>();
+				}
+				return _weaponManager;
+			}
+		}
+
         private PlayerManager _playerManager;
         public PlayerManager PlayerManager
         {

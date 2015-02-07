@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.src.Managers;
+using Assets.src.Common;
 
 namespace Assets.src.Managers.Entities
 {
@@ -9,6 +10,7 @@ namespace Assets.src.Managers.Entities
         private bool isMoving;
         private Vector3 movement = Vector3.zero;
 		public string playerName;
+		private Weapon weapon = new Weapon();
 
 		public void UseGamePad()
 		{
@@ -120,14 +122,7 @@ namespace Assets.src.Managers.Entities
 		}
         private void OnSpacePressed()
         {
-			iTween.PunchRotation(transform.GetChild (0).GetChild(3).gameObject, new Vector3(0, 0, -120),0.5f);
-			iTween.ShakePosition(Camera.main.gameObject, Vector3.one*0.02f, 0.5f);
-//			iTween.PunchRotation(Camera.main.gameObject, new Vector3(0, 0, 720),4.5f);
-			var colliders = Physics.OverlapSphere(transform.position, 10f);
-			foreach(var collider in colliders)
-			{
-				iTween.PunchScale(collider.gameObject, Vector3.one*10.1f, 0.5f);
-			}
+			weapon.Attack (transform, Enumerations.WeaponType.Club);
         }
 
 		private void OnSpaceReleased()
@@ -163,6 +158,13 @@ namespace Assets.src.Managers.Entities
                 //}
                 yield return null;
             }
+        }
+
+        public override void Die()
+        {
+            //Debug.Log("Player die");
+            base.Die();
+            
         }
     }
 }

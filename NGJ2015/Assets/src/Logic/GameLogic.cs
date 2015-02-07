@@ -4,6 +4,7 @@ using Assets.src.Managers;
 using Assets.src.Managers.Entities;
 using UnityEngine;
 using System.Collections;
+using Assets.src.Logic;
 
 public class GameLogic : MonoBehaviour
 {
@@ -20,16 +21,13 @@ public class GameLogic : MonoBehaviour
 		p1.playerName = "player1"; 
 		p1.UseGamePad();
 		manCol.PlayerManager.Player1 = p1;
-
         var player2 = manCol.PlayerManager.GetNewPlayerFromType(Enumerations.PlayerType.Player);
 		var p2 = player2.GetComponent(Enumerations.PlayerType.Player.ToString()) as Player;
 		p2.Initialize(10,10,10,5);
 		p2.playerName = "player2";
 		p2.UseKeyBoard();
 		manCol.PlayerManager.Player2 = p2;
-
-        LogicCollection.Instance.EnemyLogic.StartEnemyWave(50, 1f);
-
-    }
+		
+		var enemyLogic = EnemyLogic.Instance;    }
 
 }
