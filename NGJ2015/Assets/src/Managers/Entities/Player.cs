@@ -46,35 +46,40 @@ namespace Assets.src.Managers.Entities
 
 		private void OnDownPressed()
 		{
-			Move(new Vector3(0, 1)*Time.deltaTime);
+            if (isMoving) return;
+			this.StartMoving(new Vector3(0, -1)*Time.deltaTime);
 		}
 		private void OnDownReleased()
 		{
-			
+		    StopMoving();
 		}
 		private void OnUpPressed()
 		{
-			Move(new Vector3(0, -1)*Time.deltaTime);
+            if(isMoving) return;
+			this.StartMoving(new Vector3(0, 1)*Time.deltaTime);
 		}
 		private void OnUpReleased()
 		{
-			
+            StopMoving();
 		}
 		private void OnRightPressed()
 		{
-			Move(new Vector3(1, 0)*Time.deltaTime);
+
+			this.StartMoving(new Vector3(1, 0)*Time.deltaTime);
 		}
 		private void OnRightReleased()
 		{
-			
+            StopMoving();
 		}
 		private void OnLeftPressed()
 		{
-			Move(new Vector3(-1, 0)*Time.deltaTime);
+
+            if (isMoving) return;
+			this.StartMoving(new Vector3(-1, 0)*Time.deltaTime);
 		}
 		private void OnLeftReleased()
 		{
-
+            StopMoving();
 		}
 		private void OnSpacePressed()
 		{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Assets.src.Managers.Entities
 		protected float _health;
 		protected float _speed;
 		protected float _range;
-		protected float _damage;
+        protected float _damage;
 
 		public CharacterBase(float health, float speed, float range, float damage)
 		{
@@ -21,11 +22,18 @@ namespace Assets.src.Managers.Entities
 			_damage = damage;
 		}
 
-		protected void Move(Vector3 movement)
+		protected void StartMoving(Vector3 movement)
 		{
-			transform.position += movement;
+		    transform.position = transform.position += movement;
 		}
 		
+        protected void StopMoving()
+        {
+            if(!isMoving) return;
+            isMoving = false;
+            StopCoroutine("ConstantMovingEnumerator");
+        }
+
 		public float GetSpeed()
 		{
 			return _speed;
