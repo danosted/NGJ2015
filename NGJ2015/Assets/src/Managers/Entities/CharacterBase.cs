@@ -29,8 +29,6 @@ namespace Assets.src.Managers.Entities
 		
         protected void StopMoving()
         {
-            if(!isMoving) return;
-            isMoving = false;
             StopCoroutine("ConstantMovingEnumerator");
         }
 
