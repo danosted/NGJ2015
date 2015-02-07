@@ -143,7 +143,7 @@ namespace Assets.src.Managers.Entities
         {
             Debug.Log("Enemy die");
             base.Die();
-            ManagerCollection.Instance.EnemyManager.ActiveObjects.Remove(gameObject);
+            ManagerCollection.Instance.EnemyManager.PoolEnemyObject(gameObject);
         }
 
         private GameObject GetNearestTarget(List<GameObject> targets, Vector3 position)
