@@ -183,7 +183,7 @@ namespace Assets.src.Managers.Entities
 		}
         private void OnSpacePressed()
         {
-			Animator anim = GetComponent<Animator> ();
+			Animator anim = GetComponentInChildren<Animator> ();
 			anim.SetTrigger("attack");
             if (!weapon)
             {
@@ -202,7 +202,7 @@ namespace Assets.src.Managers.Entities
 
         private IEnumerator StartMoving()
 		{
-			var anim = GetComponent<Animator>();
+			var anim = GetComponentInChildren<Animator>();
             isMoving = true;
             while (true)
             {
