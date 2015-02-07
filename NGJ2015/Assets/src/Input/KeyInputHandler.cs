@@ -130,7 +130,7 @@ public class KeyInputHandler : MonoBehaviour
 		//Debug.Log("H2: " + Mathf.Abs(Input.GetAxis("Joy2-Horizontal")) +" V2: "+ Mathf.Abs(Input.GetAxis("Joy2-Vertical")) +"Hit2"+ Input.GetAxis("Joy2-Fire"));
 
 		//Debug.Log("H1: " + Mathf.Abs(Input.GetAxis("Joy1-Horizontal")) +" V1: "+ Mathf.Abs(Input.GetAxis("Joy1-Vertical")) +"Hit1"+ Input.GetAxis("Joy1-Fire"));
-		Debug.Log("H2: " + Mathf.Abs(Input.GetAxis("Joy2-Look-Horizontal")) +" V2: "+ Mathf.Abs(Input.GetAxis("Joy2-Look-Vertical")) +"Hit2"+ Input.GetAxis("Joy2-Fire"));
+		//Debug.Log("H2: " + Mathf.Abs(Input.GetAxis("Joy2-Look-Horizontal")) +" V2: "+ Mathf.Abs(Input.GetAxis("Joy2-Look-Vertical")) +"Hit2"+ Input.GetAxis("Joy2-Fire"));
 
 		//AllStop
 
@@ -282,8 +282,9 @@ public class KeyInputHandler : MonoBehaviour
 			}
 			
 		}
-		if(Input.GetAxis("Joy1-Fire") <= -.5f)
+		if(Input.GetAxis("Joy1-Fire") != 0)
 		{
+			//Debug.Log ("Attack1 " + Input.GetAxis("Joy1-Fire"));
 			if(OnJoy1FirePressed != null)
 			{
 				OnJoy1FirePressed();
@@ -320,8 +321,9 @@ public class KeyInputHandler : MonoBehaviour
 			}
 			
 		}
-		if(Input.GetAxis("Joy2-Fire") <= -.5f)
+		if(Input.GetAxis("Joy2-Fire") != 0f)
 		{
+			//Debug.Log ("Attack2 " + Input.GetAxis("Joy1-Fire"));
 			if(OnJoy2FirePressed != null)
 			{
 				OnJoy2FirePressed();
