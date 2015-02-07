@@ -54,14 +54,14 @@ namespace Assets.src.Managers.Entities
 
 		    }
 
-            transform.position += KeepEnemyDistance();
+            UpdatePosition(transform.position + KeepEnemyDistance());
 
 		    if (_target)
 		    {
                 if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
                 {
                     _target.TakeDamage(_damage);
-                    PushBack(((transform.position - _target.transform.position).normalized));
+                    PushBack(((transform.position - _target.transform.position).normalized)*1.1f);
                 }
 		    }
 		    
@@ -113,9 +113,14 @@ namespace Assets.src.Managers.Entities
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
-
+                var extraSpeed = 0f;
+                var distance = (transform.position - _target.transform.position).magnitude;
+                if (distance < 2*_range)
+                {
+                    extraSpeed = distance;
+                }
                 UpdatePosition(Vector3.MoveTowards(transform.position, _target.transform.position,
-                    Time.fixedDeltaTime*_speed));
+                    Time.fixedDeltaTime * (_speed + extraSpeed)));
             }
         }
 

@@ -36,7 +36,8 @@ namespace Assets.src.Managers.Entities
             Vector3 playerPos = transform.position;
             Vector2 weaponToMouse = (mousepos - playerPos).normalized;
 
-            var colliders = Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f) * 2.5f, 3f);
+            var colliders =
+                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*2.5f, 3f);
             if (colliders.Count() > 0)
             {
                 ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.PlayerAttack);
@@ -48,7 +49,7 @@ namespace Assets.src.Managers.Entities
             foreach (var collider in colliders)
             {
 
-                iTween.PunchScale(collider.gameObject, Vector3.one * 10.1f, 0.5f);
+                //iTween.PunchScale(collider.gameObject, Vector3.one * 10.1f, 0.5f);
                 var enemy = collider.GetComponent<Enemy>();
                 if (enemy != null)
                 {
@@ -57,16 +58,17 @@ namespace Assets.src.Managers.Entities
                 var character = collider.GetComponent<CharacterBase>();
                 if (character != null)
                 {
-                    Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
                     var mulitiplier = 1;
                     if ((character as Player) != null)
                     {
                         mulitiplier = 3;
                     }
                     character.PushBack(
-                        character.transform.position + ((character.transform.position - playerPos).normalized) *
+                        ((character.transform.position - playerPos).normalized)*
                         mulitiplier);
+
                 }
+
             }
         }
 

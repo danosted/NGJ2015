@@ -77,6 +77,13 @@ public class PlayerManager : ManagerBase
 		_gainingPlayer = null;
 	}
 
+	public Color GetPlayerColor(Player player)
+	{
+		if (player.playerName == "player1")
+			return new Color(185f/255f,71f/255f,177f/255f);
+		return new Color(96f/255f,207f/255f,135f/255f);
+	}
+
 	public IEnumerator GivePointsToPlayer(Player player, long points)
     {
         while(true)
@@ -92,18 +99,10 @@ public class PlayerManager : ManagerBase
 				Win.transform.GetChild(0).GetComponent<Text>().text = player.playerName;
 
 				Win.transform.GetChild(1).GetComponent<Text>().text = player.playerName;
-				switch(player.playerName)
-				{
-				case "player1":
-					Win.transform.GetChild(0).GetComponent<Text>().color = new Color(185f/255f,71f/255f,177f/255f);
-					Win.transform.GetChild(2).GetComponent<Text>().color = new Color(185f/255f,71f/255f,177f/255f);
-					break;
-				case "player2":
-					Win.transform.GetChild(0).GetComponent<Text>().color = new Color(96f/255f,207f/255f,135f/255f);
-					Win.transform.GetChild(2).GetComponent<Text>().color = new Color(96f/255f,207f/255f,135f/255f);
-					break;
+				Color playerColor = GetPlayerColor(player);
+				Win.transform.GetChild(0).GetComponent<Text>().color = playerColor;
+				Win.transform.GetChild(2).GetComponent<Text>().color = playerColor;
 
-				}
 				Win.gameObject.SetActive(true);
 				Time.timeScale = 0;
 			}
