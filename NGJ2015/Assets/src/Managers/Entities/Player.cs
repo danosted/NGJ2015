@@ -13,7 +13,19 @@ namespace Assets.src.Managers.Entities
 		public string playerName;
 		private Weapon weapon = new Weapon();
 
-		public void UseGamePad1()
+        private long _points = 0;
+
+        public long GetPoints()
+        {
+            return _points;
+        }
+
+        public void AddPoints(long points)
+        {
+            _points += points;
+        }
+
+        public void UseGamePad()
 		{
 			Debug.Log ("Player 1 Events added");
 			KeyInputHandler.Instance.OnJoy1Vertical += this.OnJoy1Vertical;
@@ -179,9 +191,18 @@ namespace Assets.src.Managers.Entities
             isMoving = true;
             while (true)
             {
+				float newx = transform.position.x + movement.x;
+				float newy = transform.position.y + movement.y;
                 if (movement.magnitude != 0f)
                 {
-                    StartMoving(movement*Time.deltaTime);
+					var newMovement = movement;
+					if (newx > 30 || newx < -30) {
+						newMovement.x = 0;
+					}
+					if (newy > 13 || newy < -11) {
+						newMovement.y = 0;
+					}
+                    StartMoving(newMovement*Time.deltaTime);
                 }
                 //else
                 //{

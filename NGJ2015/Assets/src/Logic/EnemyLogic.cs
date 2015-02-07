@@ -14,6 +14,8 @@ namespace Assets.src.Logic
 	{
 		private float timeSinceLastWave = 0.0f;
 		private float timeToNextSpawn = 0.0f;
+		private int maxNumOfEnemies = 20;
+
 
 		private static EnemyLogic _instance;
 		
@@ -92,7 +94,7 @@ namespace Assets.src.Logic
 
 		void Update() {
 			timeSinceLastWave += Time.deltaTime;
-			if (timeSinceLastWave > timeToNextSpawn) {
+			if (timeSinceLastWave > timeToNextSpawn && ManagerCollection.Instance.EnemyManager.ActiveObjects.Count < maxNumOfEnemies) {
 				timeSinceLastWave = 0.0f;
 				SpawnEnemy();
 				timeToNextSpawn = GetNextSpawnTime(Time.timeSinceLevelLoad);
