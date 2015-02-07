@@ -16,6 +16,7 @@ namespace Assets.src.Managers.Entities
         public float NearbyMonstersDist = 5;
         public int SwarmThreshold = 5;
         public int SpreadThreshold = 10;
+        public int minEnemyDistance = 2;
 
         public enum MonsterStrategy
         {
@@ -53,6 +54,8 @@ namespace Assets.src.Managers.Entities
                     break;
 
 		    }
+
+            transform.position += keepEnemyDistance();
 
 		    if (_target)
 		    {
@@ -179,15 +182,17 @@ namespace Assets.src.Managers.Entities
             public Vector3 Dist;
             public GameObject Monster;
         }
-		//private Vector3 keepEnemyDistance (GameObject enemyObject) {
-		//			Vector3 targetPosition = new Vector3(0, 0, 0);
-		//			Vector3 enemyDistance;
-		//			foreach (var otherEnemy in enemies) {
-		//				enemyDistance = otherEnemy.transform.position - enemyObject.transform.position;
-		//				if ((enemyObject.GetInstanceID() != otherEnemy.GetInstanceID()) && (enemyDistance.magnitude < minEnemyDistance))
-		//					targetPosition -= enemyDistance*(minEnemyDistance-enemyDistance.magnitude);
-		//			}
-		//			return targetPosition;
-		//		}
+        private Vector3 keepEnemyDistance()
+        {
+            Vector3 targetPosition = new Vector3(0, 0, 0);
+            Vector3 enemyDistance;
+            foreach (var otherEnemy in _nearbyMonsters)
+            {
+                enemyDistance = otherEnemy.Monster.transform.position - transform.position;
+                if ((GetInstanceID() != otherEnemy.Monster.GetInstanceID()) && (enemyDistance.magnitude < minEnemyDistance))
+                    targetPosition -= enemyDistance * (minEnemyDistance - enemyDistance.magnitude);
+            }
+            return targetPosition;
+        }
     }
 }
