@@ -31,12 +31,17 @@ namespace Assets.src.Common
 		public enum WeaponType
 		{
 			Club,
-			AssaultRifle
+			Drawer
 		}
 		public enum ProjectileTypes
 		{
-			Bullet
+			Drawer,
+            Bottle
 		}
 
+		public enum Audio {
+			PlayerAttack,
+			ChairDead
+		}
     }
 }

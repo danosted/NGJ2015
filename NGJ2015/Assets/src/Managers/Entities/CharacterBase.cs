@@ -67,8 +67,6 @@ namespace Assets.src.Managers.Entities
         {
             if (_beingPushedBack)
             {
-                Debug.Log(string.Format("{0} {1} {2}", transform.position, _pushBackVector,
-                    (transform.position - _pushBackVector).magnitude));
 
                 if (_pushbackFrame > _pushbackFrames)
                 {
