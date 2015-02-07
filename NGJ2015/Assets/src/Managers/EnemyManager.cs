@@ -14,13 +14,12 @@ namespace Assets.src.Managers
             Debug.Log(string.Format("Fetching object with type '{0}'.", enemyType));
             if(InactiveObjects.Exists(x => x.GetComponent(enemyType.ToString())))
             {
-                Debug.Log(string.Format("Object found in pool."));
                 var poolObject = InactiveObjects.Find(x => x.GetComponent(enemyType.ToString()));
-                var inactiveGO = GameObject.Instantiate(poolObject) as GameObject;
-                ActiveObjects.Add(inactiveGO.gameObject);
-                inactiveGO.transform.parent = transform;
-                inactiveGO.SetActive(true);
-                return inactiveGO;
+				ActiveObjects.Add(poolObject);
+				InactiveObjects.Remove(poolObject);
+				poolObject.transform.parent = transform;
+				poolObject.SetActive(true);
+				return poolObject;
             }
             var GO = PrefabPool.Find(x => x.GetComponent(enemyType.ToString()) != null);
             if (GO == null)
