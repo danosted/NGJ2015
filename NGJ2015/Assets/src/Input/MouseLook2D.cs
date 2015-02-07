@@ -15,7 +15,6 @@ namespace Assets.src.Input
         private bool facingLeft;
         private bool _isFacingRight;
 
-
         void Awake()
         {
             MouseInputHandler input = GetComponent<MouseInputHandler>();
@@ -26,8 +25,8 @@ namespace Assets.src.Input
 		input.OnFaceRight += FaceRight;
 #endif
             body = transform.FindChild(Constants.TransformBodyName);
-            Debug.LogWarning(transform.GetChild(0).childCount);
-            Debug.LogWarning(body);
+            //Debug.LogWarning(transform.GetChild(0).childCount);
+            //Debug.LogWarning(body);
             //body = weapons[0];
             //GameObject weaponGO = Instantiate(body.gameObject, gunPosition.position, body.transform.rotation) as GameObject;
             //weaponGO.transform.parent = transform;

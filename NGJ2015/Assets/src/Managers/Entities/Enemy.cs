@@ -18,6 +18,13 @@ namespace Assets.src.Managers.Entities
         public int SwarmThreshold = 5;
         public int SpreadThreshold = 10;
         public int minEnemyDistance = 2;
+
+        private Vector3 _direction;
+
+        public Vector3 Direction
+        {
+            get { return _direction; }
+        }
         
 
         public enum MonsterStrategy
@@ -106,6 +113,7 @@ namespace Assets.src.Managers.Entities
             {
                 //var msg = string.Format("Enemy {0} is moving towards {1}.", gameObject, _target);
                 //Debug.Log(msg, gameObject);
+                _direction = _target.transform.position - transform.position;
                 transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
             }
         }
@@ -135,7 +143,7 @@ namespace Assets.src.Managers.Entities
                 direction += _target.transform.position - transform.position;
                 direction /= 3;
             }
-
+            _direction = direction;
             transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * _speed);
         }
 
@@ -159,7 +167,7 @@ namespace Assets.src.Managers.Entities
                 finalDirection += _target.transform.position;
                 finalDirection /= 2;
             }
-
+            _direction = finalDirection;
             transform.position = Vector3.MoveTowards(transform.position, finalDirection, Time.deltaTime * _speed);
         }
 
