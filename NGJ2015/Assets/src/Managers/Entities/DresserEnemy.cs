@@ -7,16 +7,17 @@ namespace Assets.src.Managers.Entities
     public class DresserEnemy : Enemy
 	{
 
-        private float _moveCloserDist = 6;
-        private float _moveAwayDist = 4;
+        private float _moveCloserDist = 10;
+        private float _moveAwayDist = 8;
 
         private float _nearbyMonstersDist = 15;
 
-        private int _minFramesToKeepAStrategy = 30;
+        private int _minFramesToKeepAStrategy = 10;
 
         private int _strategyFrameNum = 0;
         private MonsterStrategy _previousStrategy;
 
+        private int _drawersLeft = 3;
 
         private enum MonsterStrategy
         {
@@ -64,12 +65,6 @@ namespace Assets.src.Managers.Entities
 
         private MonsterStrategy ChooseStrategy()
         {
-            _strategyFrameNum++;
-            if (_strategyFrameNum < _minFramesToKeepAStrategy)
-            {
-                return _previousStrategy;
-            }
-            _strategyFrameNum = 0;
 
             _target = GetNearestTarget(_targets, transform.position).GetComponent<CharacterBase>();
 
@@ -80,9 +75,16 @@ namespace Assets.src.Managers.Entities
                     .Where(m => m.Dist.magnitude < _nearbyMonstersDist)
                     .ToList();
 
+            _strategyFrameNum++;
+            if (_strategyFrameNum < _minFramesToKeepAStrategy)
+            {
+                return _previousStrategy;
+            }
+            _strategyFrameNum = 0;
+
             var targetDistance = (_target.transform.position - transform.position).magnitude;
-            
-            if (targetDistance >= _moveCloserDist)
+
+            if (targetDistance >= _moveCloserDist || _drawersLeft == 0)
             {
                 _previousStrategy = MonsterStrategy.MoveCloser;
                 return _previousStrategy;
@@ -98,20 +100,30 @@ namespace Assets.src.Managers.Entities
             return _previousStrategy;
         }
 
+        private void Shoot()
+        {
+            if (_drawersLeft > 0)
+            {
+                _drawersLeft--;
+                // TODO: Shoot
+            }
+        }
+
         private void ExecuteIdleStrategy()
         {
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
-            if (_target)
+            var r = new Random();
+            if (_target && r.Next(50) < 2)
             {
-                //var r = new Random();
-                //UpdatePosition(transform.position + (new Vector3
-                //{
-                //    x = (float) (r.NextDouble()-0.5),
-                //    y = (float) (r.NextDouble()-0.5),
-                //    z = 0
-                //})/(5));
+                UpdatePosition(Vector3.MoveTowards(transform.position, transform.position + (new Vector3
+                {
+                    x = (float)(r.NextDouble() - 0.5),
+                    y = (float)(r.NextDouble() - 0.5),
+                    z = 0
+                }), Time.fixedDeltaTime*(_speed/2)));
             }
         }
+
 
 
         private void ExecuteMoveAwayStrategy()

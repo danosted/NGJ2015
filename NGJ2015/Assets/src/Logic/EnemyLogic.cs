@@ -16,7 +16,9 @@ namespace Assets.src.Logic
 		private float timeToNextSpawn = 0.0f;
 		private int maxNumOfEnemies = 20;
 
+        private Enumerations.EnemyType[] _activeEnemyTypes = new[] { Enumerations.EnemyType.DresserEnemy, Enumerations.EnemyType.ChairEnemy };
 
+        private System.Random _random = new System.Random();
 		private static EnemyLogic _instance;
 		
 		private static object _lock = new object();
@@ -101,14 +103,16 @@ namespace Assets.src.Logic
 			}
 		}
 
-		void SpawnEnemy() {
-			var enemy = ManagerCollection.Instance.EnemyManager.GetNewEnemyFromType(Enumerations.EnemyType.DresserEnemy);
+		void SpawnEnemy()
+		{
+		    var chosenType = _activeEnemyTypes[_random.Next(0, _activeEnemyTypes.Length)];
+            var enemy = ManagerCollection.Instance.EnemyManager.GetNewEnemyFromType(chosenType);
 			enemy.transform.position = MathUtil.RandomOnUnitCircle() * 50f;
-			var enemyScript = enemy.GetComponent(Enumerations.EnemyType.DresserEnemy.ToString()) as Enemy;
+            var enemyScript = enemy.GetComponent(chosenType.ToString()) as Enemy;
 			enemyScript.Initialize(10f,5f,5f,1f);
 			var players = ManagerCollection.Instance.PlayerManager.GetActivePlayers();
-            Debug.Log(enemy.GetComponent(Enumerations.EnemyType.DresserEnemy.ToString()));
-            ((Enemy)enemy.GetComponent(Enumerations.EnemyType.DresserEnemy.ToString())).SetTargets(players);
+
+            enemyScript.SetTargets(players);
 		}
 
 		float GetNextSpawnTime(float elapsedTime) {
