@@ -9,7 +9,6 @@ namespace Assets.src.Managers
 {
     public class ManagerCollection
     {
-        private bool _instantiated = false;
 
         private static ManagerCollection _managerCollection;
         public static ManagerCollection Instance
@@ -53,22 +52,6 @@ namespace Assets.src.Managers
                 return _playerManager;
             }
         }
-
-		private KeyInputHandler _keyInputManager;
-		public KeyInputHandler KeyInputManager
-		{
-			get
-			{
-                if (_keyInputManager == null && !_instantiated)
-                {
-                    _instantiated = true;
-					var prefab = Resources.Load(Constants.KeyInputHandlerName);
-					var GO = (GameObject.Instantiate(prefab)) as GameObject;
-					_keyInputManager = GO.GetComponent<KeyInputHandler>();
-				}
-				return _keyInputManager;
-			}
-		}
 
 		private MouseInputHandler _mouseInputManager;
 		public MouseInputHandler MouseInputManager
