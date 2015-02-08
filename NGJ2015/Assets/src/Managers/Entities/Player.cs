@@ -266,7 +266,7 @@ namespace Assets.src.Managers.Entities
             {
                 weapon = GetComponent<Weapon>();
             }
-            weapon.Attack(transform, Enumerations.WeaponType.Club);
+
 			if (!isDead) {
 				Animator anim = GetComponentInChildren<Animator> ();
 				anim.SetTrigger ("attack");

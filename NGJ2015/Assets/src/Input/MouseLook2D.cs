@@ -18,6 +18,7 @@ namespace Assets.src.Input
         private bool UseGamepad = false;
         public int PlayerNr;
         public Vector3 directionalVector = Vector3.zero;
+        public Vector3 currentDirection = Vector3.zero;
         private bool isSet = false;
 
         public delegate void OnLookVerticalDelegate(float mag);
@@ -112,18 +113,21 @@ namespace Assets.src.Input
                 if (!UseGamepad)
                 {
                     mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                    Debug.DrawRay(transform.position, UnityEngine.Input.mousePosition);
+                    //Debug.DrawRay(Vector3.zero, mousepos);
                 }
                 else
                 {
                     mousepos = (transform.position) + directionalVector * 10f;
-
-                    Debug.DrawRay(Vector3.zero, mousepos);
+                    currentDirection = directionalVector;
+                    //Debug.DrawRay(Vector3.zero, mousepos);
                     //Debug.LogWarning("mousepos " + mousepos);
                 }
                 //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
                 Vector3 weaponPos = body.transform.position;
                 Vector3 weaponToMouse = mousepos - transform.position;
+
+                currentDirection = weaponToMouse;
+                //Debug.DrawRay(transform.position, UnityEngine.Input.mousePosition);
                 if (!weaponToMouse.Equals(Vector3.zero))
                 {
                     float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);

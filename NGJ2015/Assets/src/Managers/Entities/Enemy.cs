@@ -35,7 +35,7 @@ namespace Assets.src.Managers.Entities
 
         public override void Die()
         {
-            Debug.Log("Enemy die");
+            //Debug.Log("Enemy die");
             base.Die();
             ManagerCollection.Instance.EnemyManager.PoolEnemyObject(gameObject);
         }
