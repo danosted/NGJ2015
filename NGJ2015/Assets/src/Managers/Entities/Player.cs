@@ -50,7 +50,6 @@ namespace Assets.src.Managers.Entities
 
                 if (deadTimer > deadTime)
                 {
-                    Debug.LogError(Time.time+" Reviving "+gameObject);
                     isDead = false;
                     deadTimer = 0;
                     var anim = GetComponentInChildren<Animator>();
@@ -288,7 +287,7 @@ namespace Assets.src.Managers.Entities
                     {
                         Debug.LogWarning("after: " + newMovement);
                     }
-                    if (newx > 30 || newx < -30) {
+                    if (newx > 24 || newx < -24) {
 						newMovement.x = 0;
 					}
 					if (newy > 13 || newy < -11) {
@@ -308,7 +307,6 @@ namespace Assets.src.Managers.Entities
 
         public override void Die()
         {
-            Debug.LogError(Time.time + "Player die "+gameObject);
 			var anim = GetComponentInChildren<Animator> ();
 			isDead = true;
 			anim.SetBool ("isDead", isDead);
