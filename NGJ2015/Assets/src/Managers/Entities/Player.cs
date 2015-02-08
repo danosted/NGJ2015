@@ -50,7 +50,6 @@ namespace Assets.src.Managers.Entities
 
                 if (deadTimer > deadTime)
                 {
-                    Debug.LogError(Time.time+" Reviving "+gameObject);
                     isDead = false;
                     deadTimer = 0;
                     var anim = GetComponentInChildren<Animator>();
