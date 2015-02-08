@@ -18,8 +18,8 @@ namespace Assets.src.Managers
 				InactiveObjects.Remove(poolObject);
 				poolObject.transform.parent = transform;
 				// Initialize happens later
-                //Enemy pooledEnemy = poolObject.GetComponent<Enemy>();
-				//pooledEnemy.Initialize(pooledEnemy.GetHealth(), pooledEnemy.GetSpeed(), pooledEnemy.GetRange(), pooledEnemy.GetDamage());
+                Enemy pooledEnemy = poolObject.GetComponent<Enemy>();
+                pooledEnemy.Repool();
 				poolObject.SetActive(true);
 				return poolObject;
             }

@@ -38,7 +38,12 @@ namespace Assets.src.Managers.Entities
 
             //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
             Vector3 playerPos = transform.position;
-            Vector2 weaponToMouse = mouselook.currentDirection;
+            Vector3 weaponToMouse = mouselook.currentDirection;
+            if (weaponToMouse.Equals(Vector3.zero))
+            {
+                weaponToMouse = mouselook.facingLeft ? Vector3.left : Vector3.right;
+            }
+
             weaponToMouse.Normalize();
             Debug.DrawRay(transform.position, weaponToMouse);
             Debug.Log(hitDebug.position);
@@ -46,25 +51,24 @@ namespace Assets.src.Managers.Entities
                 Physics.OverlapSphere(hitDebug.position, 4f)
                     .ToList();
 
-            if (colliders.Any())
-            {
-            }
-            else
+            if (!colliders.Any())
             {
                 ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.PlayerAttack);
             }
-            colliders = colliders.Distinct().ToList();
+            //colliders = colliders.Distinct().ToList();
 
             //Debug.LogError(string.Join(", ", colliders.Select(c => c.gameObject.ToString() + c.gameObject.GetInstanceID()).ToArray()));
             foreach (var collider in colliders)
             {
-                var enemy = collider.GetComponent<Enemy>();
+                Debug.LogError(transform.gameObject.ToString() + collider.GetInstanceID()  +" hits " + collider.gameObject + collider.GetInstanceID());
+                var character = collider.GetComponent<CharacterBase>();
+                var enemy = character as Enemy;
                 if (enemy != null)
                 {
                     iTween.PunchScale(collider.gameObject, Vector3.one * 2f, 0.5f);
                     enemy.TakeDamage(ClubDamage);
                 }
-                var character = collider.GetComponent<CharacterBase>();
+                
                 if (character != null)
                 {
                     if (character.transform == transform) return;
