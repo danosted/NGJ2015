@@ -18,6 +18,8 @@ namespace Assets.src.Utililties
         private bool _isFacingRight;
         private Enemy entity;
 
+        private bool _firstRun = true;
+
         void Awake()
         {
             entity = GetComponent<Enemy>();
@@ -36,12 +38,21 @@ namespace Assets.src.Utililties
         {
             if (entity.TargetPosition.x < transform.position.x)
             {
+                if (_firstRun)
+                {
+                    facingLeft = false;
+                }
                 FaceLeft();
             }
             else
             {
+                if (_firstRun)
+                {
+                    facingLeft = true;
+                }
                 FaceRight();
             }
+            _firstRun = false;
             Vector3 pos = transform.position;
             Vector3 direction = (entity.TargetPosition - pos).normalized;
             Debug.DrawRay(transform.position, direction * 10f);
