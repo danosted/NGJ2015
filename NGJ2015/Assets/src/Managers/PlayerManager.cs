@@ -20,7 +20,7 @@ public class PlayerManager : ManagerBase
 	private Player _gainingPlayer;
 	[SerializeField] private int pointsPerInterval = 25;
 	[SerializeField] private int pointsToWin = 300;
-	[SerializeField] private float pointInterval = 2f;
+	[SerializeField] private float pointInterval = 1f;
 	
 
 	private float lastPointTick;
