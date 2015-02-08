@@ -36,28 +36,28 @@ public class KeyInputHandler : MonoBehaviour
 	public delegate void OnSpaceReleasedDelegate();
 	public event OnSpaceReleasedDelegate OnSpaceReleased;
 			
-	public delegate void OnJoy1FirePressedDelegate();
-	public event OnSpacePressedDelegate OnJoy1FirePressed;
+    //public delegate void OnJoy1FirePressedDelegate();
+    //public event OnSpacePressedDelegate OnJoy1FirePressed;
 
-	public delegate void OnJoy1VerticalDelegate(float mag);
-	public event OnRightReleasedDelegate OnJoy1Vertical;
+    //public delegate void OnJoy1VerticalDelegate(float mag);
+    //public event OnRightReleasedDelegate OnJoy1Vertical;
 
-	public delegate void OnJoy1HorizontalDelegate(float mag);
-	public event OnRightReleasedDelegate OnJoy1Horizontal;
+    //public delegate void OnJoy1HorizontalDelegate(float mag);
+    //public event OnRightReleasedDelegate OnJoy1Horizontal;
 	
-	public delegate void OnJoy2FirePressedDelegate();
-	public event OnSpacePressedDelegate OnJoy2FirePressed;
+    //public delegate void OnJoy2FirePressedDelegate();
+    //public event OnSpacePressedDelegate OnJoy2FirePressed;
 	
-	public delegate void OnJoy2VerticalDelegate(float mag);
-	public event OnRightReleasedDelegate OnJoy2Vertical;
+    //public delegate void OnJoy2VerticalDelegate(float mag);
+    //public event OnRightReleasedDelegate OnJoy2Vertical;
 	
-	public delegate void OnJoy2HorizontalDelegate(float mag);
-	public event OnRightReleasedDelegate OnJoy2Horizontal;
+    //public delegate void OnJoy2HorizontalDelegate(float mag);
+    //public event OnRightReleasedDelegate OnJoy2Horizontal;
 
     private static KeyInputHandler _instance;
 
     private static object _lock = new object();
-	public bool UseGamePad = true;
+    //public bool UseGamePad = true;
 
     public static KeyInputHandler Instance
     {
@@ -134,14 +134,14 @@ public class KeyInputHandler : MonoBehaviour
 
 		//AllStop
 
-		if(OnMovementStop != null)
-		{
-			OnMovementStop();
-		}
-		else
-		{
-			Debug.Log("no listener to event");
-		}			
+        //if(OnMovementStop != null)
+        //{
+        //    OnMovementStop();
+        //}
+        //else
+        //{
+        //    Debug.Log("no listener to event");
+        //}			
 
 		if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 		{
@@ -256,84 +256,84 @@ public class KeyInputHandler : MonoBehaviour
 		}
 		
 		
-		if(Input.GetAxis("Joy1-Horizontal") != 0)
-		{
-			float magAxis = Input.GetAxis("Joy1-Horizontal");
-			if(OnJoy1Horizontal != null)
-			{
-				OnJoy1Horizontal(magAxis);
-			}
-			else
-			{
-				Debug.Log("no listener to event");
-			}
+        //if(Input.GetAxis("Joy1-Horizontal") != 0)
+        //{
+        //    float magAxis = Input.GetAxis("Joy1-Horizontal");
+        //    if(OnJoy1Horizontal != null)
+        //    {
+        //        OnJoy1Horizontal(magAxis);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("no listener to event");
+        //    }
 			
-		}
-		if(Input.GetAxis("Joy1-Vertical") != 0)
-		{
-			float magAxis = Input.GetAxis("Joy1-Vertical");
-			if(OnJoy1Vertical != null)
-			{
-				OnJoy1Vertical(magAxis);
-			}
-			else
-			{
-				Debug.Log("no listener to event");
-			}
+        //}
+        //if(Input.GetAxis("Joy1-Vertical") != 0)
+        //{
+        //    float magAxis = Input.GetAxis("Joy1-Vertical");
+        //    if(OnJoy1Vertical != null)
+        //    {
+        //        OnJoy1Vertical(magAxis);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("no listener to event");
+        //    }
 			
-		}
-		if(Input.GetAxis("Joy1-Fire") != 0)
-		{
-			//Debug.Log ("Attack1 " + Input.GetAxis("Joy1-Fire"));
-			if(OnJoy1FirePressed != null)
-			{
-				OnJoy1FirePressed();
-			}
-			else
-			{
-				Debug.Log("no listener to event");
-			}
+        //}
+        //if(Input.GetAxis("Joy1-Fire") != 0)
+        //{
+        //    //Debug.Log ("Attack1 " + Input.GetAxis("Joy1-Fire"));
+        //    if(OnJoy1FirePressed != null)
+        //    {
+        //        OnJoy1FirePressed();
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("no listener to event");
+        //    }
 			
-		}
-		if(Input.GetAxis("Joy2-Horizontal") != 0)
-		{
-			float magAxis = Input.GetAxis("Joy2-Horizontal");
-			if(OnJoy2Horizontal != null)
-			{
-				OnJoy2Horizontal(magAxis);
-			}
-			else
-			{
-				Debug.Log("no listener to event");
-			}
+        //}
+        //if(Input.GetAxis("Joy2-Horizontal") != 0)
+        //{
+        //    float magAxis = Input.GetAxis("Joy2-Horizontal");
+        //    if(OnJoy2Horizontal != null)
+        //    {
+        //        OnJoy2Horizontal(magAxis);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("no listener to event");
+        //    }
 			
-		}
-		if(Input.GetAxis("Joy2-Vertical") != 0)
-		{
-			float magAxis = Input.GetAxis("Joy2-Vertical");
-			if(OnJoy2Vertical != null)
-			{
-				OnJoy2Vertical(magAxis);
-			}
-			else
-			{
-				Debug.Log("no listener to event");
-			}
+        //}
+        //if(Input.GetAxis("Joy2-Vertical") != 0)
+        //{
+        //    float magAxis = Input.GetAxis("Joy2-Vertical");
+        //    if(OnJoy2Vertical != null)
+        //    {
+        //        OnJoy2Vertical(magAxis);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("no listener to event");
+        //    }
 			
-		}
-		if(Input.GetAxis("Joy2-Fire") != 0f)
-		{
-			//Debug.Log ("Attack2 " + Input.GetAxis("Joy1-Fire"));
-			if(OnJoy2FirePressed != null)
-			{
-				OnJoy2FirePressed();
-			}
-			else
-			{
-				Debug.Log("no listener to event");
-			}
+        //}
+        //if(Input.GetAxis("Joy2-Fire") != 0f)
+        //{
+        //    //Debug.Log ("Attack2 " + Input.GetAxis("Joy1-Fire"));
+        //    if(OnJoy2FirePressed != null)
+        //    {
+        //        OnJoy2FirePressed();
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("no listener to event");
+        //    }
 			
-		}
+        //}
 
 	}
 }
