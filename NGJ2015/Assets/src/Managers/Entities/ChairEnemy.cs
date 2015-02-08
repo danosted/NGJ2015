@@ -61,7 +61,7 @@ namespace Assets.src.Managers.Entities
                 if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
                 {
                     _target.TakeDamage(_damage);
-                    PushBack(((transform.position - _target.transform.position).normalized)*1.1f);
+                    PushBack(((transform.position - _target.transform.position).normalized)*1.1f, 30);
                 }
 		    }
 		    
