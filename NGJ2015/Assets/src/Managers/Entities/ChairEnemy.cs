@@ -120,7 +120,6 @@ namespace Assets.src.Managers.Entities
 
         private void ExecuteAttackStrategy()
         {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
                 var extraSpeed = 0f;
@@ -143,7 +142,6 @@ namespace Assets.src.Managers.Entities
             //var msg = string.Format("Enemy {0} is spreading towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
 
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
 
             var centerPosition = new Vector3();
             var numPos = 0;
@@ -178,7 +176,6 @@ namespace Assets.src.Managers.Entities
             //var msg = string.Format("Enemy {0} is swarming towards {1}.", gameObject, _target);
             //Debug.Log(msg, gameObject);
 
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
 
             var finalDirection = new Vector3();
             var positions = _nearbyMonsters.Select(m => m.Monster.transform.position);
