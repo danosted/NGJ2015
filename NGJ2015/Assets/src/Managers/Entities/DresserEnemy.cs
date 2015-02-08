@@ -135,6 +135,15 @@ namespace Assets.src.Managers.Entities
                     weapon.Attack(_target.transform, Enumerations.WeaponType.Drawer);
                 }
                 _drawersLeft--;
+				var anim = GetComponentInChildren<Animator>();
+
+				if (_drawersLeft == 2) {
+					anim.SetTrigger("2DrawersLeft");
+				} else if (_drawersLeft == 1) {
+					anim.SetTrigger("1DrawersLeft");
+				} else if (_drawersLeft == 0) {
+					anim.SetTrigger("0DrawersLeft");
+				}
             }
             else
             {

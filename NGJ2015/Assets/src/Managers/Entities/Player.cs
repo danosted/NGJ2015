@@ -223,13 +223,14 @@ namespace Assets.src.Managers.Entities
 		}
         private void OnSpacePressed()
         {
-			Animator anim = GetComponentInChildren<Animator> ();
-			anim.SetTrigger("attack");
-            if (!weapon)
-            {
-                weapon = GetComponent<Weapon>();
-            }
-			weapon.Attack (transform, Enumerations.WeaponType.Club);
+			if (!isDead) {
+				Animator anim = GetComponentInChildren<Animator> ();
+				anim.SetTrigger ("attack");
+				if (!weapon) {
+					weapon = GetComponent<Weapon> ();
+				}
+				weapon.Attack (transform, Enumerations.WeaponType.Club);
+			}
         }
 
 		private void OnSpaceReleased()
