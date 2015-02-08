@@ -11,7 +11,9 @@ namespace Assets.src.Managers
         {
             if(InactiveObjects.Exists(x => x.GetComponent(enemyType.ToString())))
             {
-                var poolObject = InactiveObjects.Find(x => x.GetComponent(enemyType.ToString()));
+				var poolObject = InactiveObjects.Find(x => x.GetComponent(enemyType.ToString()));
+				var anim = GetComponentInChildren<Animator> ();
+				anim.SetBool ("isDead", false);
 				ActiveObjects.Add(poolObject);
 				InactiveObjects.Remove(poolObject);
 				poolObject.transform.parent = transform;
