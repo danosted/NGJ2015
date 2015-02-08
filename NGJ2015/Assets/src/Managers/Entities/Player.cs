@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Security.Policy;
+using UnityEngine;
 using System.Collections;
 using Assets.src.Managers;
 using Assets.src.Common;
@@ -166,7 +167,16 @@ namespace Assets.src.Managers.Entities
 
         public void GamePadDirection(Vector3 direction)
         {
-            movement = direction;
+            //direction.Normalize();
+
+            if (direction.magnitude < 0.3f)
+            {
+                movement = Vector3.zero;
+            }
+            else
+            {
+                movement = direction;    
+            }
             if(isMoving) return;
             StartCoroutine(StartMoving());	
         }
@@ -185,22 +195,6 @@ namespace Assets.src.Managers.Entities
 
 		}
 
-        public void OnJoy2Horizontal(float mag)
-		{
-            if (!isUsingGamePad) return;
-			Debug.Log (playerName);
-			movement += Vector3.right*mag;
-			if(isMoving) return;
-			StartCoroutine(StartMoving());			
-		}
-        public void OnJoy2Vertical(float mag)
-		{
-            if (!isUsingGamePad) return;
-			//Debug.Log (playerName);
-			movement += Vector3.up*mag;
-			if(isMoving) return;
-			StartCoroutine(StartMoving());			
-		}
         public void OnJoy2FirePressed()
 		{
             if (!isUsingGamePad) return;
@@ -295,8 +289,12 @@ namespace Assets.src.Managers.Entities
 				float newy = transform.position.y + movement.y;
                 if (movement.magnitude != 0f) {
 					anim.SetBool("walking", true);
-					var newMovement = movement;
-					if (newx > 30 || newx < -30) {
+                    var newMovement = movement.normalized; 
+                    if (isUsingGamePad)
+                    {
+                        Debug.LogWarning("after: " + newMovement);
+                    }
+                    if (newx > 30 || newx < -30) {
 						newMovement.x = 0;
 					}
 					if (newy > 13 || newy < -11) {

@@ -35,6 +35,7 @@ public class Projectile : MonoBehaviour {
     public void ShootProjectile(Vector3 from, Player target)
     {
         reachedTarget = false;
+        transform.position = from;
         //var msg = string.Format("Shooting drawer from {0} against {1}.", transform.position, target.transform.position);
         //Debug.Log(msg, gameObject);
         _targetPlayer = target;
