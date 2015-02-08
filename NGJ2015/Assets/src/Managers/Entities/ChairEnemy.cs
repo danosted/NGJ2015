@@ -66,8 +66,10 @@ namespace Assets.src.Managers.Entities
 		    {
                 _lastHit += Time.deltaTime;
                 if (Vector3.Magnitude(transform.position - _target.transform.position) < _range && _lastHit > _cooldown)
-                {
-                    _target.TakeDamage(_damage);
+				{
+					var anim = GetComponentInChildren<Animator> ();
+					anim.SetTrigger ("Attack");
+					_target.TakeDamage(_damage);
                     _lastHit = 0f;
                     PushBack(((transform.position - _target.transform.position).normalized)*1.1f, 30);
                 }
@@ -126,6 +128,9 @@ namespace Assets.src.Managers.Entities
                 if (distance < 2*_range)
                 {
                     extraSpeed = distance;
+					
+					var anim = GetComponentInChildren<Animator> ();
+					anim.SetTrigger ("Attack");
                 }
                 UpdatePosition(Vector3.MoveTowards(transform.position, _target.transform.position,
                     Time.fixedDeltaTime * (_speed + extraSpeed)));

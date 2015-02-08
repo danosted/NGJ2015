@@ -9,6 +9,7 @@ namespace Assets.src.Managers.Entities
     public class Player : CharacterBase
     {
         private bool isMoving;
+		private bool isDead;
         private Vector3 movement = Vector3.zero;
 		public string playerName;
         private Weapon weapon;
@@ -204,7 +205,7 @@ namespace Assets.src.Managers.Entities
 		{
 			var anim = GetComponentInChildren<Animator>();
             isMoving = true;
-            while (true)
+            while (!isDead)
             {
 				float newx = transform.position.x + movement.x;
 				float newy = transform.position.y + movement.y;
@@ -231,7 +232,10 @@ namespace Assets.src.Managers.Entities
 
         public override void Die()
         {
-            //Debug.Log("Player die");
+            //Debug.Log("Player die")
+			var anim = GetComponentInChildren<Animator> ();
+			isDead = true;
+			anim.SetBool ("isDead", isDead);
             base.Die();
             
         }
