@@ -115,7 +115,20 @@ public class PlayerManager : ManagerBase
 			WinGame (Player2);
 		else 
 			WinGame (Player1);
+		
+	}
+	public void LoseGameBoth()
+	{
+		Win.transform.GetChild(0).GetComponent<Text>().text = " You Both";
+		Win.transform.GetChild(1).GetComponent<Text>().text = Win.transform.GetChild(0).GetComponent<Text>().text;
+		Win.transform.GetChild(2).GetComponent<Text>().text = "LOSE";
+		Win.transform.GetChild(3).GetComponent<Text>().text = Win.transform.GetChild(2).GetComponent<Text>().text;
 
+		Win.transform.GetChild(0).GetComponent<Text>().color = Color.red;
+		Win.transform.GetChild(2).GetComponent<Text>().color = Win.transform.GetChild(0).GetComponent<Text>().color;
+		
+		Win.gameObject.SetActive(true);
+		Time.timeScale = 0;
 	}
 
 	private void WinGame(Player player)

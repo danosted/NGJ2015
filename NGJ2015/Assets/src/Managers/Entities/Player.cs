@@ -237,7 +237,7 @@ namespace Assets.src.Managers.Entities
 			isDead = true;
 			anim.SetBool ("isDead", isDead);
 			base.Die();
-			ManagerCollection.Instance.PlayerManager.LoseGame(this);
+			ManagerCollection.Instance.PlayerManager.LoseGameBoth();
         }
     }
 }
