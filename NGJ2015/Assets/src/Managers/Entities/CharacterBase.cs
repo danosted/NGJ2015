@@ -52,6 +52,11 @@ namespace Assets.src.Managers.Entities
             healthbar.Init(_health);
 		}
 
+        public virtual void Repool()
+        {
+            isDead = false;
+        }
+
 		protected void StartMoving(Vector3 movement)
 		{
 		    transform.position += movement * _speed;

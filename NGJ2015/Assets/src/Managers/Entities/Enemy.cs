@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.src.Utililties;
 using UnityEngine;
 
 namespace Assets.src.Managers.Entities
@@ -47,7 +48,13 @@ namespace Assets.src.Managers.Entities
 			yield return new WaitForSeconds(0.25f);
 			ManagerCollection.Instance.EnemyManager.PoolEnemyObject(gameObject);
 		}
-		
+
+        public override void Repool()
+        {
+            base.Repool();
+            GetComponent<LookTowardsDirection>()._firstRun = true;
+        }
+
 		protected GameObject GetNearestTarget(List<GameObject> targets, Vector3 position)
         {
             var nearestDist = float.MaxValue;
