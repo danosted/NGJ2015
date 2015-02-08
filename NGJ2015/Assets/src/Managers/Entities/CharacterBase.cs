@@ -25,8 +25,15 @@ namespace Assets.src.Managers.Entities
 		protected int _pushbackFrame = 0;
         protected float _pushbackMagnitude = 1f;
 
+        protected bool isDead;
+        public bool IsDead()
+        {
+            return isDead;
+        }
+
 		public virtual void Initialize(float health, float speed, float range, float damage)
 		{
+		    isDead = false;
 			_health = health;
 		    _initialhealth = health;
 			_speed = speed;
@@ -141,6 +148,7 @@ namespace Assets.src.Managers.Entities
 
         public virtual void Die()
         {
+            isDead = true;
             // die animation
             //Debug.LogError("Die "+GetType()+gameObject.GetInstanceID());
         }

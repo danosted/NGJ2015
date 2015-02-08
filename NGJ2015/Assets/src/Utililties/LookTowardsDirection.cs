@@ -31,43 +31,47 @@ namespace Assets.src.Utililties
 
         void Start()
         {
-            StartCoroutine(PointGun());
+            //StartCoroutine(PointGun());
         }
 
         void Update()
         {
-            if (entity.TargetPosition.x < transform.position.x)
+            if (!GetComponent<CharacterBase>().IsDead())
             {
-                if (_firstRun)
+                if (entity.TargetPosition.x < transform.position.x)
                 {
-                    facingLeft = false;
+                    if (_firstRun)
+                    {
+                        facingLeft = false;
+                    }
+                    FaceLeft();
                 }
-                FaceLeft();
-            }
-            else
-            {
-                if (_firstRun)
+                else
                 {
-                    facingLeft = true;
+                    if (_firstRun)
+                    {
+                        facingLeft = true;
+                    }
+                    FaceRight();
                 }
-                FaceRight();
-            }
-            _firstRun = false;
-            Vector3 pos = transform.position;
-            Vector3 direction = (entity.TargetPosition - pos);
-            direction.Normalize();
-            Debug.DrawRay(transform.position, direction * 10f);
-            //Debug.DrawRay(transform.position, Vector3.left * 10f, Color.red);
-            //Debug.DrawRay(transform.position, Vector3.right * 10f, Color.blue);
-            float angle = Mathf.Atan(direction.y / direction.x);
-            if (!body || angle.Equals(float.NaN)) return;
-            if (facingLeft)
-            {
-                body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
-            }
-            else
-            {
-                body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
+                _firstRun = false;
+                Vector3 pos = transform.position;
+                Vector3 direction = (entity.TargetPosition - pos);
+                direction.Normalize();
+                Debug.DrawRay(transform.position, direction * 10f);
+                //Debug.DrawRay(transform.position, Vector3.left * 10f, Color.red);
+                //Debug.DrawRay(transform.position, Vector3.right * 10f, Color.blue);
+                float angle = Mathf.Atan(direction.y / direction.x);
+                if (!body || angle.Equals(float.NaN)) return;
+                if (facingLeft)
+                {
+                    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
+                }
+                else
+                {
+                    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
+                }
+                
             }
         }
 

@@ -42,7 +42,7 @@ namespace Assets.src.Managers
 
         public void PoolEnemyObject(GameObject enemyGameObject)
         {
-            Debug.LogError("Pooling " + enemyGameObject.GetInstanceID() + enemyGameObject.GetComponent("Enemy").GetType());
+            //Debug.LogError("Pooling " + enemyGameObject.GetInstanceID() + enemyGameObject.GetComponent("Enemy").GetType());
             enemyGameObject.SetActive(false);
             ActiveObjects.Remove(enemyGameObject);
             InactiveObjects.Add(enemyGameObject);

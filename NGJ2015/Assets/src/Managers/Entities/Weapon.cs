@@ -35,14 +35,15 @@ namespace Assets.src.Managers.Entities
         private void ClubAttack(Transform transform)
         {
             var mouselook = GetComponent<MouseLook2D>();
-            Vector3 mousepos = mouselook.currentDirection;
-            Debug.DrawRay(transform.position, mousepos);
+
             //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
             Vector3 playerPos = transform.position;
-            Vector2 weaponToMouse = (mousepos - playerPos);
+            Vector2 weaponToMouse = mouselook.currentDirection;
             weaponToMouse.Normalize();
+            Debug.DrawRay(transform.position, weaponToMouse);
             var colliders =
-                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*3f, 4f).ToList();
+                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*3f, 4f)
+                    .ToList();
 
             if (colliders.Any())
             {
@@ -68,11 +69,11 @@ namespace Assets.src.Managers.Entities
                     if (character.transform == transform) return;
                     iTween.PunchScale(collider.gameObject, Vector3.one * 2f, 0.5f);
                     //Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
-                    var mulitiplier = 1.5f;
-                    var pushbackMagnitude = 2f;
+                    var mulitiplier = 2f;
+                    var pushbackMagnitude = 3f;
                     if ((character as Player) != null)
                     {
-                        mulitiplier = 2f;
+                        mulitiplier = 3f;
                         pushbackMagnitude = 1f;
                     }
                     character.PushBack(

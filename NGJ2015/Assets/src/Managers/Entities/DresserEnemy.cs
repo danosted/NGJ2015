@@ -35,7 +35,8 @@ namespace Assets.src.Managers.Entities
         }
 
 		public override void Initialize(float health, float speed, float range, float damage)
-		{
+        {
+            isDead = false;
 			_drawersLeft = 3; 
 			_health = health;
 			_initialhealth = health;
@@ -48,7 +49,7 @@ namespace Assets.src.Managers.Entities
 			{
 				healthbar = GetComponentInChildren<HealthbarScript>();
 			}
-            Debug.LogError(string.Format("{0}{1} starting with {2} hp", GetType(), gameObject.GetInstanceID(), _health));
+            //Debug.LogError(string.Format("{0}{1} starting with {2} hp", GetType(), gameObject.GetInstanceID(), _health));
 			//if (!floatingCombatText)
 			//{
 			//    floatingCombatText = GetComponentInChildren<FloatingCombatText>();

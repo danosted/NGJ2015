@@ -9,7 +9,6 @@ namespace Assets.src.Managers.Entities
     public class Player : CharacterBase
     {
         private bool isMoving;
-		private bool isDead;
         private Vector3 movement = Vector3.zero;
 		public string playerName;
         private Weapon weapon;
@@ -22,11 +21,6 @@ namespace Assets.src.Managers.Entities
         private float deadTimer = 0;
 
         private Vector3 _initialPosition;
-
-        public bool IsDead()
-        {
-            return isDead;
-        }
 
         private long _points = 0;
 
