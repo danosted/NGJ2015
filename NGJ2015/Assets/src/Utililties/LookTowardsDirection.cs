@@ -48,7 +48,7 @@ namespace Assets.src.Utililties
             //Debug.DrawRay(transform.position, Vector3.left * 10f, Color.red);
             //Debug.DrawRay(transform.position, Vector3.right * 10f, Color.blue);
             float angle = Mathf.Atan(direction.y / direction.x);
-            if (!body) return;
+            if (!body || angle.Equals(float.NaN)) return;
             if (facingLeft)
             {
                 body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);

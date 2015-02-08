@@ -16,6 +16,11 @@ namespace Assets.src.Managers.Entities
         private int _swarmThreshold = 3;
         private int _spreadThreshold = 8;
 
+        [SerializeField]
+        private float _cooldown = 1.5f;
+        [SerializeField]
+        private float _lastHit = 0f;
+
         public enum MonsterStrategy
         {
             Spread,
@@ -58,10 +63,12 @@ namespace Assets.src.Managers.Entities
 
 		    if (_target)
 		    {
-                if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
+                _lastHit += Time.deltaTime;
+                if (Vector3.Magnitude(transform.position - _target.transform.position) < _range && _lastHit > _cooldown)
                 {
                     _target.TakeDamage(_damage);
                     PushBack(((transform.position - _target.transform.position).normalized));
+                    _lastHit = 0f;
                 }
 		    }
 		    
