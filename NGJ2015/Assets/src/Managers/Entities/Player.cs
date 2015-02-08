@@ -262,7 +262,11 @@ namespace Assets.src.Managers.Entities
         private void OnSpacePressed()
         {
             if (isUsingGamePad) return;
-			weapon.Attack (transform, Enumerations.WeaponType.Club);
+            if (!weapon)
+            {
+                weapon = GetComponent<Weapon>();
+            }
+            weapon.Attack(transform, Enumerations.WeaponType.Club);
 			if (!isDead) {
 				Animator anim = GetComponentInChildren<Animator> ();
 				anim.SetTrigger ("attack");

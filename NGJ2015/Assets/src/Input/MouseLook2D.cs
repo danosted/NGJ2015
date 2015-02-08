@@ -71,7 +71,7 @@ namespace Assets.src.Input
             }
             if (!UseGamepad)
             {
-                Debug.Log("MouseLook2d " + directionalVector);
+                //Debug.Log("MouseLook2d " + directionalVector);
                 if (Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition).x < transform.position.x)
                 {
                     FaceLeft();
