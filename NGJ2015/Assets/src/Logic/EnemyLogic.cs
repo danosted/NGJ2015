@@ -113,11 +113,11 @@ namespace Assets.src.Logic
 		    
             if (chosenType.Equals(Enumerations.EnemyType.ChairEnemy))
 		    {
-                enemyScript.Initialize(5f, 4f, 0.5f, 1f);
+                enemyScript.Initialize(10f, 4f, 0.5f, 1f);
 		    }
             else if (chosenType.Equals(Enumerations.EnemyType.DresserEnemy))
             {
-                enemyScript.Initialize(10f, 2f, 15f, 1f);
+                enemyScript.Initialize(15f, 2f, 15f, 1f);
             }
             else if (chosenType.Equals(Enumerations.EnemyType.TrashcanEnemy))
             {

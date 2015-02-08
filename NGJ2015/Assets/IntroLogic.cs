@@ -13,6 +13,10 @@ public class IntroLogic : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			Application.LoadLevel(1);
 		}
+        if (Input.GetMouseButtonUp(0))
+        {
+            Application.LoadLevel(1);
+        }
 	}
 
 }
