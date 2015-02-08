@@ -12,6 +12,7 @@ namespace Assets.src.Managers.Entities
         public float ClubDamage = 5;
         public float AssaultRifleDamage = 4;
 
+
         public void Attack(Transform transform, Enumerations.WeaponType weapon)
         {
             switch (weapon)
@@ -34,10 +35,11 @@ namespace Assets.src.Managers.Entities
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
             Vector3 playerPos = transform.position;
-            Vector2 weaponToMouse = (mousepos - playerPos).normalized;
-
+            Vector2 weaponToMouse = (mousepos - playerPos);
+            weaponToMouse.Normalize();
             var colliders =
-                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*2.5f, 3.5f);
+                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*3f, 4f);
+
             if (colliders.Any())
             {
             }
@@ -59,14 +61,14 @@ namespace Assets.src.Managers.Entities
                     if (character.transform == transform) return;
                     iTween.PunchScale(collider.gameObject, Vector3.one * 2f, 0.5f);
                     //Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
-                    var mulitiplier = 1;
+                    var mulitiplier = 1f;
                     if ((character as Player) != null)
                     {
-                        mulitiplier = 5;
+                        mulitiplier = 1.5f;
                     }
                     character.PushBack(
                         ((character.transform.position - playerPos).normalized)*
-                        mulitiplier);
+                        mulitiplier, (int) (CharacterBase.DefaultPushbackFrames*mulitiplier));
 
                 }
                 var projectile = collider.GetComponent<Projectile>();
