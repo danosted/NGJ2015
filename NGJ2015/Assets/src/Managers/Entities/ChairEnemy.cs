@@ -71,7 +71,7 @@ namespace Assets.src.Managers.Entities
 					anim.SetTrigger ("Attack");
 					_target.TakeDamage(_damage);
                     _lastHit = 0f;
-                    PushBack(((transform.position - _target.transform.position).normalized)*1.1f);
+                    PushBack(((transform.position - _target.transform.position).normalized)*1.1f, 30);
                 }
 		    }
 		    
@@ -125,7 +125,7 @@ namespace Assets.src.Managers.Entities
             {
                 var extraSpeed = 0f;
                 var distance = (transform.position - _target.transform.position).magnitude;
-                if (distance < 2*_range)
+                if (distance < 3*_range)
                 {
                     extraSpeed = distance;
 					

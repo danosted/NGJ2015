@@ -93,18 +93,9 @@ public class PlayerManager : ManagerBase
 			yield return new WaitForSeconds(pointInterval);
 			player.AddPoints(points);
 			float playerPoints = (float)player.GetPoints();
-			bool isWon = false;
 			if (playerPoints >= pointsToWin)
 			{
-				Win.transform.GetChild(0).GetComponent<Text>().text = player.playerName;
-
-				Win.transform.GetChild(1).GetComponent<Text>().text = player.playerName;
-				Color playerColor = GetPlayerColor(player);
-				Win.transform.GetChild(0).GetComponent<Text>().color = playerColor;
-				Win.transform.GetChild(2).GetComponent<Text>().color = playerColor;
-
-				Win.gameObject.SetActive(true);
-				Time.timeScale = 0;
+				WinGame (player);
 			}
 			switch (player.playerName)
 	        {
@@ -117,4 +108,39 @@ public class PlayerManager : ManagerBase
 			}
 		}
     }
+
+	public void LoseGame(Player player)
+	{
+		if (player.playerName == Player1.playerName)
+			WinGame (Player2);
+		else 
+			WinGame (Player1);
+		
+	}
+	public void LoseGameBoth()
+	{
+		Win.transform.GetChild(0).GetComponent<Text>().text = " You Both";
+		Win.transform.GetChild(1).GetComponent<Text>().text = Win.transform.GetChild(0).GetComponent<Text>().text;
+		Win.transform.GetChild(2).GetComponent<Text>().text = "LOSE";
+		Win.transform.GetChild(3).GetComponent<Text>().text = Win.transform.GetChild(2).GetComponent<Text>().text;
+
+		Win.transform.GetChild(0).GetComponent<Text>().color = Color.red;
+		Win.transform.GetChild(2).GetComponent<Text>().color = Win.transform.GetChild(0).GetComponent<Text>().color;
+		
+		Win.gameObject.SetActive(true);
+		Time.timeScale = 0;
+	}
+
+	private void WinGame(Player player)
+	{
+		Win.transform.GetChild(0).GetComponent<Text>().text = player.playerName;
+		
+		Win.transform.GetChild(1).GetComponent<Text>().text = player.playerName;
+		Color playerColor = GetPlayerColor(player);
+		Win.transform.GetChild(0).GetComponent<Text>().color = playerColor;
+		Win.transform.GetChild(2).GetComponent<Text>().color = playerColor;
+		
+		Win.gameObject.SetActive(true);
+		Time.timeScale = 0;
+	}
 }
