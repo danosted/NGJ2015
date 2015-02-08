@@ -78,7 +78,25 @@ namespace Assets.src.Managers.Entities
                 }
                 else
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, transform.position + _pushBackVector,
+                    var dest = transform.position + _pushBackVector;
+                    if (dest.x > 30)
+                    {
+                        dest.x = 30;
+					}
+                    else if (dest.x < -30)
+                    {
+                        dest.x = -30;
+                    }
+
+                    if (dest.y > 13)
+                    {
+                        dest.y = 13;
+                    }
+                    else if (dest.y < -11)
+                    {
+                        dest.y = -11;
+                    }
+                    transform.position = Vector3.MoveTowards(transform.position, dest,
                         (Time.fixedDeltaTime*
                          (PushbackSpeed(_pushbackFrame, _pushbackFrames))));
 
