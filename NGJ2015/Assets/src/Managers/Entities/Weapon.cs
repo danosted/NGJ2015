@@ -79,7 +79,7 @@ namespace Assets.src.Managers.Entities
 
         private void AssaultRifleAttack(Transform targetTransform)
         {
-            var bulletGO = ManagerCollection.Instance.WeaponManager.GetNewProjectileFromType(Enumerations.ProjectileTypes.Drawer, transform.position, transform.rotation);
+            var bulletGO = ManagerCollection.Instance.WeaponManager.GetNewProjectileFromType(Enumerations.ProjectileTypes.Drawer, transform.position, transform.GetChild(0).transform.rotation);
             var bullet = bulletGO.GetComponent(Enumerations.ProjectileTypes.Drawer.ToString()) as Projectile;
             bullet.ShootProjectile(targetTransform.position, targetTransform.GetComponent<Player>());
         }
