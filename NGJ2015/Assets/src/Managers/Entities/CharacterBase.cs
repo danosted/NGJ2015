@@ -51,6 +51,7 @@ namespace Assets.src.Managers.Entities
             _health -= damage;
             if (healthbar)
             {
+                iTween.PunchScale(gameObject, Vector3.one * 2f, 0.5f);
                 healthbar.DamageTaken(damage);
             }
             //if (floatingCombatText)
