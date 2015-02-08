@@ -17,12 +17,12 @@ namespace Assets.src.Managers.Entities
         protected HealthbarScript healthbar;
         //private FloatingCombatText floatingCombatText;
 
-        private bool _canMove;
-        private bool _beingPushedBack;
-        private Vector3 _pushBackVector;
+		protected bool _canMove;
+		protected bool _beingPushedBack;
+		protected Vector3 _pushBackVector;
         public const int DefaultPushbackFrames = 10;
-        private int _pushbackFrames = 10;
-        private int _pushbackFrame = 0;
+		protected int _pushbackFrames = 10;
+		protected int _pushbackFrame = 0;
 
 		public void Initialize(float health, float speed, float range, float damage)
 		{

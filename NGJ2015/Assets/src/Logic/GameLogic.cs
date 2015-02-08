@@ -15,7 +15,10 @@ public class GameLogic : MonoBehaviour
 	[SerializeField] private Image p1PointBar;
 	[SerializeField] private Image p2PointBar;
 
-	public bool KeyboardControls = true;
+    public bool player1Gamepad1 = true;
+    public bool player1Gamepad2 = false;
+    public bool player2Gamepad1 = false;
+    public bool player2Gamepad2 = false;
 
     // Use this for initialization
     void Start()
@@ -26,19 +29,37 @@ public class GameLogic : MonoBehaviour
         var player1 = manCol.PlayerManager.GetNewPlayerFromType(Enumerations.PlayerType.Player);
 		var p1 = player1.GetComponent(Enumerations.PlayerType.Player.ToString()) as Player;
 		p1.Initialize(10,10,10,5);
-		p1.playerName = "player1"; 
-		if (KeyboardControls) {
-			p1.UseKeyBoard ();
-		} else {
-			p1.UseGamePad1 ();
+		p1.playerName = "player1";
+        if (player1Gamepad1)
+        {
+            p1.UseGamePad1();
+		} 
+        else if(player1Gamepad2)
+        {
+			p1.UseGamePad2 ();
 		}
+        else
+        {
+            p1.UseKeyBoard();
+        }
 
 
         var player2 = manCol.PlayerManager.GetNewPlayerFromType(Enumerations.PlayerType.Player);
 		var p2 = player2.GetComponent(Enumerations.PlayerType.Player.ToString()) as Player;
 		p2.Initialize(10,10,10,5);
 		p2.playerName = "player2";
-		p2.UseGamePad2();
+        if (player2Gamepad1)
+        {
+            p2.UseGamePad1();
+        }
+        else if (player2Gamepad2)
+        {
+            p2.UseGamePad2();
+        }
+        else
+        {
+            p2.UseKeyBoard();
+        }
 		
 		p1.setInitialPosition(transform.position + Vector3.left*4);
         p2.setInitialPosition(transform.position + Vector3.right * 4);
