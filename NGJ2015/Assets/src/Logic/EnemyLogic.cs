@@ -107,7 +107,8 @@ namespace Assets.src.Logic
 		{
 		    var chosenType = _activeEnemyTypes[_random.Next(0, _activeEnemyTypes.Length)];
             var enemy = ManagerCollection.Instance.EnemyManager.GetNewEnemyFromType(chosenType);
-			enemy.transform.position = MathUtil.RandomOnUnitCircle() * 50f;
+            //enemy.transform.position = MathUtil.RandomOnUnitCircle() * 50f;
+		    enemy.transform.position = MathUtil.RandomOnSquareFromAspect(new Vector2(16f, 9f)) * 5f;
             var enemyScript = enemy.GetComponent(chosenType.ToString()) as Enemy;
 		    
             if (chosenType.Equals(Enumerations.EnemyType.ChairEnemy))

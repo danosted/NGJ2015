@@ -17,8 +17,9 @@ namespace Assets.src.Managers
 				ActiveObjects.Add(poolObject);
 				InactiveObjects.Remove(poolObject);
 				poolObject.transform.parent = transform;
-				Enemy pooledEnemy = poolObject.GetComponent<Enemy>();
-				pooledEnemy.Initialize(pooledEnemy.GetHealth(), pooledEnemy.GetSpeed(), pooledEnemy.GetRange(), pooledEnemy.GetDamage());
+				// Initialize happens later
+                //Enemy pooledEnemy = poolObject.GetComponent<Enemy>();
+				//pooledEnemy.Initialize(pooledEnemy.GetHealth(), pooledEnemy.GetSpeed(), pooledEnemy.GetRange(), pooledEnemy.GetDamage());
 				poolObject.SetActive(true);
 				return poolObject;
             }
@@ -43,6 +44,7 @@ namespace Assets.src.Managers
 
         public void PoolEnemyObject(GameObject enemyGameObject)
         {
+            Debug.LogError("Pooling " + enemyGameObject.GetInstanceID() + enemyGameObject.GetComponent("Enemy").GetType());
             enemyGameObject.SetActive(false);
             ActiveObjects.Remove(enemyGameObject);
             InactiveObjects.Add(enemyGameObject);
