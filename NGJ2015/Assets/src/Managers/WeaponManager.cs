@@ -15,11 +15,12 @@ namespace Assets.src.Managers
 			{
 				Debug.Log(string.Format("Object found in pool."));
 				var poolObject = InactiveObjects.Find(x => x.GetComponent(bulletType.ToString()));
-				var inactiveGO = GameObject.Instantiate(poolObject, startPos, startRot) as GameObject;
-				ActiveObjects.Add(inactiveGO.gameObject);
-				inactiveGO.transform.parent = transform;
-				inactiveGO.SetActive(true);
-				return inactiveGO;
+				ActiveObjects.Add(poolObject);
+				InactiveObjects.Remove(poolObject);
+				poolObject.transform.parent = transform;
+				poolObject.transform.rotation = startRot;
+				poolObject.SetActive(true);
+				return poolObject;
 			}
 			var GO = PrefabPool.Find(x => x.GetComponent(bulletType.ToString()) != null);
 			if (GO == null)

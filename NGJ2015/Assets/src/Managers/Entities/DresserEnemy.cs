@@ -7,6 +7,9 @@ namespace Assets.src.Managers.Entities
 {
     public class DresserEnemy : Enemy
     {
+        private float _meleeCooldown = 1.5f;
+        private float _meleeLastHit = 0f;
+        private float _meleeRange = 1.5f;
 
         private float _cooldown = 2.5f;
         private float _lastShot = 0f;
@@ -31,6 +34,26 @@ namespace Assets.src.Managers.Entities
             MoveAway
         }
 
+		public new void Initialize(float health, float speed, float range, float damage)
+		{
+			_drawersLeft = 3; 
+			_health = health;
+			_initialhealth = health;
+			_speed = speed;
+			_range = range;
+			_damage = damage;
+			_canMove = true;
+			_beingPushedBack = false;
+			if (!healthbar)
+			{
+				healthbar = GetComponentInChildren<HealthbarScript>();
+			}
+			//if (!floatingCombatText)
+			//{
+			//    floatingCombatText = GetComponentInChildren<FloatingCombatText>();
+			//}
+			healthbar.Init(_health);
+		}
 
         public void Update()
         {
@@ -58,15 +81,24 @@ namespace Assets.src.Managers.Entities
 		    }
 
             transform.position += KeepEnemyDistance();
-            
+
+            UpdatePosition(transform.position + KeepEnemyDistance());
+
 		    if (_target)
-		    {
-		        _lastShot += Time.deltaTime;
+            {
+                _lastShot += Time.deltaTime;
+                _meleeLastHit += Time.deltaTime;
                 if (Vector3.Magnitude(transform.position - _target.transform.position) < _range && _lastShot > _cooldown)
                 {
                     Shoot();
                     //_target.TakeDamage(_damage);
                     _lastShot = 0f;
+                }
+                else if (Vector3.Magnitude(transform.position - _target.transform.position) < _meleeRange && _meleeLastHit > _meleeCooldown)
+                {
+                    _target.TakeDamage(_damage);
+                    _meleeLastHit = 0f;
+                    PushBack(((transform.position - _target.transform.position).normalized) * 1.1f, 30);
                 }
 		    }
 		    
@@ -123,6 +155,15 @@ namespace Assets.src.Managers.Entities
                     weapon.Attack(_target.transform, Enumerations.WeaponType.Drawer);
                 }
                 _drawersLeft--;
+				var anim = GetComponentInChildren<Animator>();
+
+				if (_drawersLeft == 2) {
+					anim.SetTrigger("2DrawersLeft");
+				} else if (_drawersLeft == 1) {
+					anim.SetTrigger("1DrawersLeft");
+				} else if (_drawersLeft == 0) {
+					anim.SetTrigger("0DrawersLeft");
+				}
             }
             else
             {

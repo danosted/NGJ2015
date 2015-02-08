@@ -90,7 +90,7 @@ namespace Assets.src.Input
             {
                 facingLeft = true;
                 float scale_x = transform.localScale.x;
-                transform.localScale = new Vector3(-1f * scale_x, transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(-1f * Math.Abs(scale_x), transform.localScale.y, transform.localScale.z);
             }
         }
 
@@ -100,7 +100,7 @@ namespace Assets.src.Input
             {
                 facingLeft = false;
                 float scale_x = transform.localScale.x;
-                transform.localScale = new Vector3(-1f * scale_x, transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(1f * Math.Abs(scale_x), transform.localScale.y, transform.localScale.z);
             }
         }
 

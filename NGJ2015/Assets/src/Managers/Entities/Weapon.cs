@@ -37,8 +37,8 @@ namespace Assets.src.Managers.Entities
             Vector2 weaponToMouse = (mousepos - playerPos).normalized;
 
             var colliders =
-                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*2.5f, 3f);
-            if (colliders.Count() > 0)
+                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*2.5f, 3.5f);
+            if (colliders.Any())
             {
             }
             else
@@ -62,7 +62,7 @@ namespace Assets.src.Managers.Entities
                     var mulitiplier = 1;
                     if ((character as Player) != null)
                     {
-                        mulitiplier = 3;
+                        mulitiplier = 5;
                     }
                     character.PushBack(
                         ((character.transform.position - playerPos).normalized)*
@@ -79,7 +79,7 @@ namespace Assets.src.Managers.Entities
 
         private void AssaultRifleAttack(Transform targetTransform)
         {
-            var bulletGO = ManagerCollection.Instance.WeaponManager.GetNewProjectileFromType(Enumerations.ProjectileTypes.Drawer, transform.position, transform.rotation);
+            var bulletGO = ManagerCollection.Instance.WeaponManager.GetNewProjectileFromType(Enumerations.ProjectileTypes.Drawer, transform.position, transform.GetChild(0).transform.rotation);
             var bullet = bulletGO.GetComponent(Enumerations.ProjectileTypes.Drawer.ToString()) as Projectile;
             bullet.ShootProjectile(targetTransform.position, targetTransform.GetComponent<Player>());
         }

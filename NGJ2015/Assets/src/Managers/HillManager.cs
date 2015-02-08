@@ -41,14 +41,14 @@ namespace Assets.src.Managers
 				Vector3 modifiedPlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y*3, player.transform.position.z);
 				if (kings.Contains(player))
 				{
-					if (Vector3.Magnitude(modifiedPlayerPosition) > hillRadius)
+					if (Vector3.Magnitude(modifiedPlayerPosition) > hillRadius || player.IsDead())
 					{
 						kings.Remove (player);
 					}
 				}
 				else 
 				{
-					if (Vector3.Magnitude(modifiedPlayerPosition) <= hillRadius)
+                    if (Vector3.Magnitude(modifiedPlayerPosition) <= hillRadius && !player.IsDead())
 					{
 						kings.Add (player);
 					}
@@ -57,7 +57,7 @@ namespace Assets.src.Managers
 			int enemyKings = 0;
 			foreach(GameObject enemy in enemies)
 			{
-				if (Vector3.Magnitude(enemy.transform.position) <= hillRadius)
+				if (Vector3.Magnitude(new Vector3(enemy.transform.position.x, enemy.transform.position.y*3, enemy.transform.position.z)) <= hillRadius)
 					enemyKings++;
 			}
 			if (kings.Count == 1 && enemyKings == 0 && !playerGainingPoints)
@@ -67,13 +67,13 @@ namespace Assets.src.Managers
 				{
 					ManagerCollection.Instance.PlayerManager.StartGivingPointsToPlayer(player);
 					playerGainingPoints = true;
-					iTween.ColorTo(carpetObject, ManagerCollection.Instance.PlayerManager.GetPlayerColor(player), 0.5f);
+					iTween.ColorTo(carpetObject, ManagerCollection.Instance.PlayerManager.GetPlayerColor(player) + new Color(0.001f, 0.001f, 0.001f), 1f);
 				}
 			}
 			else if (playerGainingPoints && !(kings.Count == 1 && enemyKings == 0))
 			{
 				ManagerCollection.Instance.PlayerManager.StopGivingPointsToPlayer();
-				iTween.ColorTo(carpetObject, Color.white, 0.5f);
+				iTween.ColorTo(carpetObject, Color.white, 1f);
 				playerGainingPoints = false;
 			}
 		}

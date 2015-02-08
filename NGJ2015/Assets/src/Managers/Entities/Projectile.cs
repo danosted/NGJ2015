@@ -1,7 +1,6 @@
 ﻿using Assets.src.Managers;
 using Assets.src.Managers.Entities;
 using UnityEngine;
-using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
@@ -40,8 +39,7 @@ public class Projectile : MonoBehaviour {
         //Debug.Log(msg, gameObject);
         _targetPlayer = target;
         //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
-        var targetPosition = target.transform.position;
-
+        
         _targetPosition = target.transform.position;
     }
 }
