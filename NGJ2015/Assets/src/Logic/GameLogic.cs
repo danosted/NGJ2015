@@ -40,8 +40,8 @@ public class GameLogic : MonoBehaviour
 		p2.playerName = "player2";
 		p2.UseGamePad2();
 		
-		p1.transform.position += Vector3.left*4;
-		p2.transform.position += Vector3.right*4;
+		p1.setInitialPosition(transform.position + Vector3.left*4);
+        p2.setInitialPosition(transform.position + Vector3.right * 4);
 
 		p1.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ManagerCollection.Instance.PlayerManager.GetPlayerColor(p1);
 		p2.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ManagerCollection.Instance.PlayerManager.GetPlayerColor(p2);
