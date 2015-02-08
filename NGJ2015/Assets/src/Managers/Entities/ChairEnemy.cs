@@ -125,7 +125,7 @@ namespace Assets.src.Managers.Entities
             {
                 var extraSpeed = 0f;
                 var distance = (transform.position - _target.transform.position).magnitude;
-                if (distance < 2*_range)
+                if (distance < 3*_range)
                 {
                     extraSpeed = distance;
 					
