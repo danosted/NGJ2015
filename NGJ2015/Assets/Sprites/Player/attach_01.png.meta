@@ -52,52 +52,32 @@ TextureImporter:
     - name: attach_01_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 7
+        y: 29
+        width: 145
+        height: 195
+      alignment: 9
+      pivot: {x: .388594121, y: .381656855}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: attach_01_1
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: attach_01_2
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 379
+        y: 29
+        width: 326
+        height: 126
+      alignment: 9
+      pivot: {x: .153138325, y: .600732684}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: attach_01_3
       rect:
         serializedVersion: 2
-        x: 768
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: attach_01_4
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 750
+        y: 29
+        width: 330
+        height: 125
+      alignment: 9
+      pivot: {x: .160839111, y: .564615369}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: attach_01_5
       rect:
@@ -107,7 +87,7 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
