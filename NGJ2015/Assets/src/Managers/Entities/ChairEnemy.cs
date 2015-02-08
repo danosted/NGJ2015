@@ -118,6 +118,8 @@ namespace Assets.src.Managers.Entities
 
         private void ExecuteAttackStrategy()
         {
+			var anim = GetComponentInChildren<Animator> ();
+			anim.SetTrigger ("Attack");
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
