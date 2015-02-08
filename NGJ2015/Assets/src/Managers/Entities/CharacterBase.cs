@@ -9,11 +9,12 @@ namespace Assets.src.Managers.Entities
 {
     public abstract class CharacterBase : MonoBehaviour
     {
-		protected float _health;
+        protected float _health;
+        protected float _initialhealth;
 		protected float _speed;
 		protected float _range;
         protected float _damage;
-        private HealthbarScript healthbar;
+        protected HealthbarScript healthbar;
         //private FloatingCombatText floatingCombatText;
 
         private bool _canMove;
@@ -26,6 +27,7 @@ namespace Assets.src.Managers.Entities
 		public void Initialize(float health, float speed, float range, float damage)
 		{
 			_health = health;
+		    _initialhealth = health;
 			_speed = speed;
 			_range = range;
 			_damage = damage;
@@ -50,7 +52,8 @@ namespace Assets.src.Managers.Entities
         public virtual void TakeDamage(float damage)
         {
             _health -= damage;
-            if (healthbar)
+            var player = this as Player;
+            if (healthbar && (player == null || !player.IsDead()))
             {
                 iTween.PunchScale(gameObject, Vector3.one * 2f, 0.5f);
                 healthbar.DamageTaken(damage);
@@ -59,7 +62,7 @@ namespace Assets.src.Managers.Entities
             //{
             //    floatingCombatText.ShowFloatingText(damage.ToString());
             //}
-            if (_health <= 0)
+            if (_health <= 0 && (player == null || !player.IsDead()))
             {
                 Die();
             }

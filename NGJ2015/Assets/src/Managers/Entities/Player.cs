@@ -14,6 +14,16 @@ namespace Assets.src.Managers.Entities
 		public string playerName;
         private Weapon weapon;
 
+        private float deadTime = 5f;
+        private float deadTimer = 0;
+
+        private Vector3 _initialPosition;
+
+        public bool IsDead()
+        {
+            return isDead;
+        }
+
         private long _points = 0;
 
         public long GetPoints()
@@ -25,6 +35,35 @@ namespace Assets.src.Managers.Entities
         {
             _points += points;
         }
+
+        public void setInitialPosition(Vector3 pos)
+        {
+            _initialPosition = pos;
+            transform.position = _initialPosition;
+        }
+
+        public new void FixedUpdate()
+        {
+            base.FixedUpdate();
+            if (isDead)
+            {
+                deadTimer += Time.fixedDeltaTime;
+
+                if (deadTimer > deadTime)
+                {
+                    Debug.LogError(Time.time+" Reviving "+gameObject);
+                    isDead = false;
+                    deadTimer = 0;
+                    var anim = GetComponentInChildren<Animator>();
+                    anim.SetBool("isDead", false);
+                    _health = _initialhealth;
+                    healthbar.Init(_health);
+                    transform.position = _initialPosition;
+                    StartCoroutine(StartMoving());
+                }
+            }
+        }
+
 
         public void UseGamePad1()
 		{
@@ -232,12 +271,12 @@ namespace Assets.src.Managers.Entities
 
         public override void Die()
         {
-            //Debug.Log("Player die")
+            Debug.LogError(Time.time + "Player die "+gameObject);
 			var anim = GetComponentInChildren<Animator> ();
 			isDead = true;
 			anim.SetBool ("isDead", isDead);
 			base.Die();
-			ManagerCollection.Instance.PlayerManager.LoseGameBoth();
+			//ManagerCollection.Instance.PlayerManager.LoseGameBoth();
         }
     }
 }

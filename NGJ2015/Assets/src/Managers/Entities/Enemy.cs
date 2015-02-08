@@ -47,7 +47,7 @@ namespace Assets.src.Managers.Entities
             foreach (var target in targets)
             {
                 var tempDist = Vector3.Distance(target.transform.position, position);
-                if (tempDist < nearestDist)
+                if (tempDist < nearestDist && !target.GetComponent<Player>().IsDead())
                 {
                     nearestDist = tempDist;
                     result = target;

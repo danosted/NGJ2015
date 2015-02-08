@@ -37,7 +37,7 @@ namespace Assets.src.Managers.Entities
             Vector2 weaponToMouse = (mousepos - playerPos).normalized;
 
             var colliders =
-                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*3.5f, 3f);
+                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*2.5f, 3.5f);
             if (colliders.Any())
             {
             }
