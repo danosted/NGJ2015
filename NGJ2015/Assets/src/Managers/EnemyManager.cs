@@ -11,7 +11,9 @@ namespace Assets.src.Managers
         {
             if(InactiveObjects.Exists(x => x.GetComponent(enemyType.ToString())))
             {
-                var poolObject = InactiveObjects.Find(x => x.GetComponent(enemyType.ToString()));
+				var poolObject = InactiveObjects.Find(x => x.GetComponent(enemyType.ToString()));
+				var anim = GetComponentInChildren<Animator> ();
+				anim.SetBool ("isDead", false);
 				ActiveObjects.Add(poolObject);
 				InactiveObjects.Remove(poolObject);
 				poolObject.transform.parent = transform;
@@ -42,7 +44,7 @@ namespace Assets.src.Managers
 
         public void PoolEnemyObject(GameObject enemyGameObject)
         {
-            Debug.LogError("Pooling " + enemyGameObject.GetInstanceID() + enemyGameObject.GetComponent("Enemy").GetType());
+            //Debug.LogError("Pooling " + enemyGameObject.GetInstanceID() + enemyGameObject.GetComponent("Enemy").GetType());
             enemyGameObject.SetActive(false);
             ActiveObjects.Remove(enemyGameObject);
             InactiveObjects.Add(enemyGameObject);

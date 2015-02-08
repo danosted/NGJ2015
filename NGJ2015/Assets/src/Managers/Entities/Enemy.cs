@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,12 +36,19 @@ namespace Assets.src.Managers.Entities
 
         public override void Die()
         {
-            //Debug.Log("Enemy die");
             base.Die();
-            ManagerCollection.Instance.EnemyManager.PoolEnemyObject(gameObject);
+			StartCoroutine(DieDelay());
         }
 
-        protected GameObject GetNearestTarget(List<GameObject> targets, Vector3 position)
+		private IEnumerator DieDelay()
+		{
+			var anim = GetComponentInChildren<Animator> ();
+			anim.SetBool ("isDead", true);
+			yield return new WaitForSeconds(0.25f);
+			ManagerCollection.Instance.EnemyManager.PoolEnemyObject(gameObject);
+		}
+		
+		protected GameObject GetNearestTarget(List<GameObject> targets, Vector3 position)
         {
             var nearestDist = float.MaxValue;
             GameObject result = targets[0];

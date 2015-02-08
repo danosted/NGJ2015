@@ -87,7 +87,7 @@ namespace Assets.src.Input
 
         private void FaceLeft()
         {
-            if (!facingLeft)
+            if (!facingLeft && !GetComponent<Player>().IsDead())
             {
                 facingLeft = true;
                 float scale_x = transform.localScale.x;
@@ -97,7 +97,7 @@ namespace Assets.src.Input
 
         private void FaceRight()
         {
-            if (facingLeft)
+            if (facingLeft && !GetComponent<Player>().IsDead())
             {
                 facingLeft = false;
                 float scale_x = transform.localScale.x;
@@ -109,36 +109,39 @@ namespace Assets.src.Input
         {
             while (body)
             {
-                Vector3 mousepos = Vector3.zero;
-                if (!UseGamepad)
+                if (!GetComponent<Player>().IsDead())
                 {
-                    mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                    //Debug.DrawRay(Vector3.zero, mousepos);
-                }
-                else
-                {
-                    mousepos = (transform.position) + directionalVector * 10f;
-                    currentDirection = directionalVector;
-                    //Debug.DrawRay(Vector3.zero, mousepos);
-                    //Debug.LogWarning("mousepos " + mousepos);
-                }
-                //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
-                Vector3 weaponPos = body.transform.position;
-                Vector3 weaponToMouse = mousepos - transform.position;
-
-                currentDirection = weaponToMouse;
-                //Debug.DrawRay(transform.position, UnityEngine.Input.mousePosition);
-                if (!weaponToMouse.Equals(Vector3.zero))
-                {
-                    float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);
-                    if (facingLeft)
+                    Vector3 mousepos = Vector3.zero;
+                    if (!UseGamepad)
                     {
-                        body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
+                        mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+                        //Debug.DrawRay(Vector3.zero, mousepos);
                     }
                     else
                     {
-                        body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
+                        mousepos = (transform.position) + directionalVector * 10f;
+                        currentDirection = directionalVector;
+                        //Debug.DrawRay(Vector3.zero, mousepos);
+                        //Debug.LogWarning("mousepos " + mousepos);
                     }
+                    //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
+                    Vector3 weaponPos = body.transform.position;
+                    Vector3 weaponToMouse = mousepos - transform.position;
+
+                    currentDirection = weaponToMouse;
+                    Debug.DrawRay(transform.position, currentDirection, Color.red);
+                    if (!weaponToMouse.Equals(Vector3.zero))
+                    {
+                        float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);
+                        if (facingLeft)
+                        {
+                            body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
+                        }
+                        else
+                        {
+                            body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
+                        }
+                    }   
                 }
                 yield return null;
             }
