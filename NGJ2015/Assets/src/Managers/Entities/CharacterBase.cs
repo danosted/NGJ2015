@@ -47,11 +47,12 @@ namespace Assets.src.Managers.Entities
 		    transform.position += movement * _speed;
 		}
 
-        public void TakeDamage(float damage)
+        public virtual void TakeDamage(float damage)
         {
             _health -= damage;
             if (healthbar)
             {
+                iTween.PunchScale(gameObject, Vector3.one * 2f, 0.5f);
                 healthbar.DamageTaken(damage);
             }
             //if (floatingCombatText)

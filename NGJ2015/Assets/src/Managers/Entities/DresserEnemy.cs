@@ -172,9 +172,17 @@ namespace Assets.src.Managers.Entities
             }
         }
 
+		public override void TakeDamage(float damage) {
+			if (_health - damage > 0) {
+				ManagerCollection.Instance.AudioManager.PlayAudio(Assets.src.Common.Enumerations.Audio.DresserHit);
+			}
+			base.TakeDamage (damage);
+		}
+
 		public override void Die() {
 			base.Die();
 			var anim = transform.GetChild(0).GetComponent<Animator> ();
+			ManagerCollection.Instance.AudioManager.PlayAudio (Assets.src.Common.Enumerations.Audio.DresserDead);
 			anim.SetBool ("isDead",true);
 		}
     }

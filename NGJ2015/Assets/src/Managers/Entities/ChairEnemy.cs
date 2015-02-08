@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using Assets.src.Common;
 
 namespace Assets.src.Managers.Entities
 {
@@ -15,6 +16,11 @@ namespace Assets.src.Managers.Entities
         private float _chargeDist = 10;
         private int _swarmThreshold = 3;
         private int _spreadThreshold = 8;
+
+        [SerializeField]
+        private float _cooldown = 1.5f;
+        [SerializeField]
+        private float _lastHit = 0f;
 
         public enum MonsterStrategy
         {
@@ -58,9 +64,11 @@ namespace Assets.src.Managers.Entities
 
 		    if (_target)
 		    {
-                if (Vector3.Magnitude(transform.position - _target.transform.position) < _range)
+                _lastHit += Time.deltaTime;
+                if (Vector3.Magnitude(transform.position - _target.transform.position) < _range && _lastHit > _cooldown)
                 {
                     _target.TakeDamage(_damage);
+                    _lastHit = 0f;
                     PushBack(((transform.position - _target.transform.position).normalized)*1.1f, 30);
                 }
 		    }
@@ -184,5 +192,16 @@ namespace Assets.src.Managers.Entities
             UpdatePosition(Vector3.MoveTowards(transform.position, finalDirection, Time.fixedDeltaTime * _speed));
         }
 
+		public override void TakeDamage(float damage) {
+			if (_health - damage > 0) {
+				ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.ChairHit);
+			}
+			base.TakeDamage (damage);
+		}
+
+		public override void Die() {
+			base.Die ();
+			ManagerCollection.Instance.AudioManager.PlayAudio (Enumerations.Audio.ChairDead);
+		}
     }
 }

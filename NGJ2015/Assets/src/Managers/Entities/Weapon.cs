@@ -40,7 +40,6 @@ namespace Assets.src.Managers.Entities
                 Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*2.5f, 3f);
             if (colliders.Count() > 0)
             {
-                ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.PlayerAttack);
             }
             else
             {
@@ -48,16 +47,17 @@ namespace Assets.src.Managers.Entities
             }
             foreach (var collider in colliders)
             {
-
-                //iTween.PunchScale(collider.gameObject, Vector3.one * 10.1f, 0.5f);
                 var enemy = collider.GetComponent<Enemy>();
                 if (enemy != null)
                 {
+                    iTween.PunchScale(collider.gameObject, Vector3.one * 2f, 0.5f);
                     enemy.TakeDamage(ClubDamage);
                 }
                 var character = collider.GetComponent<CharacterBase>();
                 if (character != null)
                 {
+                    iTween.PunchScale(collider.gameObject, Vector3.one * 2f, 0.5f);
+                    Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
                     var mulitiplier = 1;
                     if ((character as Player) != null)
                     {
@@ -68,15 +68,19 @@ namespace Assets.src.Managers.Entities
                         mulitiplier);
 
                 }
-
+                var projectile = collider.GetComponent<Projectile>();
+                if (projectile != null)
+                {
+                    ManagerCollection.Instance.WeaponManager.PoolBullets(projectile.gameObject);
+                }
             }
         }
 
         private void AssaultRifleAttack(Transform targetTransform)
         {
             var bulletGO = ManagerCollection.Instance.WeaponManager.GetNewProjectileFromType(Enumerations.ProjectileTypes.Drawer, transform.position, transform.rotation);
-            var bullet = bulletGO.GetComponent(Enumerations.ProjectileTypes.Drawer.ToString()) as Drawer;
-            bullet.ShootDrawer(targetTransform.position, targetTransform.GetComponent<Player>());
+            var bullet = bulletGO.GetComponent(Enumerations.ProjectileTypes.Drawer.ToString()) as Projectile;
+            bullet.ShootProjectile(targetTransform.position, targetTransform.GetComponent<Player>());
         }
     }
 }
