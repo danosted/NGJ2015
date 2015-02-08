@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.src.Common;
+using Assets.src.Managers.Entities;
 using UnityEngine;
 
 namespace Assets.src.Input
@@ -14,37 +15,24 @@ namespace Assets.src.Input
         private Transform body;
         private bool facingLeft;
         private bool _isFacingRight;
-		public bool UseGamepad = false;
-		public int PlayerNr = 1;
-		
-		public delegate void OnLookVerticalDelegate(float mag);
-		public event OnLookVerticalDelegate OnLookVertical;
-		
-		public delegate void OnLookHorizontalDelegate(float mag);
-		public event OnLookVerticalDelegate OnLookHorizontal;
+        private bool UseGamepad = false;
+        public int PlayerNr;
+        public Vector3 directionalVector = Vector3.zero;
+        private bool isSet = false;
+
+        public delegate void OnLookVerticalDelegate(float mag);
+        public event OnLookVerticalDelegate OnLookVertical;
+
+        public delegate void OnLookHorizontalDelegate(float mag);
+        public event OnLookVerticalDelegate OnLookHorizontal;
 
         void Awake()
         {
+            
             MouseInputHandler input = GetComponent<MouseInputHandler>();
             //input.OnPress += OnPressed;
             //input.OnRelease += OnReleased;
-#if UNITY_ANDROID
-		input.OnFaceLeft += FaceLeft;
-		input.OnFaceRight += FaceRight;
-#endif
             body = transform.FindChild(Constants.TransformBodyName);
-            //Debug.LogWarning(transform.GetChild(0).childCount);
-            //Debug.LogWarning(body);
-            //body = weapons[0];
-            //GameObject weaponGO = Instantiate(body.gameObject, gunPosition.position, body.transform.rotation) as GameObject;
-            //weaponGO.transform.parent = transform;
-            //body = weaponGO.GetComponent<Weapon>();
-            //gameManInstance = GameManager.Instance;
-            //gameManInstance.OnStateChanged += OnStateChange;
-            //GetComponent<GameInitializer2Object>().OnInitializeWithDependencies += Initialize;
-            //		GameObject ch = Instantiate(crossHairs.gameObject) as GameObject;
-            //		this.crossHairs = ch.transform;
-            //		Screen.showCursor = false;
             StartCoroutine(PointGun());
         }
 
@@ -53,44 +41,48 @@ namespace Assets.src.Input
             //healthBar = dependencies[0].GetComponent<HealthbarScript>();
             //healthBar.Init(health);
         }
-#if UNITY_ANDROID
 
-#else
-        void Update()
+        public void Update()
         {
-			if (!UseGamepad) {
-				if (Camera.main.ScreenToWorldPoint (UnityEngine.Input.mousePosition).x < transform.position.x) {
-						FaceLeft ();
-				} else {
-						FaceRight ();
-				}
-			} else {
-				if(PlayerNr == 1){
-					if(UnityEngine.Input.GetAxis("Joy1-Look-Horizontal") < 0)
-					{
-							FaceLeft ();
-						
-					}
-					if(UnityEngine.Input.GetAxis("Joy1-Look-Horizontal") > 0)
-					{
-							FaceRight ();
-						
-					}
-				} else {
-					if(UnityEngine.Input.GetAxis("Joy2-Look-Horizontal") < 0)
-					{
-							FaceLeft ();
-						
-					}
-					if(UnityEngine.Input.GetAxis("Joy2-Look-Horizontal") > 0)
-					{
-							FaceRight ();
-						
-					}
-				}
-			}
+            if (!isSet)
+            {
+                isSet = true;
+                if (PlayerNr != 0)
+                {
+                    PlayerNr = GetComponent<Player>().gamePad;
+                    UseGamepad = true;
+                }
+                if (PlayerNr == 0)
+                {
+                    UseGamepad = false;
+                }
+            }
+            if (UseGamepad)
+            {
+                //Debug.Log("MouseLook2d " + directionalVector);
+                if (directionalVector.x < 0)
+                {
+                    FaceLeft();
+                }
+                else
+                {
+                    FaceRight();
+                }
+            }
+            if (!UseGamepad)
+            {
+                Debug.Log("MouseLook2d " + directionalVector);
+                if (Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition).x < transform.position.x)
+                {
+                    FaceLeft();
+                }
+                else
+                {
+                    FaceRight();
+                }
+            }
+            
         }
-#endif
 
         private void FaceLeft()
         {
@@ -116,33 +108,34 @@ namespace Assets.src.Input
         {
             while (body)
             {
-				Vector3 mousepos = Vector3.zero;
-				if(!UseGamepad) {
-                	mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-				} else {
-					//Debug.Log (PlayerNr);
-					if(PlayerNr == 1){						
-						mousepos += Vector3.up * UnityEngine.Input.GetAxis("Joy1-Look-Vertical") * 360;
-						mousepos += Vector3.right * UnityEngine.Input.GetAxis("Joy1-Look-Horizontal") * 360;
-					} else {						
-						mousepos += Vector3.up * UnityEngine.Input.GetAxis("Joy2-Look-Vertical") * 360;
-						mousepos += Vector3.right * UnityEngine.Input.GetAxis("Joy2-Look-Horizontal") * 360;
-					}
-				}
+                Vector3 mousepos = Vector3.zero;
+                if (!UseGamepad)
+                {
+                    mousepos = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+                    Debug.DrawRay(transform.position, UnityEngine.Input.mousePosition);
+                }
+                else
+                {
+                    mousepos = (transform.position) + directionalVector * 10f;
+
+                    Debug.DrawRay(Vector3.zero, mousepos);
+                    //Debug.LogWarning("mousepos " + mousepos);
+                }
                 //			crossHairs.position = new Vector3(mousepos.x, mousepos.y, 0f);
                 Vector3 weaponPos = body.transform.position;
-                Vector3 weaponToMouse = (mousepos - weaponPos).normalized;
-				if(!weaponToMouse.Equals(Vector3.zero)) {
-                	float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);
-	                if (facingLeft)
-	                {
-	                    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
-	                }
-	                else
-	                {
-	                    body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
-	                }
-				}
+                Vector3 weaponToMouse = mousepos - transform.position;
+                if (!weaponToMouse.Equals(Vector3.zero))
+                {
+                    float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);
+                    if (facingLeft)
+                    {
+                        body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.back);
+                    }
+                    else
+                    {
+                        body.transform.rotation = Quaternion.AngleAxis(angle * 180f / Mathf.PI, Vector3.forward);
+                    }
+                }
                 yield return null;
             }
         }

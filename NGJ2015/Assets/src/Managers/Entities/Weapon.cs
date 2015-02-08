@@ -58,7 +58,7 @@ namespace Assets.src.Managers.Entities
                 {
                     if (character.transform == transform) return;
                     iTween.PunchScale(collider.gameObject, Vector3.one * 2f, 0.5f);
-                    Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
+                    //Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
                     var mulitiplier = 1;
                     if ((character as Player) != null)
                     {
