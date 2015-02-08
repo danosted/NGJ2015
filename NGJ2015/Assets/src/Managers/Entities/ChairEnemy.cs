@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using Assets.src.Common;
 
 namespace Assets.src.Managers.Entities
 {
@@ -59,7 +60,7 @@ namespace Assets.src.Managers.Entities
 
 		    }
 
-            transform.position += KeepEnemyDistance();
+            UpdatePosition(transform.position + KeepEnemyDistance());
 
 		    if (_target)
 		    {
@@ -67,8 +68,8 @@ namespace Assets.src.Managers.Entities
                 if (Vector3.Magnitude(transform.position - _target.transform.position) < _range && _lastHit > _cooldown)
                 {
                     _target.TakeDamage(_damage);
-                    PushBack(((transform.position - _target.transform.position).normalized));
                     _lastHit = 0f;
+                    PushBack(((transform.position - _target.transform.position).normalized)*1.1f);
                 }
 		    }
 		    
@@ -120,9 +121,14 @@ namespace Assets.src.Managers.Entities
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.magenta;
             if (_target)
             {
-
+                var extraSpeed = 0f;
+                var distance = (transform.position - _target.transform.position).magnitude;
+                if (distance < 2*_range)
+                {
+                    extraSpeed = distance;
+                }
                 UpdatePosition(Vector3.MoveTowards(transform.position, _target.transform.position,
-                    Time.fixedDeltaTime*_speed));
+                    Time.fixedDeltaTime * (_speed + extraSpeed)));
             }
         }
 
@@ -186,5 +192,16 @@ namespace Assets.src.Managers.Entities
             UpdatePosition(Vector3.MoveTowards(transform.position, finalDirection, Time.fixedDeltaTime * _speed));
         }
 
+		public override void TakeDamage(float damage) {
+			if (_health - damage > 0) {
+				ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.ChairHit);
+			}
+			base.TakeDamage (damage);
+		}
+
+		public override void Die() {
+			base.Die ();
+			ManagerCollection.Instance.AudioManager.PlayAudio (Enumerations.Audio.ChairDead);
+		}
     }
 }

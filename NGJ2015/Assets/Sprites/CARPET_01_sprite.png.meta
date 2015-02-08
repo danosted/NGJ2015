@@ -1,7 +1,10 @@
 fileFormatVersion: 2
-guid: c153c860621a66145b50ca8b68b8503b
+guid: b1e370eb1b2ea4b3196dbc2d91bebc9a
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: CARPET_01_sprite_0
+    21300002: CARPET_01_sprite_1
+    21300004: CARPET_01_sprite_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -42,6 +45,36 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: CARPET_01_sprite_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 582
+        height: 216
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CARPET_01_sprite_1
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 0
+        width: 582
+        height: 216
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CARPET_01_sprite_2
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 0
+        width: 582
+        height: 216
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

@@ -12,8 +12,9 @@ namespace Assets.src.Managers
 
         public void PlayAudio(Enumerations.Audio audioName)
         {
-			var audioToPlay = audioClips.Where (a => a.name == audioName.ToString ()).SingleOrDefault();
+			var audioToPlay = audioClips.Where (a => a.name == audioName.ToString ()).FirstOrDefault();
 			if (audioToPlay != null) {
+				Debug.Log("Playing audio " + audioName);
 				AudioSource.PlayClipAtPoint (audioToPlay, new Vector3 (0, 0, 0));
 			} else {
 				Debug.LogError("Audio was not found");
