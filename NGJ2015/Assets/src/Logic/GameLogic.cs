@@ -59,6 +59,7 @@ public class GameLogic : MonoBehaviour
 		ManagerCollection.Instance.PlayerManager.P2PointBar = p2PointBar;
 		ManagerCollection.Instance.PlayerManager.Win = Win;
 
+        //ManagerCollection.Instance.AudioManager.PlayAudio(Enumerations.Audio.ngj2);
 	}
 
 }
