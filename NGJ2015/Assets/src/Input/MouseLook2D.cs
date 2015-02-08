@@ -13,7 +13,7 @@ namespace Assets.src.Input
     {
         private Transform model;
         private Transform body;
-        private bool facingLeft;
+        public bool facingLeft;
         private bool _isFacingRight;
         private bool UseGamepad = false;
         public int PlayerNr;
@@ -87,7 +87,8 @@ namespace Assets.src.Input
 
         private void FaceLeft()
         {
-            if (!facingLeft && !GetComponent<Player>().IsDead())
+            //if (!facingLeft && !GetComponent<Player>().IsDead())
+            if (!GetComponent<Player>().IsDead())
             {
                 facingLeft = true;
                 float scale_x = transform.localScale.x;
@@ -97,7 +98,8 @@ namespace Assets.src.Input
 
         private void FaceRight()
         {
-            if (facingLeft && !GetComponent<Player>().IsDead())
+            //if (facingLeft && !GetComponent<Player>().IsDead())
+            if (!GetComponent<Player>().IsDead())
             {
                 facingLeft = false;
                 float scale_x = transform.localScale.x;
@@ -128,7 +130,7 @@ namespace Assets.src.Input
                     Vector3 weaponToMouse = mousepos - transform.position;
 
                     currentDirection = weaponToMouse;
-                    Debug.DrawRay(transform.position, currentDirection, Color.red);
+                    Debug.DrawRay(transform.position, currentDirection.normalized, Color.red);
                     if (!weaponToMouse.Equals(Vector3.zero))
                     {
                         float angle = Mathf.Atan(weaponToMouse.y / weaponToMouse.x);
