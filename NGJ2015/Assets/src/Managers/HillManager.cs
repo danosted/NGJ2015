@@ -39,17 +39,28 @@ namespace Assets.src.Managers
 			{
 				Player player = playerObject.GetComponent<Player>();
 				Vector3 modifiedPlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y*3, player.transform.position.z);
-				if (kings.Contains(player))
+				bool doesContainPlayer = false;
+				int i = 0;
+				foreach(Player king in kings)
+				{
+					if (king.playerName == player.playerName)
+					{
+						doesContainPlayer = true;
+						break;
+					}
+					i++;
+				}
+				if (doesContainPlayer)
 				{
 					if (Vector3.Magnitude(modifiedPlayerPosition) > hillRadius || player.IsDead())
 					{
-						kings.Remove (player);
+						kings.RemoveAt(i);
 					}
 				}
 				else 
 				{
                     if (Vector3.Magnitude(modifiedPlayerPosition) <= hillRadius && !player.IsDead())
-					{
+					{ 
 						kings.Add (player);
 					}
 				}
@@ -67,13 +78,13 @@ namespace Assets.src.Managers
 				{
 					ManagerCollection.Instance.PlayerManager.StartGivingPointsToPlayer(player);
 					playerGainingPoints = true;
-					iTween.ColorTo(carpetObject, ManagerCollection.Instance.PlayerManager.GetPlayerColor(player) + new Color(0.001f, 0.001f, 0.001f), 1f);
+					iTween.ColorTo(carpetObject, ManagerCollection.Instance.PlayerManager.GetPlayerColor(player) + new Color(0.001f, 0.001f, 0.001f), 0.5f);
 				}
 			}
 			else if (playerGainingPoints && !(kings.Count == 1 && enemyKings == 0))
 			{
 				ManagerCollection.Instance.PlayerManager.StopGivingPointsToPlayer();
-				iTween.ColorTo(carpetObject, Color.white, 1f);
+				iTween.ColorTo(carpetObject, Color.white, 0.5f);
 				playerGainingPoints = false;
 			}
 		}
