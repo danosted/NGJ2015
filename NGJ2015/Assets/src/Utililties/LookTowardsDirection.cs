@@ -18,7 +18,7 @@ namespace Assets.src.Utililties
         private bool _isFacingRight;
         private Enemy entity;
 
-        private bool _firstRun = true;
+        public bool _firstRun = true;
 
         void Awake()
         {
