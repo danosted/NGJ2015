@@ -236,8 +236,8 @@ namespace Assets.src.Managers.Entities
 			var anim = GetComponentInChildren<Animator> ();
 			isDead = true;
 			anim.SetBool ("isDead", isDead);
-            base.Die();
-            
+			base.Die();
+			ManagerCollection.Instance.PlayerManager.LoseGame(this);
         }
     }
 }
