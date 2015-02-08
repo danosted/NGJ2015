@@ -23,8 +23,9 @@ namespace Assets.src.Managers.Entities
         public const int DefaultPushbackFrames = 10;
 		protected int _pushbackFrames = 10;
 		protected int _pushbackFrame = 0;
+        protected float _pushbackMagnitude = 1f;
 
-		public void Initialize(float health, float speed, float range, float damage)
+		public virtual void Initialize(float health, float speed, float range, float damage)
 		{
 			_health = health;
 		    _initialhealth = health;
@@ -51,8 +52,12 @@ namespace Assets.src.Managers.Entities
 
         public virtual void TakeDamage(float damage)
         {
-            _health -= damage;
             var player = this as Player;
+
+            //Debug.LogError(string.Format("{3}{0} taking {1} damage - {2} hp left {4}", gameObject.GetInstanceID(), damage, _health - damage, GetType(), player == null || !player.IsDead()));
+            
+            _health -= damage;
+            
             if (healthbar && (player == null || !player.IsDead()))
             {
                 iTween.PunchScale(gameObject, Vector3.one * 2f, 0.5f);
@@ -101,7 +106,7 @@ namespace Assets.src.Managers.Entities
                     }
                     transform.position = Vector3.MoveTowards(transform.position, dest,
                         (Time.fixedDeltaTime*
-                         (PushbackSpeed(_pushbackFrame, _pushbackFrames))));
+                         (PushbackSpeed(_pushbackFrame, _pushbackFrames) * _pushbackMagnitude)));
 
                 }
                 _pushbackFrame++;
@@ -113,12 +118,13 @@ namespace Assets.src.Managers.Entities
             return _speed + _speed * (((float)maxFrames - frame) / maxFrames);
         }
 
-        public void PushBack(Vector3 destination, int duration = DefaultPushbackFrames)
+        public void PushBack(Vector3 destination, int duration = DefaultPushbackFrames, float magnitude = 1f)
         {
             //_canMove = false;
             _beingPushedBack = true;
             _pushBackVector = destination;
             _pushbackFrames = duration;
+            _pushbackMagnitude = magnitude;
         }
 
         protected void UpdatePosition(Vector3 position)
@@ -136,6 +142,7 @@ namespace Assets.src.Managers.Entities
         public virtual void Die()
         {
             // die animation
+            //Debug.LogError("Die "+GetType()+gameObject.GetInstanceID());
         }
 		
         protected void StopMoving()
@@ -161,6 +168,12 @@ namespace Assets.src.Managers.Entities
         public float GetHealth()
         {
             return _health;
+        }
+
+        public override bool Equals(object o)
+        {
+            var cha = o as CharacterBase;
+            return cha != null && cha.gameObject.GetInstanceID() != GetInstanceID();
         }
     }
 }

@@ -54,7 +54,8 @@ namespace Assets.src.Utililties
             }
             _firstRun = false;
             Vector3 pos = transform.position;
-            Vector3 direction = (entity.TargetPosition - pos).normalized;
+            Vector3 direction = (entity.TargetPosition - pos);
+            direction.Normalize();
             Debug.DrawRay(transform.position, direction * 10f);
             //Debug.DrawRay(transform.position, Vector3.left * 10f, Color.red);
             //Debug.DrawRay(transform.position, Vector3.right * 10f, Color.blue);
