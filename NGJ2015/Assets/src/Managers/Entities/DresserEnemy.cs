@@ -34,6 +34,26 @@ namespace Assets.src.Managers.Entities
             MoveAway
         }
 
+		public override void Initialize(float health, float speed, float range, float damage)
+		{
+			_drawersLeft = 3; 
+			_health = health;
+			_initialhealth = health;
+			_speed = speed;
+			_range = range;
+			_damage = damage;
+			_canMove = true;
+			_beingPushedBack = false;
+			if (!healthbar)
+			{
+				healthbar = GetComponentInChildren<HealthbarScript>();
+			}
+			//if (!floatingCombatText)
+			//{
+			//    floatingCombatText = GetComponentInChildren<FloatingCombatText>();
+			//}
+			healthbar.Init(_health);
+		}
 
         public void Update()
         {
