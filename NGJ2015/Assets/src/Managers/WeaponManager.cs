@@ -10,7 +10,7 @@ namespace Assets.src.Managers
     {
 		public GameObject GetNewProjectileFromType(Enumerations.ProjectileTypes bulletType, Vector3 startPos, Quaternion startRot)
 		{
-			Debug.Log(string.Format("Fetching object with type '{0}'.", bulletType));
+            //Debug.Log(string.Format("Fetching object with type '{0}'.", bulletType));
 			if(InactiveObjects.Exists(x => x.GetComponent(bulletType.ToString())))
 			{
 				Debug.Log(string.Format("Object found in pool."));

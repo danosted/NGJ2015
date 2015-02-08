@@ -56,6 +56,7 @@ namespace Assets.src.Managers.Entities
                 var character = collider.GetComponent<CharacterBase>();
                 if (character != null)
                 {
+                    if (character.transform == transform) return;
                     iTween.PunchScale(collider.gameObject, Vector3.one * 2f, 0.5f);
                     Debug.LogWarning(string.Format("Pushing {0} back", character.gameObject));
                     var mulitiplier = 1;
