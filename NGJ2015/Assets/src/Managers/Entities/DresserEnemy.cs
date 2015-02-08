@@ -7,6 +7,9 @@ namespace Assets.src.Managers.Entities
 {
     public class DresserEnemy : Enemy
     {
+        private float _meleeCooldown = 1.5f;
+        private float _meleeLastHit = 0f;
+        private float _meleeRange = 1.5f;
 
         private float _cooldown = 2.5f;
         private float _lastShot = 0f;
@@ -58,15 +61,24 @@ namespace Assets.src.Managers.Entities
 		    }
 
             transform.position += KeepEnemyDistance();
-            
+
+            UpdatePosition(transform.position + KeepEnemyDistance());
+
 		    if (_target)
-		    {
-		        _lastShot += Time.deltaTime;
+            {
+                _lastShot += Time.deltaTime;
+                _meleeLastHit += Time.deltaTime;
                 if (Vector3.Magnitude(transform.position - _target.transform.position) < _range && _lastShot > _cooldown)
                 {
                     Shoot();
                     //_target.TakeDamage(_damage);
                     _lastShot = 0f;
+                }
+                else if (Vector3.Magnitude(transform.position - _target.transform.position) < _meleeRange && _meleeLastHit > _meleeCooldown)
+                {
+                    _target.TakeDamage(_damage);
+                    _meleeLastHit = 0f;
+                    PushBack(((transform.position - _target.transform.position).normalized) * 1.1f, 30);
                 }
 		    }
 		    
