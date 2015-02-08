@@ -120,7 +120,6 @@ namespace Assets.src.Input
                     else
                     {
                         mousepos = (transform.position) + directionalVector * 10f;
-                        currentDirection = directionalVector;
                         //Debug.DrawRay(Vector3.zero, mousepos);
                         //Debug.LogWarning("mousepos " + mousepos);
                     }
