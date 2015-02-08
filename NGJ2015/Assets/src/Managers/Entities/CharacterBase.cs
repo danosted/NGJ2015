@@ -19,7 +19,8 @@ namespace Assets.src.Managers.Entities
         private bool _canMove;
         private bool _beingPushedBack;
         private Vector3 _pushBackVector;
-        private const int _pushbackFrames = 10;
+        private const int _defaultPushbackFrames = 10;
+        private int _pushbackFrames = 10;
         private int _pushbackFrame = 0;
 
 		public void Initialize(float health, float speed, float range, float damage)
@@ -91,11 +92,12 @@ namespace Assets.src.Managers.Entities
             return _speed + _speed * (((float)maxFrames - frame) / maxFrames);
         }
 
-        public void PushBack(Vector3 destination)
+        public void PushBack(Vector3 destination, int duration = _defaultPushbackFrames)
         {
             //_canMove = false;
             _beingPushedBack = true;
             _pushBackVector = destination;
+            _pushbackFrames = duration;
         }
 
         protected void UpdatePosition(Vector3 position)
