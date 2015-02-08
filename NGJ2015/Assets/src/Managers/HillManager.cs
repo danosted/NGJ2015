@@ -41,14 +41,14 @@ namespace Assets.src.Managers
 				Vector3 modifiedPlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y*3, player.transform.position.z);
 				if (kings.Contains(player))
 				{
-					if (Vector3.Magnitude(modifiedPlayerPosition) > hillRadius)
+					if (Vector3.Magnitude(modifiedPlayerPosition) > hillRadius || player.IsDead())
 					{
 						kings.Remove (player);
 					}
 				}
 				else 
 				{
-					if (Vector3.Magnitude(modifiedPlayerPosition) <= hillRadius)
+                    if (Vector3.Magnitude(modifiedPlayerPosition) <= hillRadius && !player.IsDead())
 					{
 						kings.Add (player);
 					}

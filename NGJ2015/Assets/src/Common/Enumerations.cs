@@ -44,7 +44,8 @@ namespace Assets.src.Common
 			ChairDead,
 			DresserDead,
 			DresserHit,
-			ChairHit
+			ChairHit,
+            ngj2
 		}
     }
 }
