@@ -14,7 +14,7 @@ namespace Assets.src.Managers.Entities
     {
         public float ClubDamage = 5;
         public float AssaultRifleDamage = 4;
-
+        public Transform hitDebug;
 
         public void Attack(Transform transform, Enumerations.WeaponType weapon)
         {
@@ -41,8 +41,9 @@ namespace Assets.src.Managers.Entities
             Vector2 weaponToMouse = mouselook.currentDirection;
             weaponToMouse.Normalize();
             Debug.DrawRay(transform.position, weaponToMouse);
+            Debug.Log(hitDebug.position);
             var colliders =
-                Physics.OverlapSphere(transform.position + new Vector3(weaponToMouse.x, weaponToMouse.y, 0f)*3f, 4f)
+                Physics.OverlapSphere(hitDebug.position, 4f)
                     .ToList();
 
             if (colliders.Any())
